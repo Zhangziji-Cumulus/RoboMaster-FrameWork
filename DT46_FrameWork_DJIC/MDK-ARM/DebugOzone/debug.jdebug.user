@@ -1,0 +1,25 @@
+
+GraphedExpression="(test).current", Color=#a00909
+GraphedExpression="(test).target", Color=#09a01b
+OpenDocument="main.c", FilePath="D:/A_Code_GitHub/My_STM32_Code_Free/My_STM32_Codes/BaseMood/Core/Src/main.c", Line=70
+OpenDocument="stm32f4xx_it.c", FilePath="D:/A_Code_GitHub/My_STM32_Code_Free/My_STM32_Codes/BaseMood/Core/Src/stm32f4xx_it.c", Line=80
+OpenDocument="Motor_Contral.c", FilePath="D:/A_Code_GitHub/My_STM32_Code_Free/My_STM32_Codes/BaseMood/MDK-ARM/UserAppliction/Motor_Contral.c", Line=0
+OpenDocument="MY_Time.h", FilePath="D:/A_Code_GitHub/My_STM32_Code_Free/My_STM32_Codes/BaseMood/MDK-ARM/UserAppliction/MY_Time.h", Line=0
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=562, h=481, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=588, h=272, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=588, h=396, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=407, h=375, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=1512, h=375, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="500 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1276;0", PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1318;16", CodeGraphLegendShown=0, CodeGraphLegendPosition="1324;84"
+OpenWindow="Find Results", DockArea=RIGHT, x=0, y=0, w=562, h=187, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[875;100;100;100;224]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (test).current";" (test).target"], ColWidths=[100;100;100;107]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[112;100;100;100;100;100;100;107;107]
+TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;118;323]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[154;100;100;213]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[26;26;26;26]
+WatchedExpression="test", RefreshRate=1, Window=Watched Data 1
+WatchedExpression="1", Window=Watched Data 1
+WatchedExpression="0", Window=Watched Data 1

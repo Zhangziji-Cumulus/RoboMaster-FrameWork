@@ -1,0 +1,87 @@
+basemood\autoaim_task.o: ACApplication\Auto\AutoAim_Task.c
+basemood\autoaim_task.o: ACApplication\Auto\AutoAim_Task.h
+basemood\autoaim_task.o: ./AAA/A_MCommon.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ../Core/Inc/main.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+basemood\autoaim_task.o: ../Core/Inc/stm32f4xx_hal_conf.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Include/core_cm4.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Include/cmsis_version.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Include/mpu_armv7.h
+basemood\autoaim_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+basemood\autoaim_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h
+basemood\autoaim_task.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\autoaim_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+basemood\autoaim_task.o: ../Core/Inc/can.h
+basemood\autoaim_task.o: ../Core/Inc/usart.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\autoaim_task.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ./ABModule/PID_Lib.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ./ABModule/Math_Lib.h
+basemood\autoaim_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
+basemood\autoaim_task.o: ./ABModule/CMDCenter.h
+basemood\autoaim_task.o: ./ABModule/Remote_Ctrl.h
+basemood\autoaim_task.o: ./AADrivers/bsp_SBUS.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ./AADrivers/VideoTx_uart.h
+basemood\autoaim_task.o: ./AADrivers/IMU/IMU_Get.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ./AADrivers/Dual_Board_Transmit_Data.h
+basemood\autoaim_task.o: ./ABModule/CMDCenter.h
+basemood\autoaim_task.o: ./ABModule/Buzzer/sound_effects_task.h
+basemood\autoaim_task.o: ./ABModule/Buzzer/buzzer_TIM_init.h
+basemood\autoaim_task.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
+basemood\autoaim_task.o: ./AADrivers/IMU/BMI088/struct_typedef.h
+basemood\autoaim_task.o: ./ABModule/MotorCtrl_DJI.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ./ABModule/MotorCtrl_ZDT.h
+basemood\autoaim_task.o: ./ABModule/ZDT/ZDT_X_V2.h
+basemood\autoaim_task.o: ./ABModule/ZDT/ZDT_Firmware.h
+basemood\autoaim_task.o: ./ABModule/ZDT/ZDT_CAN_Bsp.h
+basemood\autoaim_task.o: ./ACApplication/APP_Config.h
+basemood\autoaim_task.o: ./ACApplication/Auto/Auto_Config.h
+basemood\autoaim_task.o: ./ACApplication/Auto/AutoAim.h
+basemood\autoaim_task.o: ./AAA/A_MCommon.h
+basemood\autoaim_task.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
