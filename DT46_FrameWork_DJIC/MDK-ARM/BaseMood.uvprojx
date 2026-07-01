@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;.\ABModule\Referee</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1909,16 +1909,6 @@
               <FilePath>.\AADrivers\Dual_board_Transmit.h</FilePath>
             </File>
             <File>
-              <FileName>VideoTx_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\AADrivers\VideoTx_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>VideoTx_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\AADrivers\VideoTx_uart.h</FilePath>
-            </File>
-            <File>
               <FileName>Dual_Board_Transmit_Task.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\AADrivers\Dual_Board_Transmit_Task.c</FilePath>
@@ -2272,6 +2262,31 @@
               <FileName>RefereeCenter.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\Referee\RefereeCenter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ABModule/VT</GroupName>
+          <Files>
+            <File>
+              <FileName>VTCenter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\VT\VTCenter.c</FilePath>
+            </File>
+            <File>
+              <FileName>VTCenter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\VT\VTCenter.h</FilePath>
+            </File>
+            <File>
+              <FileName>VT03Protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\VT\VT03Protocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>VT03Protocol.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\VT\VT03Protocol.h</FilePath>
             </File>
           </Files>
         </Group>

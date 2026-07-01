@@ -71,7 +71,9 @@ basemood\main.o: ./ABModule/CMDCenter.h
 basemood\main.o: ./ABModule/Remote_Ctrl.h
 basemood\main.o: ./AADrivers/bsp_SBUS.h
 basemood\main.o: ./AAA/A_CommonSystem.h
-basemood\main.o: ./AADrivers/VideoTx_uart.h
+basemood\main.o: ./ABModule/VT/VTCenter.h
+basemood\main.o: ./ABModule/VT/VT03Protocol.h
+basemood\main.o: ./AAA/A_CommonSystem.h
 basemood\main.o: ./AADrivers/IMU/IMU_Get.h
 basemood\main.o: ./AAA/A_CommonSystem.h
 basemood\main.o: ./AADrivers/Dual_Board_Transmit_Data.h

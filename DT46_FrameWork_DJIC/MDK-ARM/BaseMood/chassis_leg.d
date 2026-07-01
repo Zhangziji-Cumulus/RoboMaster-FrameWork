@@ -65,7 +65,9 @@ basemood\chassis_leg.o: ./ABModule/CMDCenter.h
 basemood\chassis_leg.o: ./ABModule/Remote_Ctrl.h
 basemood\chassis_leg.o: ./AADrivers/bsp_SBUS.h
 basemood\chassis_leg.o: ./AAA/A_CommonSystem.h
-basemood\chassis_leg.o: ./AADrivers/VideoTx_uart.h
+basemood\chassis_leg.o: ./ABModule/VT/VTCenter.h
+basemood\chassis_leg.o: ./ABModule/VT/VT03Protocol.h
+basemood\chassis_leg.o: ./AAA/A_CommonSystem.h
 basemood\chassis_leg.o: ./AADrivers/IMU/IMU_Get.h
 basemood\chassis_leg.o: ./AAA/A_CommonSystem.h
 basemood\chassis_leg.o: ./AADrivers/Dual_Board_Transmit_Data.h

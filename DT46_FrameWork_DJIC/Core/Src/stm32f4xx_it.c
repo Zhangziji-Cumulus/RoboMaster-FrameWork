@@ -289,9 +289,13 @@ void TIM2_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
+	
+#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN && BOARD_ID == GIMBAL_BOARD)
+	
 	AutoAim_UART_IRQHandler();
+	
 #endif
+	
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
@@ -403,7 +407,17 @@ void DMA2_Stream7_IRQHandler(void)
 void USART6_IRQHandler(void)
 {
   /* USER CODE BEGIN USART6_IRQn 0 */
+	
+#if(BOARD_ID == GIMBAL_BOARD)
+	
+//  VT_UART_IRQHandler();
+	
+#elif(BOARD_ID == CHASSIS_BOARD)	
+
 	Referee_UART_IRQHandler();
+	
+#endif	
+	
   /* USER CODE END USART6_IRQn 0 */
   HAL_UART_IRQHandler(&huart6);
   /* USER CODE BEGIN USART6_IRQn 1 */

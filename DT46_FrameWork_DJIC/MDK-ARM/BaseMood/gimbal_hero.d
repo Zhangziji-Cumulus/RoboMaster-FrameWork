@@ -65,7 +65,9 @@ basemood\gimbal_hero.o: ./ABModule/CMDCenter.h
 basemood\gimbal_hero.o: ./ABModule/Remote_Ctrl.h
 basemood\gimbal_hero.o: ./AADrivers/bsp_SBUS.h
 basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
-basemood\gimbal_hero.o: ./AADrivers/VideoTx_uart.h
+basemood\gimbal_hero.o: ./ABModule/VT/VTCenter.h
+basemood\gimbal_hero.o: ./ABModule/VT/VT03Protocol.h
+basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
 basemood\gimbal_hero.o: ./AADrivers/IMU/IMU_Get.h
 basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
 basemood\gimbal_hero.o: ./AADrivers/Dual_Board_Transmit_Data.h

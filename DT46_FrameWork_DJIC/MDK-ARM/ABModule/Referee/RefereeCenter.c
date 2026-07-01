@@ -1,5 +1,7 @@
 #include "RefereeCenter.h"
 
+#if(BOARD_ID == CHASSIS_BOARD)	
+
 /* 外部串口句柄声明，对应CubeMX生成的huart6 */
 extern UART_HandleTypeDef REFEREE_UART;
 
@@ -218,3 +220,5 @@ __attribute__((used)) void RefereeTask(void *argument)
         osDelay(1);
     }
 }
+
+#endif

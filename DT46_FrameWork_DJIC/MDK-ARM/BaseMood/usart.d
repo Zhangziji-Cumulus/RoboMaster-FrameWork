@@ -36,3 +36,21 @@ basemood\usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+basemood\usart.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\usart.o: ./AAA/A_CommonSystem.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h
+basemood\usart.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\usart.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+basemood\usart.o: ../Core/Inc/can.h
+basemood\usart.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\usart.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+basemood\usart.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\usart.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h

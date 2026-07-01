@@ -5,6 +5,7 @@
 #include "stdint.h"
 #include "stdbool.h"
 #include "RefereeProtocol.h"
+#include "Dual_Board_Transmit.h"
 
 /************************ 硬件配置宏 ************************/
 #define REFEREE_UART        huart6      // 裁判系统绑定串口

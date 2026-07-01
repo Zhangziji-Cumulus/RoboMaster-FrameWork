@@ -56,10 +56,12 @@ basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\mat
 basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
-basemood\cmdcenter.o: ./AADrivers/VideoTx_uart.h
-basemood\cmdcenter.o: ./AADrivers/IMU/IMU_Get.h
+basemood\cmdcenter.o: ./ABModule/VT/VTCenter.h
+basemood\cmdcenter.o: ./ABModule/VT/VT03Protocol.h
 basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
 basemood\cmdcenter.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
+basemood\cmdcenter.o: ./AADrivers/IMU/IMU_Get.h
 basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
 basemood\cmdcenter.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\cmdcenter.o: ./ABModule/CMDCenter.h

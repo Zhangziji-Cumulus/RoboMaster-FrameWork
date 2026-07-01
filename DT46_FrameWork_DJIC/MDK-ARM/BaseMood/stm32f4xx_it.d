@@ -65,7 +65,9 @@ basemood\stm32f4xx_it.o: ./ABModule/CMDCenter.h
 basemood\stm32f4xx_it.o: ./ABModule/Remote_Ctrl.h
 basemood\stm32f4xx_it.o: ./AADrivers/bsp_SBUS.h
 basemood\stm32f4xx_it.o: ./AAA/A_CommonSystem.h
-basemood\stm32f4xx_it.o: ./AADrivers/VideoTx_uart.h
+basemood\stm32f4xx_it.o: ./ABModule/VT/VTCenter.h
+basemood\stm32f4xx_it.o: ./ABModule/VT/VT03Protocol.h
+basemood\stm32f4xx_it.o: ./AAA/A_CommonSystem.h
 basemood\stm32f4xx_it.o: ./AADrivers/IMU/IMU_Get.h
 basemood\stm32f4xx_it.o: ./AAA/A_CommonSystem.h
 basemood\stm32f4xx_it.o: ./AADrivers/Dual_Board_Transmit_Data.h
@@ -85,6 +87,6 @@ basemood\stm32f4xx_it.o: ./ACApplication/Auto/Auto_Config.h
 basemood\stm32f4xx_it.o: ./ACApplication/Auto/AutoAim.h
 basemood\stm32f4xx_it.o: ./AAA/A_MCommon.h
 basemood\stm32f4xx_it.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
-basemood\stm32f4xx_it.o: .\ABModule\Referee\RefereeCenter.h
+basemood\stm32f4xx_it.o: ./ABModule/Referee/RefereeCenter.h
 basemood\stm32f4xx_it.o: ./AAA/A_CommonSystem.h
-basemood\stm32f4xx_it.o: .\ABModule\Referee\RefereeProtocol.h
+basemood\stm32f4xx_it.o: ./ABModule/Referee/RefereeProtocol.h

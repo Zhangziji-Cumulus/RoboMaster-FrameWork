@@ -67,7 +67,9 @@ basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
 basemood\motorctrl_dji.o: ./ABModule/ZDT/ZDT_CAN_Bsp.h
 basemood\motorctrl_dji.o: ./ABModule/CMDCenter.h
 basemood\motorctrl_dji.o: ./ABModule/Remote_Ctrl.h
-basemood\motorctrl_dji.o: ./AADrivers/VideoTx_uart.h
+basemood\motorctrl_dji.o: ./ABModule/VT/VTCenter.h
+basemood\motorctrl_dji.o: ./ABModule/VT/VT03Protocol.h
+basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
 basemood\motorctrl_dji.o: ./AADrivers/IMU/IMU_Get.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
 basemood\motorctrl_dji.o: ./AADrivers/Dual_Board_Transmit_Data.h

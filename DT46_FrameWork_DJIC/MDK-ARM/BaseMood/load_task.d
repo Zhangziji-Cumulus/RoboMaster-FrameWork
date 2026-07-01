@@ -65,7 +65,9 @@ basemood\load_task.o: ./ABModule/CMDCenter.h
 basemood\load_task.o: ./ABModule/Remote_Ctrl.h
 basemood\load_task.o: ./AADrivers/bsp_SBUS.h
 basemood\load_task.o: ./AAA/A_CommonSystem.h
-basemood\load_task.o: ./AADrivers/VideoTx_uart.h
+basemood\load_task.o: ./ABModule/VT/VTCenter.h
+basemood\load_task.o: ./ABModule/VT/VT03Protocol.h
+basemood\load_task.o: ./AAA/A_CommonSystem.h
 basemood\load_task.o: ./AADrivers/IMU/IMU_Get.h
 basemood\load_task.o: ./AAA/A_CommonSystem.h
 basemood\load_task.o: ./AADrivers/Dual_Board_Transmit_Data.h

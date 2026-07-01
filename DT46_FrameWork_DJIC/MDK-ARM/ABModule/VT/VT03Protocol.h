@@ -1,13 +1,13 @@
-#ifndef __VIDEOTX_UAR_H__
-#define __VIDEOTX_UAR_H__
+#ifndef __VT03_H__
+#define __VT03_H__
 
 #include "main.h"
 
 #include <stdint.h>
+#include <stdbool.h>
 
 // 串口接收缓冲区大小（单帧21字节，定义32字节避免溢出）
 #define RC_FRAME_SIZE 21
-#define RC_BUFFER_SIZE 32
 
 //宏定义接收到的数据范围
 
@@ -20,6 +20,45 @@
 #define VTX_MOUSE_VELMIN -32768
 #define VTX_MOUSE_STOP 0
 #define VTX_MOUSE_MAX 32767
+
+/*
+ * @brief 图传遥控器原始帧打包结构体（直接映射21字节接收缓冲）
+ * @note  __packed 确保无填充对齐，位域顺序匹配小端协议
+ *        帧结构：帧头(2B) + 通道/按键(8B) + 鼠标(6B) + 鼠标按键(1B) + 键盘(2B) + CRC16(2B) = 21B
+ */
+typedef __packed struct
+{
+    /* 帧头 */
+    uint8_t sof_1;         // 0xA9
+    uint8_t sof_2;         // 0x53
+
+    /* 摇杆 + 开关 + 拨轮（紧凑位域，共61bit，填满8字节） */
+    uint64_t ch_0     : 11;
+    uint64_t ch_1     : 11;
+    uint64_t ch_2     : 11;
+    uint64_t ch_3     : 11;
+    uint64_t mode_sw  :  2;
+    uint64_t pause    :  1;
+    uint64_t fn_1     :  1;
+    uint64_t fn_2     :  1;
+    uint64_t wheel    : 11;
+    uint64_t trigger  :  1;
+
+    /* 鼠标位移 */
+    int16_t mouse_x;
+    int16_t mouse_y;
+    int16_t mouse_z;
+
+    /* 鼠标按键（各2bit，低有效位 = 按键状态） */
+    uint8_t mouse_left   : 2;
+    uint8_t mouse_right  : 2;
+    uint8_t mouse_middle : 2;
+
+    /* 键盘位图 + CRC */
+    uint16_t key;
+    uint16_t crc16;
+
+} remote_data_t;
 
 // 遥控器解析后的完整数据
 typedef struct
@@ -79,6 +118,10 @@ typedef struct
 
 } VideoTx_Ctrl_t;
 
-const VideoTx_Ctrl_t* get_VideoTx_Ctl_point(void);
+void VT_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data);
 
-#endif /* __VIDEO_TX_UAR_H__ */
+bool verify_crc16_check_sum(uint8_t *p_msg, uint16_t len);
+
+const VideoTx_Ctrl_t* get_VideoTx_Ctl_point();
+
+#endif /* __VT03_H__ */

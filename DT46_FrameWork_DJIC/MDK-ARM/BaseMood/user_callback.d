@@ -63,10 +63,12 @@ basemood\user_callback.o: ABModule\CMDCenter.h
 basemood\user_callback.o: ABModule\Remote_Ctrl.h
 basemood\user_callback.o: ./AADrivers/bsp_SBUS.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
-basemood\user_callback.o: ./AADrivers/VideoTx_uart.h
-basemood\user_callback.o: ./AADrivers/IMU/IMU_Get.h
+basemood\user_callback.o: ./ABModule/VT/VTCenter.h
+basemood\user_callback.o: ./ABModule/VT/VT03Protocol.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
 basemood\user_callback.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\user_callback.o: ./AAA/A_CommonSystem.h
+basemood\user_callback.o: ./AADrivers/IMU/IMU_Get.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
 basemood\user_callback.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\user_callback.o: ./ABModule/CMDCenter.h

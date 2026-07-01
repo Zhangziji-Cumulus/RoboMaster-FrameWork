@@ -65,7 +65,9 @@ basemood\autoaim_task.o: ./ABModule/CMDCenter.h
 basemood\autoaim_task.o: ./ABModule/Remote_Ctrl.h
 basemood\autoaim_task.o: ./AADrivers/bsp_SBUS.h
 basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
-basemood\autoaim_task.o: ./AADrivers/VideoTx_uart.h
+basemood\autoaim_task.o: ./ABModule/VT/VTCenter.h
+basemood\autoaim_task.o: ./ABModule/VT/VT03Protocol.h
+basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
 basemood\autoaim_task.o: ./AADrivers/IMU/IMU_Get.h
 basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
 basemood\autoaim_task.o: ./AADrivers/Dual_Board_Transmit_Data.h

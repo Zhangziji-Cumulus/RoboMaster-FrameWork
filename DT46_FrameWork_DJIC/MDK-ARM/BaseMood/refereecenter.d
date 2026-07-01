@@ -55,3 +55,5 @@ basemood\refereecenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include
 basemood\refereecenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\refereecenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\refereecenter.o: ABModule\Referee\RefereeProtocol.h
+basemood\refereecenter.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\refereecenter.o: ./AAA/A_CommonSystem.h

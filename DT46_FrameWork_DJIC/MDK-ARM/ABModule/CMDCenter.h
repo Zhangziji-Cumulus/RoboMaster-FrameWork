@@ -6,7 +6,7 @@
 #include "cmsis_os.h"
 /* user includes */
 #include "Remote_Ctrl.h"
-#include "VideoTx_uart.h"
+#include "VTCenter.h"
 #include "IMU_Get.h"
 #include "Dual_Board_Transmit.h"
 
