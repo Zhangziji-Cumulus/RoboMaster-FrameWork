@@ -71,7 +71,7 @@ bool verify_crc16_check_sum(uint8_t *p_msg, uint16_t len)
  */
 void VT_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data)
 {
-    rc_data->is_valid = 0;
+    rc_data->crc_ok = 0;
 
     /* 1. 帧头校验 */
     if (raw_frame[0] != 0xA9 || raw_frame[1] != 0x53) return;
@@ -80,7 +80,7 @@ void VT_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data)
     if (!verify_crc16_check_sum((uint8_t *)raw_frame, RC_FRAME_SIZE)) return;
 
     /* ----- 校验通过，开始手动提取位域数据 ----- */
-    rc_data->is_valid = 1;
+    rc_data->crc_ok = 1;
 
     // 提取 Byte 2 ~ Byte 9 的 61-bit 紧凑数据
     // 注意：STM32 是小端机，内存中低字节在前

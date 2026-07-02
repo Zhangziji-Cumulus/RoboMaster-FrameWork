@@ -373,6 +373,15 @@ void StartDefaultTask(void *argument)
 */
 /* USER CODE END Header_INS_task */
 
+/* USER CODE BEGIN Header_buzzer_effects_task */
+/**
+* @brief Function implementing the buzr thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_buzzer_effects_task */
+
+
 /* USER CODE BEGIN Header_DualBoardTask */
 /**
 * @brief Function implementing the DualBoard thread.

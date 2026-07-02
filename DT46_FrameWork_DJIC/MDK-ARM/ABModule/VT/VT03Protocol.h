@@ -114,7 +114,8 @@ typedef struct
         } bit;
     } keyboard;
 
-    uint8_t is_valid;  // 数据是否有效（CRC校验通过）
+    uint8_t crc_ok; // 数据是否有效（CRC校验通过）
+    uint8_t is_valid;
 
 } VideoTx_Ctrl_t;
 

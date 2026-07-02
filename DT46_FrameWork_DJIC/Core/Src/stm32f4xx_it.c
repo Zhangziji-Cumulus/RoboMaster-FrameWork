@@ -411,6 +411,7 @@ void USART6_IRQHandler(void)
 #if(BOARD_ID == GIMBAL_BOARD)
 	
 //  VT_UART_IRQHandler();
+	VT03_UART_IRQHandler();
 	
 #elif(BOARD_ID == CHASSIS_BOARD)	
 

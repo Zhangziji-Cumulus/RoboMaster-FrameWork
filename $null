@@ -1,1 +1,2 @@
-fatal: ref refs/remotes/origin/HEAD is not a symbolic ref
+'git' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。

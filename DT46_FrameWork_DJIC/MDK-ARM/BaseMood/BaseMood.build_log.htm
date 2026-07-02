@@ -22,28 +22,31 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\A_Code_GitHub\RoboMaster-FrameWork\DT46_FrameWork_DJIC\MDK-ARM\BaseMood.uvprojx
-Project File Date:  07/01/2026
+Project File Date:  07/02/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
 compiling VTCenter.c...
-ABModule\VT\VT03Protocol.h(125): warning:  #1295-D: Deprecated declaration get_VideoTx_Ctl_point - give arg types
+ABModule\VT\VT03Protocol.h(126): warning:  #1295-D: Deprecated declaration get_VideoTx_Ctl_point - give arg types
   const VideoTx_Ctrl_t* get_VideoTx_Ctl_point();
-ABModule\VT\VTCenter.h(10): warning:  #1-D: last line of file ends without a newline
+ABModule\VT\VTCenter.h(11): warning:  #47-D: incompatible redefinition of macro "RC_FRAME_SIZE"  (declared at line 10 of "ABModule\VT\VT03Protocol.h")
+  #define RC_FRAME_SIZE        21U    // 单帧总长�?
+ABModule\VT\VTCenter.h(44): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_H_
-ABModule\VT\VTCenter.c(45): warning:  #177-D: variable "temp_raw"  was declared but never referenced
-      uint8_t temp_raw[RC_FRAME_SIZE];
-ABModule\VT\VTCenter.c(55): warning:  #1-D: last line of file ends without a newline
+ABModule\VT\VTCenter.c(255): warning:  #1182-D: a declaration cannot have a label
+              static uint32_t lastAutoReset = 0;
+ABModule\VT\VTCenter.c(332): warning:  #1-D: last line of file ends without a newline
   #endif /* BOARD_ID == GIMBAL_BOARD */
-ABModule\VT\VTCenter.c(40): warning:  #550-D: variable "remain_VTTask"  was set but never used
+ABModule\VT\VTCenter.c(67): warning:  #550-D: variable "reconnectTick"  was set but never used
+  static uint32_t reconnectTick;
+ABModule\VT\VTCenter.c(316): warning:  #550-D: variable "remain_VTTask"  was set but never used
   static UBaseType_t remain_VTTask;
-ABModule\VT\VTCenter.c: 5 warnings, 0 errors
-compiling usart.c...
+ABModule\VT\VTCenter.c: 7 warnings, 0 errors
 linking...
-Program Size: Code=54376 RO-data=2056 RW-data=576 ZI-data=35384  
+Program Size: Code=54840 RO-data=2056 RW-data=600 ZI-data=35424  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 5 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -67,7 +70,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
