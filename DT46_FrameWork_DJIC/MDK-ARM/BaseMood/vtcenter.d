@@ -1,5 +1,6 @@
 basemood\vtcenter.o: ABModule\VT\VTCenter.c
 basemood\vtcenter.o: ABModule\VT\VTCenter.h
+basemood\vtcenter.o: ABModule\VT\VTCenter_Instance.h
 basemood\vtcenter.o: ABModule\VT\VT03Protocol.h
 basemood\vtcenter.o: ../Core/Inc/main.h
 basemood\vtcenter.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
@@ -55,8 +56,6 @@ basemood\vtcenter.o: ../Core/Inc/usart.h
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
-basemood\vtcenter.o: ./AADrivers/Dual_Board_Transmit.h
-basemood\vtcenter.o: ./AAA/A_CommonSystem.h
 basemood\vtcenter.o: ./ABModule/Buzzer/sound_effects_task.h
 basemood\vtcenter.o: ./ABModule/Buzzer/buzzer_TIM_init.h
 basemood\vtcenter.o: ./ABModule/Buzzer/bsp_buzzer_driver.h

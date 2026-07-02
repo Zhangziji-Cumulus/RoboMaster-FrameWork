@@ -57,15 +57,12 @@ basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\std
 basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\cmdcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\cmdcenter.o: ./ABModule/VT/VTCenter.h
+basemood\cmdcenter.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\cmdcenter.o: ./ABModule/VT/VT03Protocol.h
 basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
-basemood\cmdcenter.o: ./AADrivers/Dual_Board_Transmit.h
-basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
-basemood\cmdcenter.o: ./ABModule/Buzzer/sound_effects_task.h
-basemood\cmdcenter.o: ./ABModule/Buzzer/buzzer_TIM_init.h
-basemood\cmdcenter.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
-basemood\cmdcenter.o: ./AADrivers/IMU/BMI088/struct_typedef.h
 basemood\cmdcenter.o: ./AADrivers/IMU/IMU_Get.h
+basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
+basemood\cmdcenter.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\cmdcenter.o: ./AAA/A_CommonSystem.h
 basemood\cmdcenter.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\cmdcenter.o: ./ABModule/CMDCenter.h

@@ -2288,6 +2288,16 @@
               <FileType>5</FileType>
               <FilePath>.\ABModule\VT\VT03Protocol.h</FilePath>
             </File>
+            <File>
+              <FileName>VTCenter_Instance.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\VT\VTCenter_Instance.c</FilePath>
+            </File>
+            <File>
+              <FileName>VTCenter_Instance.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\VT\VTCenter_Instance.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

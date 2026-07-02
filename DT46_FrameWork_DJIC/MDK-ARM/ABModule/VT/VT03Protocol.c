@@ -1,7 +1,5 @@
 #include "VT03Protocol.h"
 
-#include "VT03Protocol.h"
-#include <string.h>
 
 /* ======================== CRC16 查表实现 ======================== */
 static const uint16_t crc16_tab[256] = {
@@ -67,59 +65,11 @@ bool verify_crc16_check_sum(uint8_t *p_msg, uint16_t len)
 }
 
 /**
- * @brief 解析单帧21字节的遥控器数据（纯位移操作，绝对安全）
- */
-void VT03_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data)
-{
-    rc_data->crc_ok = 0;
-
-    /* 1. 帧头校验 */
-    if (raw_frame[0] != 0xA9 || raw_frame[1] != 0x53) return;
-
-    /* 2. CRC校验 */
-    if (!verify_crc16_check_sum((uint8_t *)raw_frame, RC_FRAME_SIZE)) return;
-
-    /* ----- 校验通过，开始手动提取位域数据 ----- */
-    rc_data->crc_ok = 1;
-
-    // 提取 Byte 2 ~ Byte 9 的 61-bit 紧凑数据
-    // 注意：STM32 是小端机，内存中低字节在前
-    uint64_t packed_data = 0;
-    for (int i = 0; i < 8; i++) {
-        packed_data |= ((uint64_t)raw_frame[2 + i]) << (i * 8);
-    }
-
-    rc_data->ch0          = (packed_data >> 0)  & 0x7FF;  // 11 bits
-    rc_data->ch1          = (packed_data >> 11) & 0x7FF;  // 11 bits
-    rc_data->ch2          = (packed_data >> 22) & 0x7FF;  // 11 bits
-    rc_data->ch3          = (packed_data >> 33) & 0x7FF;  // 11 bits
-    rc_data->sw           = (packed_data >> 44) & 0x03;   // 2 bits
-    rc_data->pause_btn    = (packed_data >> 46) & 0x01;   // 1 bit
-    rc_data->custom_left  = (packed_data >> 47) & 0x01;   // 1 bit
-    rc_data->custom_right = (packed_data >> 48) & 0x01;   // 1 bit
-    rc_data->dial         = (packed_data >> 49) & 0x7FF;  // 11 bits
-    rc_data->trigger      = (packed_data >> 60) & 0x01;   // 1 bit
-
-    /* 提取鼠标位移 (Byte 10~15, 小端序 int16_t) */
-    rc_data->mouse_x = (int16_t)((raw_frame[11] << 8) | raw_frame[10]);
-    rc_data->mouse_y = (int16_t)((raw_frame[13] << 8) | raw_frame[12]);
-    rc_data->mouse_z = (int16_t)((raw_frame[15] << 8) | raw_frame[14]);
-
-    /* 提取鼠标按键 (Byte 16) */
-    rc_data->mouse_left  = raw_frame[16] & 0x01;
-    rc_data->mouse_right = (raw_frame[16] >> 2) & 0x01;
-    rc_data->mouse_mid   = (raw_frame[16] >> 4) & 0x01;
-
-    /* 提取键盘位图 (Byte 17~18, 小端序 uint16_t) */
-    rc_data->keyboard.value = (raw_frame[18] << 8) | raw_frame[17];
-}
-
-/**
  * @brief 检测 WASD / shift / ctrl / q e r f g z x c v b 按键，按下则蜂鸣器赋值 B_
  * @param buzzer 蜂鸣器对象指针
  * @param rc_data VT03解析数据只读指针
  */
-uint8_t VT03_KeyTest(const VideoTx_Ctrl_t *rc_data)
+uint8_t VT03_KeyTest(const VT03_Data_t *rc_data)
 {
     // 数据无效直接返回，不触发蜂鸣
     if (rc_data->is_valid == 0)
@@ -152,20 +102,28 @@ uint8_t VT03_KeyTest(const VideoTx_Ctrl_t *rc_data)
 }
 
 /**
- * @brief 检测 WASD / shift / ctrl / q e r f g z x c v b 按键，按下则蜂鸣器赋值 B_
- * @param buzzer 蜂鸣器对象指针
+ * @brief 检测鼠标是否有移动或任意按键按下
  * @param rc_data VT03解析数据只读指针
+ * @return 1=鼠标有动作，0=鼠标无动作或数据无效
  */
-uint8_t VT03_MouseTest(const VideoTx_Ctrl_t *rc_data)
+uint8_t VT03_MouseTest(const VT03_Data_t *rc_data)
 {
+    // 数据无效直接返回
+    if (rc_data->is_valid == 0)
+        return 0;
 
-}
+    // 检测鼠标移动（x/y/z 任一非零）或鼠标按键按下（值为1）
+    if (rc_data->mouse_x != 0 ||
+        rc_data->mouse_y != 0 ||
+        rc_data->mouse_z != 0 ||
+        rc_data->mouse_left  == 1 ||
+        rc_data->mouse_right == 1 ||
+        rc_data->mouse_mid   == 1)
+    {
+        return 1;
+    }
 
-VideoTx_Ctrl_t VTData;
-
-const VideoTx_Ctrl_t* get_VideoTx_Ctl_point(void)
-{
-    return &VTData;
+    return 0;
 }
 
 //==================== VT03 解析回调 ====================
@@ -210,6 +168,6 @@ uint8_t VT03_ParseCallback(const uint8_t *raw_frame, void *out_data)
     data->mouse_mid   = (raw_frame[16] >> 4) & 0x01;
 
     data->keyboard.value = (raw_frame[18] << 8) | raw_frame[17];
-    
+
     return 1;
 }

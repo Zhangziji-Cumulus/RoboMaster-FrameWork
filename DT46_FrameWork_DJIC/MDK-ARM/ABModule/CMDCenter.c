@@ -33,13 +33,13 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
   for(;;)
   {
     const RC_Ctl_t* RC_Ctl = get_RC_Ctl_point();
-    const VideoTx_Ctrl_t *VideoTx_Data = get_VideoTx_Ctl_point();
+    const VT03_Data_t *VT_Ctr = get_VT03_Ctl_point();
 
     //判断有没有正确接受到数据、数据是否正常；不正常则设置为“停止模式”
-    if(VideoTx_Data->is_valid == 1 || RC_Ctl->is_valid == 1)
+    if(VT_Ctr->is_valid == 1 || RC_Ctl->is_valid == 1)
     {
       //更新控制模式
-      if (VideoTx_Data->is_valid == 1)
+      if (VT_Ctr->is_valid == 1)
       {
         CMD.ctrl = KEYBOARD_MODE;
       }
@@ -126,12 +126,12 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
       //键盘控制
       else if(CMD.ctrl == KEYBOARD_MODE)
       {
-        CMD.Chassis.FB = VideoTx_Data->ch2  - VTX_CHANNEL_MID;
-        CMD.Chassis.LR = VideoTx_Data->ch3  - VTX_CHANNEL_MID;
-        CMD.Chassis.RO = VideoTx_Data->ch0  - VTX_CHANNEL_MID;
+        CMD.Chassis.FB = VT_Ctr->ch2  - VTX_CHANNEL_MID;
+        CMD.Chassis.LR = VT_Ctr->ch3  - VTX_CHANNEL_MID;
+        CMD.Chassis.RO = VT_Ctr->ch0  - VTX_CHANNEL_MID;
 
-        CMD.Gimbal.Yaw = VideoTx_Data->ch0    -  VTX_CHANNEL_MID; 
-        CMD.Gimbal.Pitch = VideoTx_Data->ch1  -  VTX_CHANNEL_MID;
+        CMD.Gimbal.Yaw = VT_Ctr->ch0    -  VTX_CHANNEL_MID; 
+        CMD.Gimbal.Pitch = VT_Ctr->ch1  -  VTX_CHANNEL_MID;
       }
     }
     else

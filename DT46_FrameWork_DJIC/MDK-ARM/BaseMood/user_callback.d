@@ -64,15 +64,12 @@ basemood\user_callback.o: ABModule\Remote_Ctrl.h
 basemood\user_callback.o: ./AADrivers/bsp_SBUS.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
 basemood\user_callback.o: ./ABModule/VT/VTCenter.h
+basemood\user_callback.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\user_callback.o: ./ABModule/VT/VT03Protocol.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
-basemood\user_callback.o: ./AADrivers/Dual_Board_Transmit.h
-basemood\user_callback.o: ./AAA/A_CommonSystem.h
-basemood\user_callback.o: ./ABModule/Buzzer/sound_effects_task.h
-basemood\user_callback.o: ./ABModule/Buzzer/buzzer_TIM_init.h
-basemood\user_callback.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
-basemood\user_callback.o: ./AADrivers/IMU/BMI088/struct_typedef.h
 basemood\user_callback.o: ./AADrivers/IMU/IMU_Get.h
+basemood\user_callback.o: ./AAA/A_CommonSystem.h
+basemood\user_callback.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
 basemood\user_callback.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\user_callback.o: ./ABModule/CMDCenter.h
@@ -82,6 +79,10 @@ basemood\user_callback.o: ./AAA/A_MCommon.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
 basemood\user_callback.o: ./ABModule/Math_Lib.h
 basemood\user_callback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
+basemood\user_callback.o: ./ABModule/Buzzer/sound_effects_task.h
+basemood\user_callback.o: ./ABModule/Buzzer/buzzer_TIM_init.h
+basemood\user_callback.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
+basemood\user_callback.o: ./AADrivers/IMU/BMI088/struct_typedef.h
 basemood\user_callback.o: ./ABModule/MotorCtrl_ZDT.h
 basemood\user_callback.o: ./ABModule/ZDT/ZDT_X_V2.h
 basemood\user_callback.o: ./ABModule/ZDT/ZDT_Firmware.h
