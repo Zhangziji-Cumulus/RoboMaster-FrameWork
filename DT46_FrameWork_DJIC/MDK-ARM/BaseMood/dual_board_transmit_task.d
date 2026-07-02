@@ -62,6 +62,10 @@ basemood\dual_board_transmit_task.o: ./AAA/A_CommonSystem.h
 basemood\dual_board_transmit_task.o: ./ABModule/VT/VTCenter.h
 basemood\dual_board_transmit_task.o: ./ABModule/VT/VT03Protocol.h
 basemood\dual_board_transmit_task.o: ./AAA/A_CommonSystem.h
+basemood\dual_board_transmit_task.o: ./ABModule/Buzzer/sound_effects_task.h
+basemood\dual_board_transmit_task.o: ./ABModule/Buzzer/buzzer_TIM_init.h
+basemood\dual_board_transmit_task.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
+basemood\dual_board_transmit_task.o: ./AADrivers/IMU/BMI088/struct_typedef.h
 basemood\dual_board_transmit_task.o: ./AADrivers/IMU/IMU_Get.h
 basemood\dual_board_transmit_task.o: ./AAA/A_CommonSystem.h
 basemood\dual_board_transmit_task.o: ./AADrivers/Dual_Board_Transmit_Data.h

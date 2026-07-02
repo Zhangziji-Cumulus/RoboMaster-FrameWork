@@ -70,6 +70,10 @@ basemood\motorctrl_dji.o: ./ABModule/Remote_Ctrl.h
 basemood\motorctrl_dji.o: ./ABModule/VT/VTCenter.h
 basemood\motorctrl_dji.o: ./ABModule/VT/VT03Protocol.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
+basemood\motorctrl_dji.o: ./ABModule/Buzzer/sound_effects_task.h
+basemood\motorctrl_dji.o: ./ABModule/Buzzer/buzzer_TIM_init.h
+basemood\motorctrl_dji.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
+basemood\motorctrl_dji.o: ./AADrivers/IMU/BMI088/struct_typedef.h
 basemood\motorctrl_dji.o: ./AADrivers/IMU/IMU_Get.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
 basemood\motorctrl_dji.o: ./AADrivers/Dual_Board_Transmit_Data.h
@@ -79,10 +83,6 @@ basemood\motorctrl_dji.o: ./AAA/A_MCommon.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
 basemood\motorctrl_dji.o: ./ABModule/Math_Lib.h
 basemood\motorctrl_dji.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
-basemood\motorctrl_dji.o: ./ABModule/Buzzer/sound_effects_task.h
-basemood\motorctrl_dji.o: ./ABModule/Buzzer/buzzer_TIM_init.h
-basemood\motorctrl_dji.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
-basemood\motorctrl_dji.o: ./AADrivers/IMU/BMI088/struct_typedef.h
 basemood\motorctrl_dji.o: ./ABModule/MotorCtrl_ZDT.h
 basemood\motorctrl_dji.o: ./ABModule/ZDT/ZDT_X_V2.h
 basemood\motorctrl_dji.o: ./ABModule/ZDT/ZDT_Firmware.h

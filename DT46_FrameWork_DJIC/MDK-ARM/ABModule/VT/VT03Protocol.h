@@ -119,10 +119,79 @@ typedef struct
 
 } VideoTx_Ctrl_t;
 
-void VT_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data);
+// 遥控器解析后的完整数据
+typedef struct
+{
+    // 摇杆通道（原始值：364~1684，中间值1024）
+    uint16_t ch0;   // 右摇杆水平
+    uint16_t ch1;   // 右摇杆竖直
+    uint16_t ch2;   // 左摇杆竖直
+    uint16_t ch3;   // 左摇杆水平
+    uint16_t dial;  // 拨轮
+    
+    // 开关/按键
+    uint8_t sw;         // 挡位开关 0:C,1:N,2:S
+    uint8_t pause_btn;  // 暂停键 未按下为0，按下为1
+    uint8_t custom_left;// 自定义左键 未按下为0，按下为1
+    uint8_t custom_right;// 自定义右键 未按下为0，按下为1
+    uint8_t trigger;    // 扳机键，未按下为0，按下为1
+    
+    // 鼠标数据（有符号16位）
+    //最小值-32768，最大值32767，未移动为0
+    int16_t mouse_x;//鼠标左右移动的速度，负为左移动
+    int16_t mouse_y;//鼠标前后移动的速度，负为向后移动
+    int16_t mouse_z;//鼠标滚轮的滚动速度，负值为向后滚动
+    
+    // 鼠标按键，最小值0，最大值1，未按下为1，按下为0
+    uint8_t mouse_left;
+    uint8_t mouse_right;
+    uint8_t mouse_mid;
+    
+    // 键盘按键（16位位图）
+    //最小值0，最大值65545，每个位代表一个键是否按下，1表示按下，0表示未按下
+    union
+    {
+        uint16_t value;
+        struct
+        {
+            uint16_t w      : 1;
+            uint16_t s      : 1;
+            uint16_t a      : 1;
+            uint16_t d      : 1;
+            uint16_t shift  : 1;
+            uint16_t ctrl   : 1;
+            uint16_t q      : 1;
+            uint16_t e      : 1;
+            uint16_t r      : 1;
+            uint16_t f      : 1;
+            uint16_t g      : 1;
+            uint16_t z      : 1;
+            uint16_t x      : 1;
+            uint16_t c      : 1;
+            uint16_t v      : 1;
+            uint16_t b      : 1;
+        } bit;
+    } keyboard;
 
+    uint8_t crc_ok; // 数据是否有效（CRC校验通过）
+    uint8_t is_valid;
+
+}VT03_Data_t;
+
+//解析图传数据
+void VT03_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data);
+//解析图传数据回调函数
+uint8_t VT03_ParseCallback(const uint8_t *raw_frame, void *out_data);
+
+//CRC校验
 bool verify_crc16_check_sum(uint8_t *p_msg, uint16_t len);
+
+//测试键盘值，返回 0 / 1
+uint8_t VT03_KeyTest(const VideoTx_Ctrl_t *rc_data);
 
 const VideoTx_Ctrl_t* get_VideoTx_Ctl_point();
 
-#endif /* __VT03_H__ */
+#endif 
+
+/* __VT03_H__ */
+

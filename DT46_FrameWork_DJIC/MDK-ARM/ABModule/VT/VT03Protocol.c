@@ -69,7 +69,7 @@ bool verify_crc16_check_sum(uint8_t *p_msg, uint16_t len)
 /**
  * @brief 解析单帧21字节的遥控器数据（纯位移操作，绝对安全）
  */
-void VT_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data)
+void VT03_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data)
 {
     rc_data->crc_ok = 0;
 
@@ -114,9 +114,102 @@ void VT_ParseFrame(const uint8_t *raw_frame, VideoTx_Ctrl_t *rc_data)
     rc_data->keyboard.value = (raw_frame[18] << 8) | raw_frame[17];
 }
 
+/**
+ * @brief 检测 WASD / shift / ctrl / q e r f g z x c v b 按键，按下则蜂鸣器赋值 B_
+ * @param buzzer 蜂鸣器对象指针
+ * @param rc_data VT03解析数据只读指针
+ */
+uint8_t VT03_KeyTest(const VideoTx_Ctrl_t *rc_data)
+{
+    // 数据无效直接返回，不触发蜂鸣
+    if (rc_data->is_valid == 0)
+        return 0;
+
+    uint8_t key_trigger = 0;
+
+    // 你指定的全部按键
+    if (rc_data->keyboard.bit.w     ||
+        rc_data->keyboard.bit.s     ||
+        rc_data->keyboard.bit.a     ||
+        rc_data->keyboard.bit.d     ||
+        rc_data->keyboard.bit.shift ||
+        rc_data->keyboard.bit.ctrl  ||
+        rc_data->keyboard.bit.q     ||
+        rc_data->keyboard.bit.e     ||
+        rc_data->keyboard.bit.r     ||
+        rc_data->keyboard.bit.f     ||
+        rc_data->keyboard.bit.g     ||
+        rc_data->keyboard.bit.z     ||
+        rc_data->keyboard.bit.x     ||
+        rc_data->keyboard.bit.c     ||
+        rc_data->keyboard.bit.v     ||
+        rc_data->keyboard.bit.b)
+    {
+        key_trigger = 1;
+    }
+
+    return key_trigger;
+}
+
+/**
+ * @brief 检测 WASD / shift / ctrl / q e r f g z x c v b 按键，按下则蜂鸣器赋值 B_
+ * @param buzzer 蜂鸣器对象指针
+ * @param rc_data VT03解析数据只读指针
+ */
+uint8_t VT03_MouseTest(const VideoTx_Ctrl_t *rc_data)
+{
+
+}
+
 VideoTx_Ctrl_t VTData;
 
 const VideoTx_Ctrl_t* get_VideoTx_Ctl_point(void)
 {
     return &VTData;
+}
+
+//==================== VT03 解析回调 ====================
+uint8_t VT03_ParseCallback(const uint8_t *raw_frame, void *out_data)
+{
+    VT03_Data_t  *data = (VT03_Data_t  *)out_data;
+    data->crc_ok = 0;
+    // is_valid 由 VT_UpdateValidFlag 统一管理（含防抖），回调中不清零
+
+    // 帧头校验
+    if (raw_frame[0] != 0xA9 || raw_frame[1] != 0x53)
+        return 0;
+    // CRC校验
+    if (!verify_crc16_check_sum((uint8_t *)raw_frame, 21))
+        return 0;
+
+    data->crc_ok = 1;
+    // 下方复制你完整的位域、鼠标、通道解析代码
+    uint64_t packed_data = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        packed_data |= ((uint64_t)raw_frame[2 + i]) << (i * 8);
+    }
+
+    data->ch0          = (packed_data >> 0)  & 0x7FF;
+    data->ch1          = (packed_data >> 11) & 0x7FF;
+    data->ch2          = (packed_data >> 22) & 0x7FF;
+    data->ch3          = (packed_data >> 33) & 0x7FF;
+    data->sw           = (packed_data >> 44) & 0x03;
+    data->pause_btn    = (packed_data >> 46) & 0x01;
+    data->custom_left  = (packed_data >> 47) & 0x01;
+    data->custom_right = (packed_data >> 48) & 0x01;
+    data->dial         = (packed_data >> 49) & 0x7FF;
+    data->trigger      = (packed_data >> 60) & 0x01;
+
+    data->mouse_x = (int16_t)((raw_frame[11] << 8) | raw_frame[10]);
+    data->mouse_y = (int16_t)((raw_frame[13] << 8) | raw_frame[12]);
+    data->mouse_z = (int16_t)((raw_frame[15] << 8) | raw_frame[14]);
+
+    data->mouse_left  = raw_frame[16] & 0x01;
+    data->mouse_right = (raw_frame[16] >> 2) & 0x01;
+    data->mouse_mid   = (raw_frame[16] >> 4) & 0x01;
+
+    data->keyboard.value = (raw_frame[18] << 8) | raw_frame[17];
+    
+    return 1;
 }

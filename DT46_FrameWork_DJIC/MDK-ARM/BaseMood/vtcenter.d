@@ -57,3 +57,7 @@ basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdl
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\vtcenter.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\vtcenter.o: ./AAA/A_CommonSystem.h
+basemood\vtcenter.o: ./ABModule/Buzzer/sound_effects_task.h
+basemood\vtcenter.o: ./ABModule/Buzzer/buzzer_TIM_init.h
+basemood\vtcenter.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
+basemood\vtcenter.o: ./AADrivers/IMU/BMI088/struct_typedef.h

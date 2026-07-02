@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "A_MCommon.h"
 #include "RefereeCenter.h"
+#include "VTCenter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -411,7 +412,13 @@ void USART6_IRQHandler(void)
 #if(BOARD_ID == GIMBAL_BOARD)
 	
 //  VT_UART_IRQHandler();
-	VT03_UART_IRQHandler();
+//	VT03_UART_IRQHandler();
+
+	VT_Instance_t *inst = VT_GetInstanceByUart(&huart6);
+  if(inst != NULL)
+  {
+			VT_UART_IRQHandler(inst);
+  }
 	
 #elif(BOARD_ID == CHASSIS_BOARD)	
 

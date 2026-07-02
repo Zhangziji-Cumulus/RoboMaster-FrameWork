@@ -1,56 +1,7 @@
 #include "VTCenter.h"
 
+#if(0)
 #if(BOARD_ID == GIMBAL_BOARD)
-
-// // 定义接收缓冲区，大小严格匹配协议帧长
-// static uint8_t vt03_rx_buf[RC_FRAME_SIZE];
-
-// /**
-//  * @brief 初始化 VT03 串口 DMA 接收
-//  */
-// void VT03_DMA_Init(void)
-// {
-//     // 启动第一次 DMA 接收，固定接收 21 字节
-//     HAL_UART_Receive_DMA(&huart6, vt03_rx_buf, RC_FRAME_SIZE);
-// }
-
-// VideoTx_Ctrl_t RX_data = {0};
-
-// /**
-//  * @brief UART 接收完成回调函数（由 HAL 库在中断中自动调用）
-//  * @note  在普通模式下，每次收满 21 字节触发一次
-//  */
-// void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-// {
-//     // 1. 确认是串口6的接收完成中断
-//     if (huart->Instance == USART6) 
-//     {
-//         // 2. 获取解析后的数据结构指针
-//         //VideoTx_Ctrl_t *rc_data = (VideoTx_Ctrl_t *)get_VideoTx_Ctl_point();
-        
-//         // 3. 调用你提供的协议解析函数（内部包含帧头校验和CRC校验）
-//         VT_ParseFrame(vt03_rx_buf, &RX_data);
-        
-//         // 4. 【关键】DMA 普通模式下，接收完成后 DMA 会自动停止，
-//         //    必须在这里重新启动下一次 21 字节的接收，否则将不再接收数据
-//         HAL_UART_Receive_DMA(&huart6, vt03_rx_buf, RC_FRAME_SIZE);
-//     }
-// }
-
-// static UBaseType_t remain_VTTask;
-// __attribute__((used)) void VTTask(void *argument)
-// {
-//      VT03_DMA_Init(); 
-
-//     for(;;)
-//     {
-
-//         remain_VTTask = uxTaskGetStackHighWaterMark(NULL);
-//         osDelay(1);
-//     }
-// }
-
-
 
 /* 私有变量 */
 static UART_HandleTypeDef *vt03Huart;
@@ -205,7 +156,7 @@ static void VT03_UpdateDataValidFlag(void)
  */
 static void VT03_DecodeFrame(const uint8_t *frameRaw)
 {
-    VT_ParseFrame(frameRaw, &vt03Data);
+    VT03_ParseFrame(frameRaw, &vt03Data);
 
     if (vt03Data.crc_ok == 1)
     {
@@ -313,15 +264,23 @@ void VT03_UART_IRQHandler(void)
     }
 }
 
+
+
 static UBaseType_t remain_VTTask;
 __attribute__((used)) void VTTask(void *argument)
 {
     // 初始化串口6，huart6为你CubeMX生成的句柄
     VT03_Init(&huart6);
+    buzzer_t *buzzer = get_buzzer_effect_point();
 
     for(;;)
     {
         VT03_Process();
+
+        if(VT03_KeyTest(&vt03Data))
+        {
+            buzzer->sound_effect = B_;
+        }
 
         // 栈余量监控
         remain_VTTask = uxTaskGetStackHighWaterMark(NULL);
@@ -330,3 +289,294 @@ __attribute__((used)) void VTTask(void *argument)
 }
 
 #endif /* BOARD_ID == GIMBAL_BOARD */
+#endif
+
+//==================== 私有函数声明 ====================
+static uint8_t VT_DecodeFrame(VT_Instance_t *inst, const uint8_t *frame_raw);
+static void VT_StateMachineHandle(VT_Instance_t *inst);
+static void VT_SafeReset(VT_Instance_t *inst);
+static void VT_UpdateValidFlag(VT_Instance_t *inst);
+static VT_Instance_t *vt_inst_map[VT_MAX_INST] = {0};
+
+void VT_RegisterInstance(UART_HandleTypeDef *huart, VT_Instance_t *inst)
+{
+    for(uint8_t i=0; i<VT_MAX_INST; i++)
+    {
+        if(vt_inst_map[i] == 0)
+        {
+            vt_inst_map[i] = inst;
+            break;
+        }
+    }
+}
+
+VT_Instance_t *VT_GetInstanceByUart(UART_HandleTypeDef *huart)
+{
+    for(uint8_t i=0; i<VT_MAX_INST; i++)
+    {
+        if(vt_inst_map[i] && vt_inst_map[i]->huart == huart)
+        {
+            return vt_inst_map[i];
+        }
+    }
+    return NULL;
+}
+
+//==================== 对外初始化 ====================
+void VT_Init(VT_Instance_t *inst,
+             UART_HandleTypeDef *huart,
+             const VT_Config_t *cfg,
+             VT_ParseCallback parse_cb,
+             uint8_t *rx_buf,
+             void *data_buf)
+{
+    memset(inst, 0, sizeof(VT_Instance_t));
+    inst->huart     = huart;
+    inst->cfg       = *cfg;
+    inst->parse_cb  = parse_cb;
+    inst->rx_cyclic_buf = rx_buf;
+    inst->user_data = data_buf;
+
+    memset(inst->rx_cyclic_buf, 0, inst->cfg.rx_buf_len);
+    inst->state = VT_STATE_RECONNECTING;
+    inst->new_data_flag = 0;
+    inst->last_valid_tick = HAL_GetTick();
+    inst->last_parse_tick = HAL_GetTick();
+    inst->reconnect_tick = HAL_GetTick();
+    inst->crc_fail_cnt = 0;
+    inst->scan_offset = 0;
+
+    VT_RegisterInstance(huart,inst);
+
+    // 开启空闲中断
+    __HAL_UART_ENABLE_IT(inst->huart, UART_IT_IDLE);
+    // 启动循环DMA接收
+    HAL_UART_Receive_DMA(inst->huart, inst->rx_cyclic_buf, inst->cfg.rx_buf_len);
+}
+
+//==================== 周期处理入口 ====================
+void VT_Process(VT_Instance_t *inst)
+{
+    uint16_t i;
+    uint8_t frame_find_flag = 0;
+    const VT_Config_t *cfg = &inst->cfg;
+
+    VT_StateMachineHandle(inst);
+
+    if (inst->new_data_flag || (HAL_GetTick() - inst->last_parse_tick > cfg->scan_interval_ms))
+    {
+        // 从上次扫描位置开始，环形扫描一圈（最多 rx_buf_len 次，防止死循环）
+        for (uint16_t cnt = 0; cnt < cfg->rx_buf_len; cnt++)
+        {
+            i = inst->scan_offset + cnt;
+            if (i >= cfg->rx_buf_len)
+                i -= cfg->rx_buf_len;  // 环形回卷
+
+            // 剩余空间不足一帧，跳过
+            if(i + cfg->frame_len > cfg->rx_buf_len)
+                continue;
+
+            if (inst->rx_cyclic_buf[i] == cfg->head0 && inst->rx_cyclic_buf[i+1] == cfg->head1)
+            {
+                if (VT_DecodeFrame(inst, &inst->rx_cyclic_buf[i]) == 1)
+                {
+                    frame_find_flag = 1;
+                    inst->last_valid_tick = HAL_GetTick();
+                    memset(&inst->rx_cyclic_buf[i], 0, cfg->frame_len);
+                    inst->scan_offset = (i + cfg->frame_len) % cfg->rx_buf_len;
+                    break;
+                }
+            }
+        }
+
+        // 未找到有效帧时不改变 scan_offset，下次从同一位置继续扫描
+        inst->new_data_flag = 0;
+        inst->last_parse_tick = HAL_GetTick();
+        if (frame_find_flag)
+        {
+            inst->state = VT_STATE_NORMAL;
+        }
+    }
+    VT_UpdateValidFlag(inst);
+}
+
+//==================== 帧解析调度（调用对应型号回调） ====================
+static uint8_t VT_DecodeFrame(VT_Instance_t *inst, const uint8_t *frame_raw)
+{
+    uint8_t crc_ok = inst->parse_cb(frame_raw, inst->user_data);
+
+    // 更新CRC连续失败计数
+    if (crc_ok == 1)
+    {
+        inst->crc_fail_cnt = 0;
+    }
+    else
+    {
+        if (inst->crc_fail_cnt < inst->cfg.crc_fail_max)
+        {
+            inst->crc_fail_cnt++;
+        }
+    }
+
+    return crc_ok;
+}
+
+//==================== 通信状态机 ====================
+static void VT_StateMachineHandle(VT_Instance_t *inst)
+{
+    uint32_t tick_now = HAL_GetTick();
+    uint32_t time_no_frame = tick_now - inst->last_valid_tick;
+    const VT_Config_t *cfg = &inst->cfg;
+
+    switch (inst->state)
+    {
+        case VT_STATE_NORMAL:
+            if (time_no_frame > cfg->power_lost_ms)
+            {
+                inst->state = VT_STATE_POWER_LOST;
+            }
+            else if (time_no_frame > cfg->signal_lost_ms)
+            {
+                inst->state = VT_STATE_SIGNAL_LOST;
+            }
+            break;
+        case VT_STATE_SIGNAL_LOST:
+            if (time_no_frame > cfg->power_lost_ms)
+            {
+                inst->state = VT_STATE_POWER_LOST;
+            }
+            break;
+        case VT_STATE_POWER_LOST:
+            static uint32_t auto_reset_tick = 0;
+            // 5秒才自动重置一次，降低串口启停频率
+            if (tick_now - auto_reset_tick > 5000U)
+            {
+                VT_ResetReceiver(inst);
+                auto_reset_tick = tick_now;
+            }
+            break;
+        case VT_STATE_RECONNECTING:
+            if (time_no_frame > cfg->power_lost_ms)
+            {
+                inst->state = VT_STATE_POWER_LOST;
+            }
+            break;
+    }
+}
+
+//==================== 更新数据有效标志 ====================
+static void VT_UpdateValidFlag(VT_Instance_t *inst)
+{
+    const VT_Config_t *cfg = &inst->cfg;
+    uint8_t *crc_ok_ptr   = (uint8_t *)inst->user_data + cfg->crc_ok_offset;
+    uint8_t *is_valid_ptr = (uint8_t *)inst->user_data + cfg->is_valid_offset;
+
+    if (inst->state != VT_STATE_NORMAL || inst->crc_fail_cnt >= cfg->crc_fail_max)
+    {
+        // 链路异常 或 连续CRC失败达阈值 → 强制无效
+        // crc_ok不受影响，它独立反映最近一帧的CRC校验结果
+        *is_valid_ptr = 0;
+    }
+    else if (*crc_ok_ptr == 1)
+    {
+        // CRC校验通过且链路正常 → 数据有效
+        *is_valid_ptr = 1;
+    }
+    /* else: CRC校验失败但连续次数未达阈值 → 保持当前is_valid不变（防抖） */
+}
+
+//==================== 安全重置串口DMA，清除硬件错误 ====================
+static void VT_SafeReset(VT_Instance_t *inst)
+{
+    UART_HandleTypeDef *huart = inst->huart;
+    // 停止DMA，移除while死循环阻塞
+    HAL_UART_AbortReceive(huart);
+
+    // 清溢出、帧错误、奇偶错误
+    __HAL_UART_CLEAR_FLAG(huart, UART_FLAG_ORE | UART_FLAG_NE | UART_FLAG_FE | UART_FLAG_PE);
+    (void)huart->Instance->DR;
+
+    memset(inst->rx_cyclic_buf, 0, inst->cfg.rx_buf_len);
+    inst->new_data_flag = 0;
+    inst->crc_fail_cnt = 0;
+
+    __HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
+    HAL_UART_Receive_DMA(huart, inst->rx_cyclic_buf, inst->cfg.rx_buf_len);
+}
+
+void VT_ResetReceiver(VT_Instance_t *inst)
+{
+    VT_SafeReset(inst);
+    inst->state = VT_STATE_RECONNECTING;
+    inst->last_valid_tick = HAL_GetTick();
+    inst->reconnect_tick = inst->last_valid_tick;
+}
+
+//==================== 串口中断处理 ====================
+void VT_UART_IRQHandler(VT_Instance_t *inst)
+{
+    UART_HandleTypeDef *huart = inst->huart;
+    // IDLE空闲中断
+    if (__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE) != RESET)
+    {
+        __HAL_UART_CLEAR_IDLEFLAG(huart);
+        inst->new_data_flag = 1;
+    }
+    // 硬件错误清除
+    if (__HAL_UART_GET_FLAG(huart, UART_FLAG_ORE | UART_FLAG_NE | UART_FLAG_FE | UART_FLAG_PE) != RESET)
+    {
+        __HAL_UART_CLEAR_FLAG(huart, UART_FLAG_ORE | UART_FLAG_NE | UART_FLAG_FE | UART_FLAG_PE);
+        (void)huart->Instance->DR;
+    }
+}
+
+//==================== 状态查询接口 ====================
+uint8_t VT_IsDataValid(const VT_Instance_t *inst)
+{
+    uint8_t *is_valid_ptr = (uint8_t *)inst->user_data + inst->cfg.is_valid_offset;
+    return *is_valid_ptr;
+}
+
+uint8_t VT_IsPowerLost(const VT_Instance_t *inst)
+{
+    return (inst->state == VT_STATE_POWER_LOST);
+}
+
+
+
+//========= VT03 实例资源 =========
+static uint8_t vt03_rx_buf[64];
+static VideoTx_Ctrl_t vt03_data;
+static VT_Instance_t vt03_inst;
+const VT_Config_t VT03_CFG = {
+    .frame_len = 21,
+    .rx_buf_len = 64,
+    .head0 = 0xA9,
+    .head1 = 0x53,
+    .scan_interval_ms = 10,
+    .signal_lost_ms = 100,
+    .power_lost_ms = 500,
+    .crc_fail_max = 3,
+    .crc_ok_offset   = offsetof(VT03_Data_t, crc_ok),
+    .is_valid_offset = offsetof(VT03_Data_t, is_valid)
+};
+
+static UBaseType_t remain_VTTask;
+__attribute__((used)) void VTTask(void *argument)
+{
+    // 初始化串口6，huart6为你CubeMX生成的句柄
+    buzzer_t *buzzer = get_buzzer_effect_point();
+    VT_Init(&vt03_inst, &huart6, &VT03_CFG, VT03_ParseCallback, vt03_rx_buf, &vt03_data);
+
+    for(;;)
+    {
+
+        VT_Process(&vt03_inst);
+        VT03_Data_t *rc = VT_GET_DATA(VT03_Data_t, &vt03_inst);
+
+        // 栈余量监控
+        remain_VTTask = uxTaskGetStackHighWaterMark(NULL);
+        osDelay(1);
+    }
+}
+

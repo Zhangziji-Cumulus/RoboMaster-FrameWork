@@ -74,13 +74,13 @@ basemood\main.o: ./AAA/A_CommonSystem.h
 basemood\main.o: ./ABModule/VT/VTCenter.h
 basemood\main.o: ./ABModule/VT/VT03Protocol.h
 basemood\main.o: ./AAA/A_CommonSystem.h
+basemood\main.o: ./ABModule/Buzzer/sound_effects_task.h
+basemood\main.o: ./ABModule/Buzzer/buzzer_TIM_init.h
+basemood\main.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
 basemood\main.o: ./AADrivers/IMU/IMU_Get.h
 basemood\main.o: ./AAA/A_CommonSystem.h
 basemood\main.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\main.o: ./ABModule/CMDCenter.h
-basemood\main.o: ./ABModule/Buzzer/sound_effects_task.h
-basemood\main.o: ./ABModule/Buzzer/buzzer_TIM_init.h
-basemood\main.o: ./ABModule/Buzzer/bsp_buzzer_driver.h
 basemood\main.o: ./ABModule/MotorCtrl_DJI.h
 basemood\main.o: ./AAA/A_CommonSystem.h
 basemood\main.o: ./ABModule/MotorCtrl_ZDT.h
