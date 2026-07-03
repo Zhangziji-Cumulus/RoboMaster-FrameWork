@@ -229,6 +229,18 @@ const osThreadAttr_t VT_attributes = {
   .stack_size = sizeof(VTBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
+/* Definitions for PlyerUI */
+osThreadId_t PlyerUIHandle;
+uint32_t PlyerUIBuffer[ 128 ];
+osStaticThreadDef_t PlyerUIControlBlock;
+const osThreadAttr_t PlyerUI_attributes = {
+  .name = "PlyerUI",
+  .cb_mem = &PlyerUIControlBlock,
+  .cb_size = sizeof(PlyerUIControlBlock),
+  .stack_mem = &PlyerUIBuffer[0],
+  .stack_size = sizeof(PlyerUIBuffer),
+  .priority = (osPriority_t) osPriorityHigh7,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -249,6 +261,7 @@ void ShootingLoadTask(void *argument);
 void AutoAimTask(void *argument);
 void RefereeTask(void *argument);
 void VTTask(void *argument);
+void PlyerUITask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -328,6 +341,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of VT */
   VTHandle = osThreadNew(VTTask, NULL, &VT_attributes);
 
+  /* creation of PlyerUI */
+  PlyerUIHandle = osThreadNew(PlyerUITask, NULL, &PlyerUI_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
 	
@@ -364,23 +380,6 @@ void StartDefaultTask(void *argument)
   }
   /* USER CODE END StartDefaultTask */
 }
-
-/* USER CODE BEGIN Header_INS_task */
-/**
-* @brief Function implementing the imuTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_INS_task */
-
-/* USER CODE BEGIN Header_buzzer_effects_task */
-/**
-* @brief Function implementing the buzr thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_buzzer_effects_task */
-
 
 /* USER CODE BEGIN Header_DualBoardTask */
 /**
@@ -615,6 +614,24 @@ __weak void VTTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END VTTask */
+}
+
+/* USER CODE BEGIN Header_PlyerUITask */
+/**
+* @brief Function implementing the PlyerUI thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_PlyerUITask */
+__weak void PlyerUITask(void *argument)
+{
+  /* USER CODE BEGIN PlyerUITask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END PlyerUITask */
 }
 
 /* Private application code --------------------------------------------------*/

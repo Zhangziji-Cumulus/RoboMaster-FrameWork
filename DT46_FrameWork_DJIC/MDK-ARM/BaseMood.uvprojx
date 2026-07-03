@@ -311,7 +311,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>0</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT;.\ABModule\PlayerUI</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2297,6 +2297,51 @@
               <FileName>VTCenter_Instance.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\VT\VTCenter_Instance.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ABModule/PlayerUI</GroupName>
+          <Files>
+            <File>
+              <FileName>PlayerUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\PlayerUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>PlayerUI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\PlayerUI.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_g.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_g.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_g.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_g.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_interface.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_interface.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_types.h</FilePath>
             </File>
           </Files>
         </Group>

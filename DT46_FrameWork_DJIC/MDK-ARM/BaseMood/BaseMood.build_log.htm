@@ -22,88 +22,37 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\A_Code_GitHub\RoboMaster-FrameWork\DT46_FrameWork_DJIC\MDK-ARM\BaseMood.uvprojx
-Project File Date:  07/02/2026
+Project File Date:  07/03/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
-Build target 'BaseMood'
-compiling RefereeProtocol.c...
-ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREEPROTOCOL_H_
-ABModule\Referee\RefereeProtocol.c(520): warning:  #1-D: last line of file ends without a newline
-  }
-ABModule\Referee\RefereeProtocol.c: 2 warnings, 0 errors
-compiling Dual_board_Transmit.c...
-AADrivers\Dual_board_Transmit.c(13): warning:  #177-D: variable "g_rxTotalSize"  was declared but never referenced
-  static uint16_t g_rxTotalSize = 0;           // 期望的总大�?
-AADrivers\Dual_board_Transmit.c: 1 warning, 0 errors
-compiling Gimbal_Task.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-ACApplication\Gimbal\Gimbal_Task.h(24): warning:  #1-D: last line of file ends without a newline
-  #endif // GIMBAL_TASK_H_
-ACApplication\Gimbal\Gimbal_Task.c(19): warning:  #550-D: variable "remain_GimbalTask"  was set but never used
-  static UBaseType_t remain_GimbalTask;
-ACApplication\Gimbal\Gimbal_Task.c: 3 warnings, 0 errors
+Rebuild target 'BaseMood'
+assembling startup_stm32f407xx.s...
+compiling i2c.c...
+compiling gpio.c...
+compiling spi.c...
+compiling tim.c...
+compiling stm32f4xx_hal_can.c...
+compiling stm32f4xx_hal_timebase_tim.c...
+compiling dma.c...
+compiling stm32f4xx_hal_tim_ex.c...
+compiling can.c...
+compiling freertos.c...
+../Core/Src/freertos.c(300): warning:  #167-D: argument of type "void (*)(const void *)" is incompatible with parameter of type "osThreadFunc_t"
+    imuTaskHandle = osThreadNew(INS_task, 
+ULL, &imuTask_attributes);
+../Core/Src/freertos.c(303): warning:  #167-D: argument of type "void (*)(const void *)" is incompatible with parameter of type "osThreadFunc_t"
+    buzrHandle = osThreadNew(buzzer_effects_task, 
+ULL, &buzr_attributes);
+../Core/Src/freertos.c: 2 warnings, 0 errors
 compiling usart.c...
-compiling AutoAim.c...
+compiling stm32f4xx_hal_rcc.c...
+compiling main.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
-ACApplication\Auto\AutoAim.c(210): warning:  #1-D: last line of file ends without a newline
-  #endif
-ACApplication\Auto\AutoAim.c: 2 warnings, 0 errors
-compiling bsp_Init.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-AADrivers\bsp_Init.c(9): warning:  #223-D: function "can_filter_init" declared implicitly
-      can_filter_init();
-AADrivers\bsp_Init.c: 2 warnings, 0 errors
-compiling RefereeCenter.c...
-ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
-  #define UART_PARITY_NONE             0U
-ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREEPROTOCOL_H_
-ABModule\Referee\RefereeCenter.h(18): warning:  #1-D: last line of file ends without a newline
-  #endif // REFEREE_CENTER_H
-ABModule\Referee\RefereeCenter.c(136): warning:  #1-D: last line of file ends without a newline
-  #endif
-ABModule\Referee\RefereeCenter.c(29): warning:  #550-D: variable "remain_RefereeTask"  was set but never used
-  static UBaseType_t remain_RefereeTask;
-ABModule\Referee\RefereeCenter.c: 5 warnings, 0 errors
-compiling AutoAim_Task.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-ACApplication\Auto\AutoAim_Task.h(7): warning:  #1-D: last line of file ends without a newline
-  #endif // AUTO_TASK_H_
-ACApplication\Auto\AutoAim_Task.c(15): warning:  #550-D: variable "remain_AutoAimTask"  was set but never used
-  static UBaseType_t remain_AutoAimTask;
-ACApplication\Auto\AutoAim_Task.c: 3 warnings, 0 errors
-compiling Chassis_Task.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-ACApplication\Chassis\Chassis_Task.c(20): warning:  #550-D: variable "remain_ChassisTask"  was set but never used
-  static UBaseType_t remain_ChassisTask;
-ACApplication\Chassis\Chassis_Task.c: 2 warnings, 0 errors
-compiling CMDCenter.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-ABModule\CMDCenter.c(165): warning:  #550-D: variable "remain_CMDUpdateTask"  was set but never used
-  static UBaseType_t remain_CMDUpdateTask;
-ABModule\CMDCenter.c: 2 warnings, 0 errors
-compiling Dual_Board_Transmit_Task.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-AADrivers\Dual_Board_Transmit_Task.h(17): warning:  #1-D: last line of file ends without a newline
-  #endif // DUAL_BOARD_TRANSMIT_TASK_H_
-AADrivers\Dual_Board_Transmit_Task.c(72): warning:  #1-D: last line of file ends without a newline
-  #endif
-AADrivers\Dual_Board_Transmit_Task.c(49): warning:  #550-D: variable "remain_DualBoardTask"  was set but never used
-    static UBaseType_t remain_DualBoardTask;
-AADrivers\Dual_Board_Transmit_Task.c: 4 warnings, 0 errors
-compiling Chassis_leg.c...
-./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif // VTCENTER_INSTANCE_H_
-ACApplication\Chassis\Chassis_leg.c: 1 warning, 0 errors
+../Core/Src/main.c(110): warning:  #223-D: function "BSP_Init" declared implicitly
+  	BSP_Init();
+../Core/Src/main.c: 2 warnings, 0 errors
 compiling stm32f4xx_it.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
@@ -116,16 +65,129 @@ compiling stm32f4xx_it.c...
 ../Core/Src/stm32f4xx_it.c(313): warning:  #223-D: function "SBUS_UART_IRQHandler" declared implicitly
   	SBUS_UART_IRQHandler();
 ../Core/Src/stm32f4xx_it.c: 5 warnings, 0 errors
-compiling main.c...
+compiling stm32f4xx_hal_tim.c...
+compiling stm32f4xx_hal_msp.c...
+compiling stm32f4xx_hal_rcc_ex.c...
+compiling stm32f4xx_hal_flash.c...
+compiling stm32f4xx_hal_cortex.c...
+compiling stm32f4xx_hal_flash_ex.c...
+compiling stm32f4xx_hal_dma_ex.c...
+compiling croutine.c...
+compiling stm32f4xx_hal.c...
+compiling stm32f4xx_hal_dma.c...
+compiling stm32f4xx_hal_pwr.c...
+compiling stm32f4xx_hal_gpio.c...
+compiling list.c...
+compiling event_groups.c...
+compiling stm32f4xx_hal_flash_ramfunc.c...
+compiling stm32f4xx_hal_pwr_ex.c...
+compiling stream_buffer.c...
+compiling queue.c...
+compiling timers.c...
+compiling heap_4.c...
+compiling tasks.c...
+compiling stm32f4xx_hal_exti.c...
+compiling port.c...
+compiling stm32f4xx_hal_i2c.c...
+compiling stm32f4xx_hal_spi.c...
+compiling stm32f4xx_hal_i2c_ex.c...
+compiling stm32f4xx_hal_uart.c...
+compiling BMI088driver.c...
+compiling system_stm32f4xx.c...
+compiling bsp_delay.c...
+compiling bsp_rc.c...
+compiling AHRS_middleware.c...
+compiling bsp_imu_pwm.c...
+compiling user_lib.c...
+compiling ist8310driver.c...
+compiling bsp_CAN.c...
+AADrivers\bsp_CAN.c(26): warning:  #186-D: pointless comparison of unsigned integer with zero
+      if (hcan->Instance == 
+AN1 && (filter_bank > 13 || filter_bank < 0)) {
+AADrivers\bsp_CAN.c(236): warning:  #940-D: missing return statement at end of non-void function "CAN_SendFloatArray" 
+  }
+AADrivers\bsp_CAN.c(166): warning:  #177-D: function "BytesToFloat"  was declared but never referenced
+  static float BytesToFloat(uint8_t* bytes) {
+AADrivers\bsp_CAN.c: 3 warnings, 0 errors
+compiling cmsis_os2.c...
+compiling MotorCtrl_ZDT.c...
+compiling Math_Lib.c...
+ABModule\Math_Lib.c(14): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      return degrees * 
+Y_PI / 180.0;
+ABModule\Math_Lib.c(337): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      float wheel_rpm = (speed_mps * 60.0f) / (2.0f * 
+Y_PI * radius_m);
+ABModule\Math_Lib.c(355): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      float circumference = 2.0f * 
+Y_PI * radius_m;
+ABModule\Math_Lib.c(358): warning:  #1-D: last line of file ends without a newline
+  }
+ABModule\Math_Lib.c: 4 warnings, 0 errors
+compiling bsp_SBUS.c...
+AADrivers\bsp_SBUS.c(188): warning:  #1182-D: a declaration cannot have a label
+              static uint32_t lastResetTick = 0;
+AADrivers\bsp_SBUS.c(243): warning:  #550-D: variable "remain_SBUSTask"  was set but never used
+  static UBaseType_t remain_SBUSTask;
+AADrivers\bsp_SBUS.c: 2 warnings, 0 errors
+compiling bsp_Init.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
-../Core/Src/main.c(110): warning:  #223-D: function "BSP_Init" declared implicitly
-  	BSP_Init();
-../Core/Src/main.c: 2 warnings, 0 errors
+AADrivers\bsp_Init.c(9): warning:  #223-D: function "can_filter_init" declared implicitly
+      can_filter_init();
+AADrivers\bsp_Init.c: 2 warnings, 0 errors
+compiling Dual_Board_Transmit_Task.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+AADrivers\Dual_Board_Transmit_Task.h(17): warning:  #1-D: last line of file ends without a newline
+  #endif // DUAL_BOARD_TRANSMIT_TASK_H_
+AADrivers\Dual_Board_Transmit_Task.c(72): warning:  #1-D: last line of file ends without a newline
+  #endif
+AADrivers\Dual_Board_Transmit_Task.c(49): warning:  #550-D: variable "remain_DualBoardTask"  was set but never used
+    static UBaseType_t remain_DualBoardTask;
+AADrivers\Dual_Board_Transmit_Task.c: 4 warnings, 0 errors
+compiling Dual_board_Transmit.c...
+AADrivers\Dual_board_Transmit.c(13): warning:  #177-D: variable "g_rxTotalSize"  was declared but never referenced
+  static uint16_t g_rxTotalSize = 0;           // 期望的总大�?
+AADrivers\Dual_board_Transmit.c: 1 warning, 0 errors
+compiling IMU_PID.c...
+compiling bsp_spi.c...
+compiling BMI088Middleware.c...
+compiling RefereeProtocol.c...
+ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREEPROTOCOL_H_
+ABModule\Referee\RefereeProtocol.c(520): warning:  #1-D: last line of file ends without a newline
+  }
+ABModule\Referee\RefereeProtocol.c: 2 warnings, 0 errors
+compiling INS_task.c...
+compiling ZDT_Emm_V5.c...
+ABModule\ZDT\ZDT_Emm_V5.c(1597): warning:  #1-D: last line of file ends without a newline
+  #endif
+ABModule\ZDT\ZDT_Emm_V5.c: 1 warning, 0 errors
+compiling bsp_buzzer_driver.c...
+compiling PID_Lib.c...
+compiling MotorCtrl_DJI_Check_Task.c...
+ABModule\MotorCtrl_DJI_Check_Task.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif // MOTORCTRL_DJI_CHECK_TASK_H_
+ABModule\MotorCtrl_DJI_Check_Task.c(7): warning:  #223-D: function "CAN_DJI_Motor_CheckOnline" declared implicitly
+      CAN_DJI_Motor_CheckOnline(DJI_MFeedback_CAN1);
+ABModule\MotorCtrl_DJI_Check_Task.c: 2 warnings, 0 errors
+compiling ist8310driver_middleware.c...
+compiling buzzer_TIM_init.c...
+compiling Remote_Ctrl.c...
+ABModule\Remote_Ctrl.c(36): warning:  #940-D: missing return statement at end of non-void function "Switch_Set" 
+  }
+ABModule\Remote_Ctrl.c(59): warning:  #940-D: missing return statement at end of non-void function "Knob_Set" 
+  }
+ABModule\Remote_Ctrl.c(116): warning:  #550-D: variable "remain_RCUpdate"  was set but never used
+  static UBaseType_t remain_RCUpdate;
+ABModule\Remote_Ctrl.c: 3 warnings, 0 errors
 compiling MotorCtrl_DJI.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
 ABModule\MotorCtrl_DJI.c: 1 warning, 0 errors
+compiling MotorCtrl_DJI_STOP.c...
+compiling sound_effects_task.c...
 compiling User_CallBack.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
@@ -134,6 +196,46 @@ ABModule\User_CallBack.c(173): warning:  #1-D: last line of file ends without a 
 ABModule\User_CallBack.c(104): warning:  #550-D: variable "g_dataValid"  was set but never used
   static uint8_t g_dataValid = 0;
 ABModule\User_CallBack.c: 3 warnings, 0 errors
+compiling AutoNavigation.c...
+compiling CMDCenter.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\CMDCenter.c(165): warning:  #550-D: variable "remain_CMDUpdateTask"  was set but never used
+  static UBaseType_t remain_CMDUpdateTask;
+ABModule\CMDCenter.c: 2 warnings, 0 errors
+compiling AutoShooting.c...
+compiling Chassis_Omni.c...
+compiling ZDT_X_V2.c...
+ABModule\ZDT\ZDT_X_V2.c(2699): warning:  #1-D: last line of file ends without a newline
+  #endif
+ABModule\ZDT\ZDT_X_V2.c: 1 warning, 0 errors
+compiling Chassis_Steering.c...
+compiling ZDT_CAN_Bsp.c...
+ABModule\ZDT\ZDT_CAN_Bsp.c(98): warning:  #223-D: function "memcpy" declared implicitly
+  		memcpy(&rx_Buff[Packet * 8],rxdata,8);
+ABModule\ZDT\ZDT_CAN_Bsp.c: 1 warning, 0 errors
+compiling Dial.c...
+compiling RefereeCenter.c...
+ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
+  #define UART_PARITY_NONE             0U
+ABModule\Referee\RefereeProtocol.h(539): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREEPROTOCOL_H_
+ABModule\Referee\RefereeCenter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREE_CENTER_H
+ABModule\Referee\RefereeCenter.c(136): warning:  #1-D: last line of file ends without a newline
+  #endif
+ABModule\Referee\RefereeCenter.c(29): warning:  #550-D: variable "remain_RefereeTask"  was set but never used
+  static UBaseType_t remain_RefereeTask;
+ABModule\Referee\RefereeCenter.c: 5 warnings, 0 errors
+compiling VT03Protocol.c...
+compiling VTCenter.c...
+ABModule\VT\VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\VT\VTCenter.c(37): warning:  #177-D: variable "rc"  was declared but never referenced
+          VT03_Data_t *rc = VT_GET_DATA(VT03_Data_t, &vt03_inst);
+ABModule\VT\VTCenter.c(26): warning:  #550-D: variable "remain_VTTask"  was set but never used
+  static UBaseType_t remain_VTTask;
+ABModule\VT\VTCenter.c: 3 warnings, 0 errors
 compiling Chassis_Mecanu.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
@@ -144,14 +246,70 @@ ACApplication\Chassis\Chassis_Mecanu.c(8): warning:  #188-D: enumerated type mix
 ACApplication\Chassis\Chassis_Mecanu.c(256): warning:  #1-D: last line of file ends without a newline
   #endif
 ACApplication\Chassis\Chassis_Mecanu.c: 4 warnings, 0 errors
-compiling Load_Task.c...
+compiling VTCenter_Instance.c...
+ABModule\VT\VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\VT\VTCenter_Instance.c: 1 warning, 0 errors
+compiling ui_g.c...
+compiling PlayerUI.c...
+ABModule\PlayerUI\ui_g.h(13): warning:  #1295-D: Deprecated declaration ui_init_g_Ungroup - give arg types
+  void ui_init_g_Ungroup();
+ABModule\PlayerUI\ui_g.h(14): warning:  #1295-D: Deprecated declaration ui_update_g_Ungroup - give arg types
+  void ui_update_g_Ungroup();
+ABModule\PlayerUI\ui_g.h(15): warning:  #1295-D: Deprecated declaration ui_remove_g_Ungroup - give arg types
+  void ui_remove_g_Ungroup();
+ABModule\PlayerUI\ui.h(16): warning:  #1295-D: Deprecated declaration ui_init_g_Ungroup - give arg types
+  void ui_init_g_Ungroup();
+ABModule\PlayerUI\ui.h(17): warning:  #1295-D: Deprecated declaration ui_update_g_Ungroup - give arg types
+  void ui_update_g_Ungroup();
+ABModule\PlayerUI\ui.h(18): warning:  #1295-D: Deprecated declaration ui_remove_g_Ungroup - give arg types
+  void ui_remove_g_Ungroup();
+ABModule\PlayerUI\PlayerUIExtend.h(24): warning:  #1-D: last line of file ends without a newline
+  #endif // PLAEYERUIEXTEND_H_
+ABModule\PlayerUI\PlayerUI.h(15): warning:  #1-D: last line of file ends without a newline
+  #endif // PLAYERUI_H_
+ABModule\PlayerUI\PlayerUI.c(5): warning:  #550-D: variable "remain_PlyerUITask"  was set but never used
+  static UBaseType_t remain_PlyerUITask;
+ABModule\PlayerUI\PlayerUI.c: 9 warnings, 0 errors
+compiling AutoAim_Task.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
-ACApplication\Shooting\Load_Task.c(23): warning:  #223-D: function "Shooting_Init" declared implicitly
-    Shooting_Init();
-ACApplication\Shooting\Load_Task.c(19): warning:  #550-D: variable "remain_LoadTask"  was set but never used
-  static UBaseType_t remain_LoadTask;
-ACApplication\Shooting\Load_Task.c: 3 warnings, 0 errors
+ACApplication\Auto\AutoAim_Task.h(7): warning:  #1-D: last line of file ends without a newline
+  #endif // AUTO_TASK_H_
+ACApplication\Auto\AutoAim_Task.c(15): warning:  #550-D: variable "remain_AutoAimTask"  was set but never used
+  static UBaseType_t remain_AutoAimTask;
+ACApplication\Auto\AutoAim_Task.c: 3 warnings, 0 errors
+compiling ui_interface.c...
+compiling Chassis_leg.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Chassis\Chassis_leg.c: 1 warning, 0 errors
+compiling Shooting_Task.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Shooting\Shooting_Task.c(19): warning:  #550-D: variable "remain_ShootingTask"  was set but never used
+  static UBaseType_t remain_ShootingTask;
+ACApplication\Shooting\Shooting_Task.c: 2 warnings, 0 errors
+compiling Chassis_Task.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Chassis\Chassis_Task.c(20): warning:  #550-D: variable "remain_ChassisTask"  was set but never used
+  static UBaseType_t remain_ChassisTask;
+ACApplication\Chassis\Chassis_Task.c: 2 warnings, 0 errors
+compiling Gimbal_Task.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Gimbal\Gimbal_Task.h(24): warning:  #1-D: last line of file ends without a newline
+  #endif // GIMBAL_TASK_H_
+ACApplication\Gimbal\Gimbal_Task.c(19): warning:  #550-D: variable "remain_GimbalTask"  was set but never used
+  static UBaseType_t remain_GimbalTask;
+ACApplication\Gimbal\Gimbal_Task.c: 3 warnings, 0 errors
+compiling AutoAim.c...
+./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Auto\AutoAim.c(210): warning:  #1-D: last line of file ends without a newline
+  #endif
+ACApplication\Auto\AutoAim.c: 2 warnings, 0 errors
 compiling Gimbal_Hero.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
@@ -164,16 +322,18 @@ ACApplication\Shooting\Shooting_Hero.c(768): warning:  #223-D: function "Dual_Bo
 ACApplication\Shooting\Shooting_Hero.c(781): warning:  #223-D: function "Dual_Board_TX_Set_LoadEndFlag" declared implicitly
               Dual_Board_TX_Set_LoadEndFlag(0);
 ACApplication\Shooting\Shooting_Hero.c: 3 warnings, 0 errors
-compiling Shooting_Task.c...
+compiling Load_Task.c...
 ./ABModule/VT/VTCenter_Instance.h(102): warning:  #1-D: last line of file ends without a newline
   #endif // VTCENTER_INSTANCE_H_
-ACApplication\Shooting\Shooting_Task.c(19): warning:  #550-D: variable "remain_ShootingTask"  was set but never used
-  static UBaseType_t remain_ShootingTask;
-ACApplication\Shooting\Shooting_Task.c: 2 warnings, 0 errors
+ACApplication\Shooting\Load_Task.c(23): warning:  #223-D: function "Shooting_Init" declared implicitly
+    Shooting_Init();
+ACApplication\Shooting\Load_Task.c(19): warning:  #550-D: variable "remain_LoadTask"  was set but never used
+  static UBaseType_t remain_LoadTask;
+ACApplication\Shooting\Load_Task.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=55924 RO-data=2844 RW-data=604 ZI-data=33820  
+Program Size: Code=56220 RO-data=3652 RW-data=632 ZI-data=34472  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 51 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 83 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -197,7 +357,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:16
+Build Time Elapsed:  00:01:19
 </pre>
 </body>
 </html>
