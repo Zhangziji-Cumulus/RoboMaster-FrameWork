@@ -506,14 +506,8 @@ typedef struct
 /************************* 全局变量声明 *************************/
 extern referee_all_data_t g_ref_data;
 
-/************************* CRC校验函数声明 *************************/
-uint8_t  Get_CRC8_Check_Sum(uint8_t *pchMessage, uint32_t dwLength, uint8_t ucCRC8);
-uint32_t Verify_CRC8_Check_Sum(uint8_t *pchMessage, uint32_t dwLength);
-void     Append_CRC8_Check_Sum(uint8_t *pchMessage, uint32_t dwLength);
-
-uint16_t Get_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength, uint16_t wCRC);
-uint32_t Verify_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength);
-void     Append_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength);
+/************************* CRC校验函数声明（复用 CRC 模块） *************************/
+#include "CRC.h"
 
 /************************* 解析器函数声明 *************************/
 void Referee_Parser_Init(referee_parser_t *parser);

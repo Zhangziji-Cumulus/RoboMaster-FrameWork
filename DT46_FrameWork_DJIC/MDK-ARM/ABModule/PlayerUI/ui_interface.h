@@ -1,15 +1,12 @@
 //
-// Created by bismarckkk on 2024/2/17.
+// Created by bismarckkk on 2025/3/22.
+// Dynamic Edition
 //
 
 #ifndef UI_INTERFACE_H
 #define UI_INTERFACE_H
 
-#include <stdio.h>
 #include "ui_types.h"
-
-#include "cmsis_os2.h"   // 核心，定义osMutexId_t等类型
-#include "freertos.h"    // CubeMX自动生成的RTOS配置头
 #include "usart.h"
 
 extern int ui_self_id;
@@ -17,13 +14,27 @@ extern int ui_self_id;
 void print_message(const uint8_t* message, int length);
 
 // User Code Begin
-#define SEND_MESSAGE(message, len) HAL_UART_Transmit_DMA(&huart6, message, len); osDelay(10);
+#define SEND_MESSAGE(message, len) do { \
+    if (HAL_UART_Transmit(&huart6, message, len, 50) != HAL_OK) { \
+        huart6.gState = HAL_UART_STATE_READY; \
+    } \
+} while(0)
 // User Code End
+
+#define ui_set(obj, field, value) { \
+    obj->field = value; \
+    obj##_dirty = obj##_max_send_count; \
+}
 
 void ui_proc_1_frame(ui_1_frame_t *msg);
 void ui_proc_2_frame(ui_2_frame_t *msg);
 void ui_proc_5_frame(ui_5_frame_t *msg);
 void ui_proc_7_frame(ui_7_frame_t *msg);
 void ui_proc_string_frame(ui_string_frame_t *msg);
+void ui_proc_delete_frame(ui_delete_frame_t *msg);
+
+void ui_delete_layer(const uint8_t delete_type, const uint8_t layer);
+
+void ui_scan_and_send(const ui_interface_figure_t* ui_now_figures, uint8_t* ui_dirty_figure, const ui_interface_string_t* ui_now_strings, uint8_t* ui_dirty_string, int total_figures, int total_strings);
 
 #endif //UI_INTERFACE_H

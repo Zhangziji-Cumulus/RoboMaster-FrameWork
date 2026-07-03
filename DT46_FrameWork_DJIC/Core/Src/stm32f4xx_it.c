@@ -422,7 +422,7 @@ void USART6_IRQHandler(void)
 	
 #elif(BOARD_ID == CHASSIS_BOARD)	
 
-	Referee_UART_IRQHandler();
+Referee_UART_IRQHandler();
 	
 #endif	
 	

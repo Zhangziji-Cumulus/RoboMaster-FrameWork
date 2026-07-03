@@ -1,11 +1,14 @@
 //
-// Created by bismarckkk on 2024/2/17.
+// Created by bismarckkk on 2025/3/22.
+// Dynamic Edition
 //
 
 #ifndef UI_TYPES_H
 #define UI_TYPES_H
 
 // User Code Begin
+
+// #define MANUAL_DIRTY
 
 #if defined(__GNUC__) || defined(__CC_ARM)
 #define MESSAGE_PACKED __attribute__((packed))
@@ -99,5 +102,18 @@ typedef struct {
     ui_interface_string_t option;
     uint16_t crc16;
 } MESSAGE_PACKED ui_string_frame_t;
+
+typedef struct {
+    ui_frame_header_t header;
+    uint8_t delete_type;
+    uint8_t layer;
+    uint16_t crc16;
+} MESSAGE_PACKED ui_delete_frame_t;
+
+extern ui_string_frame_t _ui_string_frame;
+extern ui_1_frame_t _ui_1_frame;
+extern ui_2_frame_t _ui_2_frame;
+extern ui_5_frame_t _ui_5_frame;
+extern ui_7_frame_t _ui_7_frame;
 
 #endif //UI_TYPES_H

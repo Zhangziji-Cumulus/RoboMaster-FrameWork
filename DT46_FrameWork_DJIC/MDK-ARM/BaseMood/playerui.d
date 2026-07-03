@@ -56,7 +56,5 @@ basemood\playerui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdb
 basemood\playerui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\playerui.o: ABModule\PlayerUI\ui.h
 basemood\playerui.o: ABModule\PlayerUI\ui_interface.h
-basemood\playerui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 basemood\playerui.o: ABModule\PlayerUI\ui_types.h
-basemood\playerui.o: ABModule\PlayerUI\ui_g.h
-basemood\playerui.o: ABModule\PlayerUI\PlayerUIExtend.h
+basemood\playerui.o: ABModule\PlayerUI\ui_Spin.h
