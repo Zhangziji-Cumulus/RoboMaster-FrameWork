@@ -10,8 +10,8 @@ extern "C" {
 #endif
 
 #include "ui_interface.h"
-
 #include "ui_Spin.h"
+#include "ui_testAPI.h"
 
 #ifdef __cplusplus
 }

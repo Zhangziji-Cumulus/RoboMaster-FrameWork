@@ -1,0 +1,1 @@
+{"version":2,"data":{"default":{},"testAPI":{"0":{"type":"UiRound","id":0,"name":"AutoAimFlag","layer":0,"group":"AutoAim","r":null,"x":null,"y":null,"color":"white","lineWidth":null},"1":{"type":"UiRect","id":1,"name":"DetectionRange","layer":0,"group":"Ungroup","width":null,"height":null,"x":null,"y":null,"color":"green","lineWidth":null}}},"selected":"testAPI"}

@@ -2343,6 +2343,26 @@
               <FileType>5</FileType>
               <FilePath>.\ABModule\PlayerUI\ui_types.h</FilePath>
             </File>
+            <File>
+              <FileName>ui_testAPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_testAPI.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_testAPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_testAPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>DrawUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\DrawUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>DrawUI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\DrawUI.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

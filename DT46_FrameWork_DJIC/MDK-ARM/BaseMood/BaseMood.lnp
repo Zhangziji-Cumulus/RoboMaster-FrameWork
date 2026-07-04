@@ -84,6 +84,8 @@
 "basemood\playerui.o"
 "basemood\ui_interface.o"
 "basemood\ui_spin.o"
+"basemood\ui_testapi.o"
+"basemood\drawui.o"
 "basemood\crc.o"
 "basemood\autoaim.o"
 "basemood\autonavigation.o"
