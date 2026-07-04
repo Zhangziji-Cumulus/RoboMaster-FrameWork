@@ -2329,29 +2329,9 @@
               <FilePath>.\ABModule\PlayerUI\ui_interface.h</FilePath>
             </File>
             <File>
-              <FileName>ui_Spin.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_Spin.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_Spin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_Spin.h</FilePath>
-            </File>
-            <File>
               <FileName>ui_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\PlayerUI\ui_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>ui_testAPI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_testAPI.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_testAPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_testAPI.h</FilePath>
             </File>
             <File>
               <FileName>DrawUI.c</FileName>
@@ -2362,6 +2342,36 @@
               <FileName>DrawUI.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\PlayerUI\DrawUI.h</FilePath>
+            </File>
+            <File>
+              <FileName>DrawUI_Extend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\DrawUI_Extend.c</FilePath>
+            </File>
+            <File>
+              <FileName>DrawUI_Extend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\DrawUI_Extend.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_Chassis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_Chassis.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_Chassis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_Chassis.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui_ShootingFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_ShootingFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_ShootingFrame.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_ShootingFrame.h</FilePath>
             </File>
           </Files>
         </Group>

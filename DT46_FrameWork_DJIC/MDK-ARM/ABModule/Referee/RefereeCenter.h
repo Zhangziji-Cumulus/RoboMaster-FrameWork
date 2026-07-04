@@ -13,6 +13,7 @@
 
 /************************ 对外接口函数 ************************/
 void Referee_UART_IRQHandler(void);    // 串口空闲中断处理（放入对应串口中断中）
+const referee_all_data_t* Referee_GetData(void);  // 获取裁判系统只读数据指针
 
 
 #endif // REFEREE_CENTER_H

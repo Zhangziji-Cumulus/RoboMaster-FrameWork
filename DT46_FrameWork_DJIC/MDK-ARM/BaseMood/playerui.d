@@ -58,5 +58,11 @@ basemood\playerui.o: ABModule\PlayerUI\DrawUI.h
 basemood\playerui.o: ABModule\PlayerUI\ui.h
 basemood\playerui.o: ABModule\PlayerUI\ui_interface.h
 basemood\playerui.o: ABModule\PlayerUI\ui_types.h
-basemood\playerui.o: ABModule\PlayerUI\ui_Spin.h
-basemood\playerui.o: ABModule\PlayerUI\ui_testAPI.h
+basemood\playerui.o: ABModule\PlayerUI\ui_Chassis.h
+basemood\playerui.o: ABModule\PlayerUI\ui_ShootingFrame.h
+basemood\playerui.o: ./ABModule/Referee/RefereeCenter.h
+basemood\playerui.o: ./AAA/A_CommonSystem.h
+basemood\playerui.o: ./ABModule/Referee/RefereeProtocol.h
+basemood\playerui.o: .\ABModule\CRC\CRC.h
+basemood\playerui.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\playerui.o: ./AAA/A_CommonSystem.h

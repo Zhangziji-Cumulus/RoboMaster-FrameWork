@@ -2,6 +2,10 @@
 
 #if(BOARD_ID == CHASSIS_BOARD)	
 
+/************************* 静态全局变量声明 *************************/
+/* 裁判系统数据存储（仅本文件持有，外部通过 Referee_GetData() 只读访问） */
+static referee_all_data_t s_ref_data;
+
 /* 外部串口句柄声明，对应CubeMX生成的huart6 */
 extern UART_HandleTypeDef REFEREE_UART;
 
@@ -39,8 +43,9 @@ static void Referee_ProcessDelta(void);
  *********************************************************************/
 void Referee_Init(void)
 {
-    /* 1. 初始化协议解析状态机 */
-    Referee_Parser_Init(&g_ref_ins.Parser);
+    /* 1. 清空数据存储，初始化协议解析状态机（注入数据指针） */
+    memset(&s_ref_data, 0, sizeof(referee_all_data_t));
+    Referee_Parser_Init(&g_ref_ins.Parser, &s_ref_data);
 
     /* 2. 环形DMA参数初始化 */
     g_ref_ins.Tx_Seq = 0;
@@ -176,7 +181,7 @@ __attribute__((used)) void RefereeTask(void *argument)
         }
 
         /* 无任何新数据直接延时，释放CPU */
-        if (g_ref_data.update.all_flag == 0)
+        if (s_ref_data.update.all_flag == 0)
         {
             osDelay(1);
             continue;
@@ -184,6 +189,16 @@ __attribute__((used)) void RefereeTask(void *argument)
 
         osDelay(1);
     }
+}
+
+/**********************************************************************
+ * @brief  获取裁判系统数据只读指针
+ * @return const referee_all_data_t* 只读数据指针
+ * @note   外部模块通过此函数访问裁判系统数据，禁止直接写数据
+ *********************************************************************/
+const referee_all_data_t* Referee_GetData(void)
+{
+    return &s_ref_data;
 }
 
 #endif

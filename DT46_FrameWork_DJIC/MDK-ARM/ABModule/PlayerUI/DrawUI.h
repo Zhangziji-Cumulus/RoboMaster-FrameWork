@@ -21,6 +21,7 @@
 
 
 #include "ui.h"
+#include "RefereeCenter.h"
 
 
 void DrawUI_Init(void);

@@ -501,18 +501,15 @@ typedef struct
     ref_parse_state_e  state;
     uint16_t           data_cnt;
     referee_full_frame_t frame_buf;
+    referee_all_data_t *store;         // 外部数据存储指针（由使用者注入）
 } referee_parser_t;
-
-/************************* 全局变量声明 *************************/
-extern referee_all_data_t g_ref_data;
 
 /************************* CRC校验函数声明（复用 CRC 模块） *************************/
 #include "CRC.h"
 
 /************************* 解析器函数声明 *************************/
-void Referee_Parser_Init(referee_parser_t *parser);
+void Referee_Parser_Init(referee_parser_t *parser, referee_all_data_t *store);
 void Referee_Parser_Byte(referee_parser_t *parser, uint8_t byte);
-void Referee_Frame_Callback(referee_full_frame_t *frame); // 弱定义，用户可重写
 
 /************************* 打包发送函数声明（下位机发送用） *************************/
 // 通用打包函数：填充帧头+命令码+数据+CRC，返回整包长度

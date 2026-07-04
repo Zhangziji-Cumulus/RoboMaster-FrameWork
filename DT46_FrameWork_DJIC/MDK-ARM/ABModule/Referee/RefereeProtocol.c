@@ -4,20 +4,24 @@
 
 #define MIN(a, b)  ((a) < (b) ? (a) : (b))
 
-/************************* 全局数据 *************************/
-referee_all_data_t g_ref_data = {0};
+
 
 
 /************************* 解析器初始化 *************************/
-void Referee_Parser_Init(referee_parser_t *parser)
+void Referee_Parser_Init(referee_parser_t *parser, referee_all_data_t *store)
 {
     if (parser == NULL)
         return;
     parser->state = WAIT_SOF;
     parser->data_cnt = 0;
+    parser->store = store;
     memset(&parser->frame_buf, 0, sizeof(referee_full_frame_t));
-    memset(&g_ref_data, 0, sizeof(referee_all_data_t));
+    if (store != NULL)
+        memset(store, 0, sizeof(referee_all_data_t));
 }
+
+/************************* 帧数据派发（前向声明） *************************/
+static void Referee_DispatchFrame(referee_all_data_t *store, referee_full_frame_t *frame);
 
 /************************* 单字节解析状态机 *************************/
 void Referee_Parser_Byte(referee_parser_t *parser, uint8_t byte)
@@ -71,8 +75,9 @@ void Referee_Parser_Byte(referee_parser_t *parser, uint8_t byte)
 
             if (Verify_CRC16_Check_Sum(p_start, pack_len))
             {
-                // 校验通过，进入回调
-                Referee_Frame_Callback(&parser->frame_buf);
+                // 校验通过，写入数据存储
+                if (parser->store != NULL)
+                    Referee_DispatchFrame(parser->store, &parser->frame_buf);
             }
             // 重置状态机等待下一帧
             parser->state = WAIT_SOF;
@@ -88,13 +93,13 @@ void Referee_Parser_Byte(referee_parser_t *parser, uint8_t byte)
     }
 }
 
-/************************* 帧回调弱定义 *************************/
-__weak void Referee_Frame_Callback(referee_full_frame_t *frame)
+/************************* 帧数据派发 *************************/
+static void Referee_DispatchFrame(referee_all_data_t *store, referee_full_frame_t *frame)
 {
-    if (frame == NULL)
+    if (store == NULL || frame == NULL)
         return;
 
-    referee_all_data_t *all = &g_ref_data;
+    referee_all_data_t *all = store;
 
     switch (frame->cmd_id)
     {

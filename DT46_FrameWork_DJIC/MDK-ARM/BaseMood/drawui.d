@@ -40,5 +40,28 @@ basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-basemood\drawui.o: ABModule\PlayerUI\ui_Spin.h
-basemood\drawui.o: ABModule\PlayerUI\ui_testAPI.h
+basemood\drawui.o: ABModule\PlayerUI\ui_Chassis.h
+basemood\drawui.o: ABModule\PlayerUI\ui_ShootingFrame.h
+basemood\drawui.o: ./ABModule/Referee/RefereeCenter.h
+basemood\drawui.o: ./AAA/A_CommonSystem.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h
+basemood\drawui.o: ../Core/Inc/FreeRTOSConfig.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+basemood\drawui.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+basemood\drawui.o: ../Core/Inc/can.h
+basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
+basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\drawui.o: ./ABModule/Referee/RefereeProtocol.h
+basemood\drawui.o: .\ABModule\CRC\CRC.h
+basemood\drawui.o: ./AADrivers/Dual_Board_Transmit.h
+basemood\drawui.o: ./AAA/A_CommonSystem.h
+basemood\drawui.o: ./AAA/A_CommonSystem.h
