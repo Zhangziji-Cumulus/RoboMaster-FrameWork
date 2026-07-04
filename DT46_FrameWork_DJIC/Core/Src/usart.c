@@ -252,11 +252,12 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   {
   /* USER CODE BEGIN USART6_MspInit 0 */
 
-#if(BOARD_ID == GIMBAL_BOARD)
-  hdma_usart6_rx.Init.Mode = DMA_CIRCULAR;
-#elif(BOARD_ID == CHASSIS_BOARD)	
-  hdma_usart6_rx.Init.Mode = DMA_NORMAL;
-#endif
+// #if(BOARD_ID == GIMBAL_BOARD)
+//   hdma_usart6_rx.Init.Mode = DMA_CIRCULAR;
+// #elif(BOARD_ID == CHASSIS_BOARD)	
+//   hdma_usart6_rx.Init.Mode = DMA_NORMAL;
+// #endif
+
   /* USER CODE END USART6_MspInit 0 */
     /* USART6 clock enable */
     __HAL_RCC_USART6_CLK_ENABLE();
@@ -282,6 +283,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     hdma_usart6_rx.Init.MemInc = DMA_MINC_ENABLE;
     hdma_usart6_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_usart6_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_usart6_rx.Init.Mode = DMA_CIRCULAR;
     hdma_usart6_rx.Init.Priority = DMA_PRIORITY_HIGH;
     hdma_usart6_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_usart6_rx) != HAL_OK)

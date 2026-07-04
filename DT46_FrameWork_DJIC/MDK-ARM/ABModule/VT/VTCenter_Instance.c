@@ -1,5 +1,7 @@
 #include "VTCenter_Instance.h"
 
+#if(BOARD_ID == GIMBAL_BOARD)
+
 //==================== 私有函数声明 ====================
 static uint8_t VT_DecodeFrame(VT_Instance_t *inst, const uint8_t *frame_raw);
 static void VT_StateMachineHandle(VT_Instance_t *inst);
@@ -252,4 +254,4 @@ uint8_t VT_IsPowerLost(const VT_Instance_t *inst)
     return (inst->state == VT_STATE_POWER_LOST);
 }
 
-
+#endif

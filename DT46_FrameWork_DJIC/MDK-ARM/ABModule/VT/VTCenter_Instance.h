@@ -5,6 +5,8 @@
 #include "A_CommonSystem.h"
 #include <string.h>
 
+#if(BOARD_ID == GIMBAL_BOARD)
+
 #define VT_MAX_INST 2
 
 //==================== 通信状态枚举 ====================
@@ -98,5 +100,7 @@ void VT_UART_IRQHandler(VT_Instance_t *inst);
 // 状态判断接口
 uint8_t VT_IsDataValid(const VT_Instance_t *inst);
 uint8_t VT_IsPowerLost(const VT_Instance_t *inst);
+
+#endif
 
 #endif // VTCENTER_INSTANCE_H_

@@ -56,6 +56,8 @@ basemood\vtcenter.o: ../Core/Inc/usart.h
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\math.h
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 basemood\vtcenter.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
+basemood\vtcenter.o: ./AADrivers/Dual_board_Transmit.h
+basemood\vtcenter.o: ./AAA/A_CommonSystem.h
 basemood\vtcenter.o: ./ABModule/Buzzer/sound_effects_task.h
 basemood\vtcenter.o: ./ABModule/Buzzer/buzzer_TIM_init.h
 basemood\vtcenter.o: ./ABModule/Buzzer/bsp_buzzer_driver.h

@@ -27,20 +27,159 @@ Project File Date:  07/03/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin'
 Build target 'BaseMood'
-compiling PlayerUI.c...
-ABModule\PlayerUI\ui_Spin.h(30): warning:  #1295-D: Deprecated declaration ui_init_Spin - give arg types
-  void ui_init_Spin();
-ABModule\PlayerUI\ui_Spin.h(31): warning:  #1295-D: Deprecated declaration ui_update_Spin - give arg types
-  void ui_update_Spin();
-ABModule\PlayerUI\PlayerUI.c(30): warning:  #1-D: last line of file ends without a newline
-  }
-ABModule\PlayerUI\PlayerUI.c(5): warning:  #550-D: variable "remain_PlyerUITask"  was set but never used
-  static UBaseType_t remain_PlyerUITask;
-ABModule\PlayerUI\PlayerUI.c: 4 warnings, 0 errors
+compiling Dual_Board_Transmit_Task.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+AADrivers\Dual_Board_Transmit_Task.h(17): warning:  #1-D: last line of file ends without a newline
+  #endif // DUAL_BOARD_TRANSMIT_TASK_H_
+AADrivers\Dual_Board_Transmit_Task.c(12): warning:  #188-D: enumerated type mixed with another type
+  BoardTransmit_Gimbal_TX_t Tx  = {0};
+AADrivers\Dual_Board_Transmit_Task.c(72): warning:  #1-D: last line of file ends without a newline
+  #endif
+AADrivers\Dual_Board_Transmit_Task.c(14): warning:  #550-D: variable "remain_DualBoardTask"  was set but never used
+  static UBaseType_t remain_DualBoardTask;
+AADrivers\Dual_Board_Transmit_Task.c: 5 warnings, 0 errors
+compiling usart.c...
+compiling AutoAim.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Auto\AutoAim.c(210): warning:  #1-D: last line of file ends without a newline
+  #endif
+ACApplication\Auto\AutoAim.c: 2 warnings, 0 errors
+compiling Dual_board_Transmit.c...
+AADrivers\Dual_board_Transmit.c(13): warning:  #177-D: variable "g_rxTotalSize"  was declared but never referenced
+  static uint16_t g_rxTotalSize = 0;           // 期望的总大�?
+AADrivers\Dual_board_Transmit.c: 1 warning, 0 errors
+compiling CMDCenter.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\CMDCenter.c(77): warning:  #223-D: function "MyMath_Map_Range_Int16" declared implicitly
+          CMD.Chassis.FB   = MyMath_Map_Range_Int16(RC_Ctl->Stick.LY,RC_Ctl->Range.Min,RC_Ctl->Range.Max,-CMD_CTRL_RANGE,CMD_CTRL_RANGE);
+ABModule\CMDCenter.c(29): warning:  #550-D: variable "remain_CMDUpdateTask"  was set but never used
+  static UBaseType_t remain_CMDUpdateTask;
+ABModule\CMDCenter.c: 3 warnings, 0 errors
+compiling VTCenter.c...
+ABModule\VT\VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\VT\VTCenter.c(39): warning:  #177-D: variable "rc"  was declared but never referenced
+          VT03_Data_t *rc = VT_GET_DATA(VT03_Data_t, &vt03_inst);
+ABModule\VT\VTCenter.c(28): warning:  #550-D: variable "remain_VTTask"  was set but never used
+  static UBaseType_t remain_VTTask;
+ABModule\VT\VTCenter.c: 3 warnings, 0 errors
+compiling MotorCtrl_DJI.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\MotorCtrl_DJI.c: 1 warning, 0 errors
+compiling User_CallBack.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ABModule\User_CallBack.c(173): warning:  #1-D: last line of file ends without a newline
+  #endif
+ABModule\User_CallBack.c(28): warning:  #550-D: variable "g_dataValid"  was set but never used
+  static uint8_t g_dataValid = 0;
+ABModule\User_CallBack.c: 3 warnings, 0 errors
+compiling bsp_Init.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+AADrivers\bsp_Init.c(9): warning:  #223-D: function "can_filter_init" declared implicitly
+      can_filter_init();
+AADrivers\bsp_Init.c: 2 warnings, 0 errors
+compiling stm32f4xx_it.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+./ABModule/Referee/RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
+  #define UART_PARITY_NONE             0U
+./ABModule/Referee/RefereeProtocol.h(533): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREEPROTOCOL_H_
+./ABModule/Referee/RefereeCenter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREE_CENTER_H
+../Core/Src/stm32f4xx_it.c(313): warning:  #223-D: function "SBUS_UART_IRQHandler" declared implicitly
+  	SBUS_UART_IRQHandler();
+../Core/Src/stm32f4xx_it.c: 5 warnings, 0 errors
+compiling RefereeCenter.c...
+ABModule\Referee\RefereeProtocol.h(22): warning:  #47-D: incompatible redefinition of macro "UART_PARITY_NONE"  (declared at line 290 of "../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h")
+  #define UART_PARITY_NONE             0U
+ABModule\Referee\RefereeProtocol.h(533): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREEPROTOCOL_H_
+ABModule\Referee\RefereeCenter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif // REFEREE_CENTER_H
+ABModule\Referee\RefereeCenter.c(189): warning:  #1-D: last line of file ends without a newline
+  #endif
+ABModule\Referee\RefereeCenter.c: 4 warnings, 0 errors
+compiling main.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+../Core/Src/main.c(110): warning:  #223-D: function "BSP_Init" declared implicitly
+  	BSP_Init();
+../Core/Src/main.c: 2 warnings, 0 errors
+compiling Chassis_Task.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Chassis\Chassis_Task.c(20): warning:  #550-D: variable "remain_ChassisTask"  was set but never used
+  static UBaseType_t remain_ChassisTask;
+ACApplication\Chassis\Chassis_Task.c: 2 warnings, 0 errors
+compiling Chassis_leg.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Chassis\Chassis_leg.c: 1 warning, 0 errors
+compiling Chassis_Mecanu.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Chassis\Chassis_Mecanu.h(89): warning:  #1-D: last line of file ends without a newline
+  #endif // CHASSIS_MECANU_H_
+ACApplication\Chassis\Chassis_Mecanu.c(256): warning:  #1-D: last line of file ends without a newline
+  #endif
+ACApplication\Chassis\Chassis_Mecanu.c: 3 warnings, 0 errors
+compiling AutoAim_Task.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Auto\AutoAim_Task.h(7): warning:  #1-D: last line of file ends without a newline
+  #endif // AUTO_TASK_H_
+ACApplication\Auto\AutoAim_Task.c(15): warning:  #550-D: variable "remain_AutoAimTask"  was set but never used
+  static UBaseType_t remain_AutoAimTask;
+ACApplication\Auto\AutoAim_Task.c: 3 warnings, 0 errors
+compiling Shooting_Task.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Shooting\Shooting_Task.c(19): warning:  #550-D: variable "remain_ShootingTask"  was set but never used
+  static UBaseType_t remain_ShootingTask;
+ACApplication\Shooting\Shooting_Task.c: 2 warnings, 0 errors
+compiling Gimbal_Hero.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Gimbal\Gimbal_Hero.c: 1 warning, 0 errors
+compiling Gimbal_Task.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Gimbal\Gimbal_Task.h(24): warning:  #1-D: last line of file ends without a newline
+  #endif // GIMBAL_TASK_H_
+ACApplication\Gimbal\Gimbal_Task.c(19): warning:  #550-D: variable "remain_GimbalTask"  was set but never used
+  static UBaseType_t remain_GimbalTask;
+ACApplication\Gimbal\Gimbal_Task.c: 3 warnings, 0 errors
+compiling Shooting_Hero.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Shooting\Shooting_Hero.c(62): warning:  #174-D: expression has no effect
+      Shooting_State_Machine.Push_Stroke == PUSHPL;
+ACApplication\Shooting\Shooting_Hero.c(351): warning:  #223-D: function "Dual_Board_TX_Set_LoadStartFlag" declared implicitly
+          Dual_Board_TX_Set_LoadStartFlag(1);
+ACApplication\Shooting\Shooting_Hero.c(357): warning:  #223-D: function "Dual_Board_TX_Set_LoadStartFlag" declared implicitly
+  				 Dual_Board_TX_Set_LoadStartFlag(0);//发送清零指�?
+ACApplication\Shooting\Shooting_Hero.c(278): warning:  #177-D: function "PuahRod_Update_Target"  was declared but never referenced
+  static void PuahRod_Update_Target(void)
+ACApplication\Shooting\Shooting_Hero.c: 5 warnings, 0 errors
+compiling Load_Task.c...
+./ABModule/VT/VTCenter_Instance.h(106): warning:  #1-D: last line of file ends without a newline
+  #endif // VTCENTER_INSTANCE_H_
+ACApplication\Shooting\Load_Task.c(23): warning:  #223-D: function "Shooting_Init" declared implicitly
+    Shooting_Init();
+ACApplication\Shooting\Load_Task.c(19): warning:  #550-D: variable "remain_LoadTask"  was set but never used
+  static UBaseType_t remain_LoadTask;
+ACApplication\Shooting\Load_Task.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=57524 RO-data=3652 RW-data=632 ZI-data=34848  
+Program Size: Code=56904 RO-data=2888 RW-data=608 ZI-data=36472  
 FromELF: creating hex file...
-"BaseMood\BaseMood.axf" - 0 Error(s), 4 Warning(s).
+"BaseMood\BaseMood.axf" - 0 Error(s), 54 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -64,7 +203,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:38
 </pre>
 </body>
 </html>

@@ -1,6 +1,8 @@
 #include "VTCenter.h"
 #include "sound_effects_task.h"
 
+#if(BOARD_ID == GIMBAL_BOARD)
+
 //========= VT03 实例资源 =========
 static uint8_t vt03_rx_buf[64];
 static VT03_Data_t vt03_data;
@@ -37,11 +39,11 @@ __attribute__((used)) void VTTask(void *argument)
         VT03_Data_t *rc = VT_GET_DATA(VT03_Data_t, &vt03_inst);
 
         //测试键盘功能是否正常
-        //
-        // if(VT03_KeyTest(&vt03_data) || VT03_MouseTest(&vt03_data))
-        // {
-        //     buzzer->sound_effect = B_;
-        // }
+        
+        if(VT03_KeyTest(&vt03_data) || VT03_MouseTest(&vt03_data))
+        {
+            buzzer->sound_effect = B_;
+        }
 
         // 栈余量监控
         remain_VTTask = uxTaskGetStackHighWaterMark(NULL);
@@ -49,5 +51,5 @@ __attribute__((used)) void VTTask(void *argument)
     }
 }
 
-
+#endif
 
