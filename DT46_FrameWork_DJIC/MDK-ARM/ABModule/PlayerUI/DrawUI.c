@@ -1,7 +1,10 @@
 #include "DrawUI.h"
-#include "A_CommonSystem.h"
 
-static const referee_all_data_t* ReFeree_DrawUI;
+
+static const referee_all_data_t* Referee_DrawUI;
+static const float* INS_angle_DrawUI;
+static const CMD_t* CMD_DrawUI;
+
 
 //使用这个函数来更新交互、数据
 static void Update_Data(void);
@@ -12,25 +15,38 @@ void DrawUI_Init(void)
 {
     osDelay(1000);
 
-    ReFeree_DrawUI = Referee_GetData();
-    ui_self_id = ReFeree_DrawUI->_robot_status.robot_id; 
+    //获取机器人ID
+    Referee_DrawUI = Referee_GetData();
+    ui_self_id = Referee_DrawUI->_robot_status.robot_id; 
+
+    //初始化UI
+    ui_init_static_Ungroup();
+    osDelay(100);
+    ui_update_static_Ungroup();
+    osDelay(100);
     ui_init_ShootingFrame();
 
-    ui_init_Chassis();
+
     //ui_init_Chassis();
+
+
+
 }
 
 void DrawUI_Update(void)
 {
+    //更新动态数据
     DrawUI_Dynamic();
 
+    //更新UI
+    //ui_update_static_Ungroup();
+
     ui_update_ShootingFrame();
+    //ui_update_Chassis();
 
-    ui_update_Chassis();
+    //自动重初始化UI
+    DrawUI_ReInit(5000);
 
-    DrawUI_ReInit(10000);
-
-    
 }
 
 //重新初始化UI手动触发、自动触发（每隔 timems 毫秒执行一次，基于 HAL 滴答）
@@ -43,22 +59,35 @@ static void DrawUI_ReInit(uint32_t timems)
         return;
     last_tick = now;
 
-    ReFeree_DrawUI = Referee_GetData();
-    ui_self_id = ReFeree_DrawUI->_robot_status.robot_id; 
+    Referee_DrawUI = Referee_GetData();
+    ui_self_id = Referee_DrawUI->_robot_status.robot_id; 
+    
+    ui_init_static_Ungroup();
+    osDelay(100);
+    ui_update_static_Ungroup();
+    osDelay(100);
     ui_init_ShootingFrame();
-    ui_init_Chassis();
 }
 
 //使用这个函数来更新交互、数据
 static void Update_Data(void)
 {
-    ReFeree_DrawUI = Referee_GetData();
+    //获取裁判系统数据
+    Referee_DrawUI = Referee_GetData();
+    //获取地盘控制板姿态
+    INS_angle_DrawUI = IMU_Get_point();
+    //获取控制指令
+    CMD_DrawUI =  CMD_Get_point();
 } 
+
+float Yaw;
 
 //使用这个函数来更新动态值
 static void DrawUI_Dynamic(void)
 {
     Update_Data();
+
+    Yaw = INS_angle_DrawUI[0];
 
     static uint16_t i;
 
@@ -82,5 +111,19 @@ static void DrawUI_Dynamic(void)
     }
     i++;
 
+    //绘制地盘方向
+    {
+        float out_x, out_y;
+        RotateLineUI(
+            ui_Chassis_Ungroup_NewLine->start_x,
+            ui_Chassis_Ungroup_NewLine->start_y,
+            50,
+            Yaw,
+            &out_x,
+            &out_y
+        );
+        ui_Chassis_Ungroup_NewLine->end_x = out_x;
+        ui_Chassis_Ungroup_NewLine->end_y = out_y;
+    }
 }
 

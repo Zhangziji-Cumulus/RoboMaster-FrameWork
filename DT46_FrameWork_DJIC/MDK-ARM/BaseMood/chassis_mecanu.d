@@ -57,6 +57,8 @@ basemood\chassis_mecanu.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\includ
 basemood\chassis_mecanu.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\chassis_mecanu.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\chassis_mecanu.o: ./AAA/A_CommonSystem.h
+basemood\chassis_mecanu.o: ./AADrivers/IMU/IMU_Get.h
+basemood\chassis_mecanu.o: ./AAA/A_CommonSystem.h
 basemood\chassis_mecanu.o: ./ABModule/PID_Lib.h
 basemood\chassis_mecanu.o: ./AAA/A_CommonSystem.h
 basemood\chassis_mecanu.o: ./ABModule/Math_Lib.h
@@ -68,8 +70,6 @@ basemood\chassis_mecanu.o: ./AAA/A_CommonSystem.h
 basemood\chassis_mecanu.o: ./ABModule/VT/VTCenter.h
 basemood\chassis_mecanu.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\chassis_mecanu.o: ./ABModule/VT/VT03Protocol.h
-basemood\chassis_mecanu.o: ./AAA/A_CommonSystem.h
-basemood\chassis_mecanu.o: ./AADrivers/IMU/IMU_Get.h
 basemood\chassis_mecanu.o: ./AAA/A_CommonSystem.h
 basemood\chassis_mecanu.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\chassis_mecanu.o: ./ABModule/CMDCenter.h
@@ -87,4 +87,5 @@ basemood\chassis_mecanu.o: ./ACApplication/APP_Config.h
 basemood\chassis_mecanu.o: ./ACApplication/Auto/Auto_Config.h
 basemood\chassis_mecanu.o: ./ACApplication/Auto/AutoAim.h
 basemood\chassis_mecanu.o: ./AAA/A_MCommon.h
+basemood\chassis_mecanu.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\chassis_mecanu.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h

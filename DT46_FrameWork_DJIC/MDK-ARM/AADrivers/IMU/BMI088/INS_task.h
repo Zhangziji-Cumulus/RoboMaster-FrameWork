@@ -177,3 +177,4 @@ extern const fp32 *get_accel_data_point(void);
 extern const fp32 *get_mag_data_point(void);
 
 #endif
+

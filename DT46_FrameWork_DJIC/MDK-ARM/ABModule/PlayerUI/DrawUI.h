@@ -22,7 +22,9 @@
 
 #include "ui.h"
 #include "RefereeCenter.h"
-
+#include "DrawUI_Extend.h"
+#include "A_CommonSystem.h"
+#include "A_MCommon.h"
 
 void DrawUI_Init(void);
 

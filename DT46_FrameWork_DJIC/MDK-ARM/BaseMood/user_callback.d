@@ -90,3 +90,4 @@ basemood\user_callback.o: ./ACApplication/APP_Config.h
 basemood\user_callback.o: ./ACApplication/Auto/Auto_Config.h
 basemood\user_callback.o: ./ACApplication/Auto/AutoAim.h
 basemood\user_callback.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\user_callback.o: ./AADrivers/IMU/BMI088/INS_task.h

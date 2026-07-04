@@ -2,6 +2,7 @@
 #define AUTOAIM_H_
 
 #include "A_MCommon.h"
+#include "INS_task.h"
 
 
 /* 自瞄结构体自己对齐可以确定结构体的大小 */

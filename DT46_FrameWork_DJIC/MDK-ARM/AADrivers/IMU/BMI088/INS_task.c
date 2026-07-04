@@ -180,7 +180,6 @@ const float* IMU_Get_point(void)
 {
   return INS_angle;
 }
-
 #endif
 
 /**

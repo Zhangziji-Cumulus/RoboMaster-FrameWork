@@ -57,6 +57,8 @@ basemood\autoaim.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbo
 basemood\autoaim.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\autoaim.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\autoaim.o: ./AAA/A_CommonSystem.h
+basemood\autoaim.o: ./AADrivers/IMU/IMU_Get.h
+basemood\autoaim.o: ./AAA/A_CommonSystem.h
 basemood\autoaim.o: ./ABModule/PID_Lib.h
 basemood\autoaim.o: ./AAA/A_CommonSystem.h
 basemood\autoaim.o: ./ABModule/Math_Lib.h
@@ -68,8 +70,6 @@ basemood\autoaim.o: ./AAA/A_CommonSystem.h
 basemood\autoaim.o: ./ABModule/VT/VTCenter.h
 basemood\autoaim.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\autoaim.o: ./ABModule/VT/VT03Protocol.h
-basemood\autoaim.o: ./AAA/A_CommonSystem.h
-basemood\autoaim.o: ./AADrivers/IMU/IMU_Get.h
 basemood\autoaim.o: ./AAA/A_CommonSystem.h
 basemood\autoaim.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\autoaim.o: ./ABModule/CMDCenter.h
@@ -87,3 +87,4 @@ basemood\autoaim.o: ./ACApplication/APP_Config.h
 basemood\autoaim.o: ./ACApplication/Auto/Auto_Config.h
 basemood\autoaim.o: ./ACApplication/Auto/AutoAim.h
 basemood\autoaim.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\autoaim.o: ./AADrivers/IMU/BMI088/INS_task.h

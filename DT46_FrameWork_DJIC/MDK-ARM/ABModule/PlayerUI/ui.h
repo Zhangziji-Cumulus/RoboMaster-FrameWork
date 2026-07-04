@@ -13,6 +13,7 @@ extern "C" {
 
 #include "ui_Chassis.h"
 #include "ui_ShootingFrame.h"
+#include "ui_static.h"
 
 #ifdef __cplusplus
 }

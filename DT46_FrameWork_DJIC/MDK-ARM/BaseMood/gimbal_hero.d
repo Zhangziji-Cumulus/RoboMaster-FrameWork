@@ -57,6 +57,8 @@ basemood\gimbal_hero.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\s
 basemood\gimbal_hero.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\gimbal_hero.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
+basemood\gimbal_hero.o: ./AADrivers/IMU/IMU_Get.h
+basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
 basemood\gimbal_hero.o: ./ABModule/PID_Lib.h
 basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
 basemood\gimbal_hero.o: ./ABModule/Math_Lib.h
@@ -68,8 +70,6 @@ basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
 basemood\gimbal_hero.o: ./ABModule/VT/VTCenter.h
 basemood\gimbal_hero.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\gimbal_hero.o: ./ABModule/VT/VT03Protocol.h
-basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
-basemood\gimbal_hero.o: ./AADrivers/IMU/IMU_Get.h
 basemood\gimbal_hero.o: ./AAA/A_CommonSystem.h
 basemood\gimbal_hero.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\gimbal_hero.o: ./ABModule/CMDCenter.h
@@ -87,4 +87,5 @@ basemood\gimbal_hero.o: ./ACApplication/APP_Config.h
 basemood\gimbal_hero.o: ./ACApplication/Auto/Auto_Config.h
 basemood\gimbal_hero.o: ./ACApplication/Auto/AutoAim.h
 basemood\gimbal_hero.o: ./AAA/A_MCommon.h
+basemood\gimbal_hero.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\gimbal_hero.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
