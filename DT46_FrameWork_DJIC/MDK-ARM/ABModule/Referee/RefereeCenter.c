@@ -75,6 +75,15 @@ void Referee_UART_IRQHandler(void)
         /* 清除空闲中断标志 */
         __HAL_UART_CLEAR_IDLEFLAG(&REFEREE_UART);
 
+        /* 清除硬件错误标志（ORE/NE/FE/PE），防止错误累积锁死UART */
+        if (__HAL_UART_GET_FLAG(&REFEREE_UART, UART_FLAG_ORE | UART_FLAG_NE |
+                                                UART_FLAG_FE | UART_FLAG_PE) != RESET)
+        {
+            __HAL_UART_CLEAR_FLAG(&REFEREE_UART, UART_FLAG_ORE | UART_FLAG_NE |
+                                                  UART_FLAG_FE | UART_FLAG_PE);
+            (void)REFEREE_UART.Instance->DR;  /* 读DR完成硬件清除 */
+        }
+
         /* 计算本次实际接收字节数 = 缓冲区总长 - DMA剩余传输计数 */
         uint16_t recv_len = REFEREE_RX_BUF_SIZE - __HAL_DMA_GET_COUNTER(REFEREE_UART.hdmarx);
 
@@ -86,6 +95,9 @@ void Referee_UART_IRQHandler(void)
 
         /* 2. 切换DMA目标缓冲区（乒乓切换） */
         g_ref_ins.Rx_ActiveBuf ^= 1U;
+
+        /* 2.5 复位UART状态机，允许重新配置DMA */
+        HAL_UART_AbortReceive(&REFEREE_UART);
 
         /* 3. 重启DMA接收，硬件写入新缓冲区 */
         HAL_UART_Receive_DMA(&REFEREE_UART,
