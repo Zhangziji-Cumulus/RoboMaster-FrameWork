@@ -28,24 +28,22 @@ void DrawUI_Init(void)
         所以字符串尽量是静态的
     */
 
-    // ui_init_Static_Text1();
-    // osDelay(30);
-    // ui_init_Static_Text2();
-    // osDelay(30);
-    // ui_init_Static_Text3();
-    // osDelay(30);
-    // ui_init_Static_Text4();
-    // osDelay(30);
-    // ui_init_Static_Text5();
-    // osDelay(30);
-    // ui_init_Static_Graphic();
-    // osDelay(30);
+    ui_init_Static_Text1();
+    osDelay(30);
+    ui_init_Static_Text2();
+    osDelay(30);
+    ui_init_Static_Text3();
+    osDelay(30);
+    ui_init_Static_Text4();
+    osDelay(30);
+    ui_init_Static_Text5();
+    osDelay(30);
+    ui_init_Static_Graphic();
+    osDelay(50);
 
     //初始化动态UI
     ui_init_Dynamic();
     osDelay(50);
-
-
 }
 
 void DrawUI_Update(void)
@@ -56,7 +54,7 @@ void DrawUI_Update(void)
     ui_update_Dynamic();
 
     //自动重初始化UI
-    DrawUI_ReInit(5000);
+    DrawUI_ReInit(2000);
 
 }
 
@@ -87,10 +85,11 @@ static void DrawUI_ReInit(uint32_t timems)
     // ui_init_Static_Text5();
     // osDelay(30);
     // ui_init_Static_Graphic();
-    // osDelay(30);
-    
+    // osDelay(200);
+
     ui_init_Dynamic();
-    osDelay(50);
+    
+    //osDelay(50);
 }
 
 //使用这个函数来更新交互、数据
