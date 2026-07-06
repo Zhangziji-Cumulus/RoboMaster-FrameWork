@@ -11,8 +11,7 @@ extern "C" {
 
 #include "ui_interface.h"
 
-#include "ui_Chassis.h"
-#include "ui_ShootingFrame.h"
+#include "ui_Dynamic.h"
 #include "ui_static.h"
 
 #ifdef __cplusplus

@@ -24,7 +24,7 @@ uint8_t ui_Dynamic_max_send_count[TOTAL_FIGURE + TOTAL_STRING] = {
 ui_interface_figure_t ui_Dynamic_last_figures[TOTAL_FIGURE];
 #endif
 
-#define SCAN_AND_SEND() ui_scan_and_send(ui_g_now_figures, ui_g_dirty_figure, NULL, NULL, TOTAL_FIGURE, TOTAL_STRING)
+#define SCAN_AND_SEND() ui_scan_and_send(ui_Dynamic_now_figures, ui_Dynamic_dirty_figure, NULL, NULL, TOTAL_FIGURE, TOTAL_STRING)
 
 void ui_init_Dynamic() {
     ui_Dynamic_Fire_AutoAimFlag->figure_type = 2;

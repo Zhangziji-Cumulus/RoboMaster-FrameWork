@@ -25,10 +25,11 @@
 
 /* 对外函数 */
 
-//基础函数
+//线条旋转基础函数
 void RotateLineByStart(float x0, float y0, float len, double angle, float base_angle_deg, uint8_t reverse_dir, float *out_x, float *out_y);
-
-//封装部分功能函数
+//线条旋转封装部分功能函数
 void RotateLineUI(float x0, float y0, float len, double angle, float *out_x, float *out_y);
+//角度插值：按百分比计算角度范围内的终点角度
+float LerpAngle(float start_deg, float range_deg, float percent, int normalize);
 
 #endif // DRAWUI_EXTEND_H_

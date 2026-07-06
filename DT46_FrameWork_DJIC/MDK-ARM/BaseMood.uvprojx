@@ -2354,34 +2354,24 @@
               <FilePath>.\ABModule\PlayerUI\DrawUI_Extend.h</FilePath>
             </File>
             <File>
-              <FileName>ui_Chassis.c</FileName>
+              <FileName>ui_Dynamic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_Chassis.c</FilePath>
+              <FilePath>.\ABModule\PlayerUI\ui_Dynamic.c</FilePath>
             </File>
             <File>
-              <FileName>ui_Chassis.h</FileName>
+              <FileName>ui_Dynamic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_Chassis.h</FilePath>
+              <FilePath>.\ABModule\PlayerUI\ui_Dynamic.h</FilePath>
             </File>
             <File>
-              <FileName>ui_ShootingFrame.c</FileName>
+              <FileName>ui_Static.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_ShootingFrame.c</FilePath>
+              <FilePath>.\ABModule\PlayerUI\ui_Static.c</FilePath>
             </File>
             <File>
-              <FileName>ui_ShootingFrame.h</FileName>
+              <FileName>ui_Static.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_ShootingFrame.h</FilePath>
-            </File>
-            <File>
-              <FileName>ui_static.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_static.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_static.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ABModule\PlayerUI\ui_static.h</FilePath>
+              <FilePath>.\ABModule\PlayerUI\ui_Static.h</FilePath>
             </File>
           </Files>
         </Group>

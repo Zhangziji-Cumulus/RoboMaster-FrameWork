@@ -65,3 +65,28 @@ void RotateLineUI(float x0, float y0, float len, double angle, float *out_x, flo
     RotateLineByStart(x0, y0, len, angle, 90.0f,0, out_x, out_y);
 }
 
+/**
+ * @brief 角度插值：根据起始角度、角度范围、百分比计算终点角度
+ * @param start_deg 初始角度 0~360 float
+ * @param range_deg 总旋转角度范围，正数顺时针，负数逆时针
+ * @param percent 百分比 0~100，支持超100或小于0
+ * @param normalize 1：结果限制在 [0, 360)；0：不做角度归一
+ * @return 目标末位置角度
+ */
+float LerpAngle(float start_deg, float range_deg, float percent, int normalize)
+{
+    // 百分比转为0~1系数
+    float scale = percent / 100.0f;
+    float end = start_deg + range_deg * scale;
+
+    // 需要归一化时，内置取模处理
+    if (normalize)
+    {
+        end = fmodf(end, 360.0f);
+        if (end < 0.0f)
+        {
+            end += 360.0f;
+        }
+    }
+    return end;
+}

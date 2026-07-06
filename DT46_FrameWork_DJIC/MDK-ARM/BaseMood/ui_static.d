@@ -1,4 +1,4 @@
-basemood\ui_static.o: ABModule\PlayerUI\ui_static.c
+basemood\ui_static.o: ABModule\PlayerUI\ui_Static.c
 basemood\ui_static.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\ui_static.o: ABModule\PlayerUI\ui_interface.h
 basemood\ui_static.o: ABModule\PlayerUI\ui_types.h

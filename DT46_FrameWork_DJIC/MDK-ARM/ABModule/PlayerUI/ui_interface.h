@@ -14,11 +14,14 @@ extern int ui_self_id;
 void print_message(const uint8_t* message, int length);
 
 // User Code Begin
-#define SEND_MESSAGE(message, len) do { \
-    if (HAL_UART_Transmit(&huart6, message, len, 50) != HAL_OK) { \
-        huart6.gState = HAL_UART_STATE_READY; \
-    } \
-} while(0)
+// #define SEND_MESSAGE(message, len) do { \
+//     if (HAL_UART_Transmit(&huart6, message, len, 50) != HAL_OK) { \
+//         huart6.gState = HAL_UART_STATE_READY; \
+//     } \
+// } while(0)
+
+#define SEND_MESSAGE(message, len) HAL_UART_Transmit_DMA(&huart6, message, len); osDelay(10);
+
 // User Code End
 
 #define ui_set(obj, field, value) { \
