@@ -7,13 +7,18 @@
 #include "ui_interface.h"
 #include "ui_Dynamic.h"
 
-#define TOTAL_FIGURE 4
+#define TOTAL_FIGURE 9
 #define TOTAL_STRING 0
 
 ui_interface_figure_t ui_Dynamic_now_figures[TOTAL_FIGURE];
 uint8_t ui_Dynamic_dirty_figure[TOTAL_FIGURE];
 
 uint8_t ui_Dynamic_max_send_count[TOTAL_FIGURE + TOTAL_STRING] = {
+    1,
+    1,
+    1,
+    1,
+    1,
     1,
     1,
     1,
@@ -27,14 +32,14 @@ ui_interface_figure_t ui_Dynamic_last_figures[TOTAL_FIGURE];
 #define SCAN_AND_SEND() ui_scan_and_send(ui_Dynamic_now_figures, ui_Dynamic_dirty_figure, NULL, NULL, TOTAL_FIGURE, TOTAL_STRING)
 
 void ui_init_Dynamic() {
-    ui_Dynamic_Fire_AutoAimFlag->figure_type = 2;
-    ui_Dynamic_Fire_AutoAimFlag->operate_type = 1;
-    ui_Dynamic_Fire_AutoAimFlag->layer = 0;
-    ui_Dynamic_Fire_AutoAimFlag->color = 8;
-    ui_Dynamic_Fire_AutoAimFlag->start_x = 960;
-    ui_Dynamic_Fire_AutoAimFlag->start_y = 540;
-    ui_Dynamic_Fire_AutoAimFlag->width = 2;
-    ui_Dynamic_Fire_AutoAimFlag->r = 200;
+    ui_Dynamic_Fire_AutoAimLock->figure_type = 2;
+    ui_Dynamic_Fire_AutoAimLock->operate_type = 1;
+    ui_Dynamic_Fire_AutoAimLock->layer = 0;
+    ui_Dynamic_Fire_AutoAimLock->color = 8;
+    ui_Dynamic_Fire_AutoAimLock->start_x = 960;
+    ui_Dynamic_Fire_AutoAimLock->start_y = 540;
+    ui_Dynamic_Fire_AutoAimLock->width = 2;
+    ui_Dynamic_Fire_AutoAimLock->r = 200;
 
     ui_Dynamic_Chassis_SuperPower->figure_type = 4;
     ui_Dynamic_Chassis_SuperPower->operate_type = 1;
@@ -58,14 +63,61 @@ void ui_init_Dynamic() {
     ui_Dynamic_Chassis_ChassisFront->end_x = 250;
     ui_Dynamic_Chassis_ChassisFront->end_y = 749;
 
+    ui_Dynamic_Fire_AutoAimFlag->figure_type = 2;
+    ui_Dynamic_Fire_AutoAimFlag->operate_type = 1;
+    ui_Dynamic_Fire_AutoAimFlag->layer = 0;
+    ui_Dynamic_Fire_AutoAimFlag->color = 8;
+    ui_Dynamic_Fire_AutoAimFlag->start_x = 1390;
+    ui_Dynamic_Fire_AutoAimFlag->start_y = 425;
+    ui_Dynamic_Fire_AutoAimFlag->width = 10;
+    ui_Dynamic_Fire_AutoAimFlag->r = 10;
+
     ui_Dynamic_Fire_FireFlag->figure_type = 2;
     ui_Dynamic_Fire_FireFlag->operate_type = 1;
     ui_Dynamic_Fire_FireFlag->layer = 0;
     ui_Dynamic_Fire_FireFlag->color = 8;
-    ui_Dynamic_Fire_FireFlag->start_x = 1380;
-    ui_Dynamic_Fire_FireFlag->start_y = 400;
+    ui_Dynamic_Fire_FireFlag->start_x = 1348;
+    ui_Dynamic_Fire_FireFlag->start_y = 334;
     ui_Dynamic_Fire_FireFlag->width = 10;
     ui_Dynamic_Fire_FireFlag->r = 10;
+
+    ui_Dynamic_Fire_LoadFlag->figure_type = 2;
+    ui_Dynamic_Fire_LoadFlag->operate_type = 1;
+    ui_Dynamic_Fire_LoadFlag->layer = 0;
+    ui_Dynamic_Fire_LoadFlag->color = 8;
+    ui_Dynamic_Fire_LoadFlag->start_x = 1300;
+    ui_Dynamic_Fire_LoadFlag->start_y = 250;
+    ui_Dynamic_Fire_LoadFlag->width = 10;
+    ui_Dynamic_Fire_LoadFlag->r = 10;
+
+    ui_Dynamic_Fire_SpinFlag->figure_type = 2;
+    ui_Dynamic_Fire_SpinFlag->operate_type = 1;
+    ui_Dynamic_Fire_SpinFlag->layer = 0;
+    ui_Dynamic_Fire_SpinFlag->color = 8;
+    ui_Dynamic_Fire_SpinFlag->start_x = 250;
+    ui_Dynamic_Fire_SpinFlag->start_y = 700;
+    ui_Dynamic_Fire_SpinFlag->width = 15;
+    ui_Dynamic_Fire_SpinFlag->r = 10;
+
+    ui_Dynamic_Gimbal_PitchLine->figure_type = 0;
+    ui_Dynamic_Gimbal_PitchLine->operate_type = 1;
+    ui_Dynamic_Gimbal_PitchLine->layer = 0;
+    ui_Dynamic_Gimbal_PitchLine->color = 0;
+    ui_Dynamic_Gimbal_PitchLine->start_x = 1669;
+    ui_Dynamic_Gimbal_PitchLine->start_y = 700;
+    ui_Dynamic_Gimbal_PitchLine->width = 8;
+    ui_Dynamic_Gimbal_PitchLine->end_x = 1620;
+    ui_Dynamic_Gimbal_PitchLine->end_y = 700;
+
+    ui_Dynamic_Gimbal_PitchAngle->figure_type = 5;
+    ui_Dynamic_Gimbal_PitchAngle->operate_type = 1;
+    ui_Dynamic_Gimbal_PitchAngle->layer = 0;
+    ui_Dynamic_Gimbal_PitchAngle->color = 8;
+    ui_Dynamic_Gimbal_PitchAngle->start_x = 1734;
+    ui_Dynamic_Gimbal_PitchAngle->start_y = 710;
+    ui_Dynamic_Gimbal_PitchAngle->width = 3;
+    ui_Dynamic_Gimbal_PitchAngle->font_size = 25;
+    ui_Dynamic_Gimbal_PitchAngle->number = 12345;
 
     uint32_t idx = 0;
     for (int i = 0; i < TOTAL_FIGURE; i++) {

@@ -66,6 +66,22 @@ void RotateLineUI(float x0, float y0, float len, double angle, float *out_x, flo
 }
 
 /**
+ * @brief 适配UI绘图场景的简化封装函数
+ * @brief 固定配置：基准0°(水平向左)、旋转方向反转(正弧度向左，负弧度向右)
+ * @param x0 线段起点X fp32
+ * @param y0 线段起点Y fp32
+ * @param len 线段长度
+ * @param angle 输入旋转Yaw，单位：弧度 rad
+ * @param out_x 输出末端X fp32
+ * @param out_y 输出末端Y fp32
+ * @note 直接替换原有调用，无需额外传入基准角与方向标志，简化业务代码
+ */
+void PitchLineUI(float x0, float y0, float len, double angle, float *out_x, float *out_y)
+{
+    RotateLineByStart(x0, y0, len, angle, 180.0f,0, out_x, out_y);
+}
+
+/**
  * @brief 角度插值：根据起始角度、角度范围、百分比计算终点角度
  * @param start_deg 初始角度 0~360 float
  * @param range_deg 总旋转角度范围，正数顺时针，负数逆时针

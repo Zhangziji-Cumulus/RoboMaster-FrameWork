@@ -2373,6 +2373,16 @@
               <FileType>5</FileType>
               <FilePath>.\ABModule\PlayerUI\ui_Static.h</FilePath>
             </File>
+            <File>
+              <FileName>ui_Dynamic2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_Dynamic2.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_Dynamic2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\PlayerUI\ui_Dynamic2.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -41,6 +41,7 @@ basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 basemood\drawui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 basemood\drawui.o: ABModule\PlayerUI\ui_Dynamic.h
+basemood\drawui.o: ABModule\PlayerUI\ui_Dynamic2.h
 basemood\drawui.o: ABModule\PlayerUI\ui_static.h
 basemood\drawui.o: ./ABModule/Referee/RefereeCenter.h
 basemood\drawui.o: ./AAA/A_CommonSystem.h

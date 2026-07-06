@@ -12,6 +12,7 @@ extern "C" {
 #include "ui_interface.h"
 
 #include "ui_Dynamic.h"
+#include "ui_Dynamic2.h"
 #include "ui_static.h"
 
 #ifdef __cplusplus

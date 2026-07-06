@@ -1,0 +1,1 @@
+{"version":2,"data":{"Dynamic2":{"0":{"type":"UiLine","id":0,"name":"PitchLine","layer":0,"group":"Gimbal","x":1669,"y":700,"x2":1620,"y2":700,"color":"main","lineWidth":8},"1":{"type":"UiFloat","id":1,"name":"PitchAngle","layer":0,"group":"Gimbal","fontSize":25,"x":1750,"y":700,"color":"white","float":12.345}}},"selected":"Dynamic2"}

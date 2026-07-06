@@ -59,6 +59,7 @@ basemood\playerui_task.o: ABModule\PlayerUI\ui.h
 basemood\playerui_task.o: ABModule\PlayerUI\ui_interface.h
 basemood\playerui_task.o: ABModule\PlayerUI\ui_types.h
 basemood\playerui_task.o: ABModule\PlayerUI\ui_Dynamic.h
+basemood\playerui_task.o: ABModule\PlayerUI\ui_Dynamic2.h
 basemood\playerui_task.o: ABModule\PlayerUI\ui_static.h
 basemood\playerui_task.o: ./ABModule/Referee/RefereeCenter.h
 basemood\playerui_task.o: ./AAA/A_CommonSystem.h
