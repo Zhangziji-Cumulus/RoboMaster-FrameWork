@@ -2304,14 +2304,14 @@
           <GroupName>ABModule/PlayerUI</GroupName>
           <Files>
             <File>
-              <FileName>PlayerUI.c</FileName>
+              <FileName>PlayerUI_Task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\ABModule\PlayerUI\PlayerUI.c</FilePath>
+              <FilePath>.\ABModule\PlayerUI\PlayerUI_Task.c</FilePath>
             </File>
             <File>
-              <FileName>PlayerUI.h</FileName>
+              <FileName>PlayerUI_Task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\ABModule\PlayerUI\PlayerUI.h</FilePath>
+              <FilePath>.\ABModule\PlayerUI\PlayerUI_Task.h</FilePath>
             </File>
             <File>
               <FileName>ui.h</FileName>

@@ -26,11 +26,6 @@ void DrawUI_Init(void)
     osDelay(100);
     ui_init_ShootingFrame();
 
-
-    //ui_init_Chassis();
-
-
-
 }
 
 void DrawUI_Update(void)
@@ -42,7 +37,6 @@ void DrawUI_Update(void)
     //ui_update_static_Ungroup();
 
     ui_update_ShootingFrame();
-    //ui_update_Chassis();
 
     //自动重初始化UI
     DrawUI_ReInit(5000);
@@ -80,14 +74,12 @@ static void Update_Data(void)
     CMD_DrawUI =  CMD_Get_point();
 } 
 
-float Yaw;
-
 //使用这个函数来更新动态值
 static void DrawUI_Dynamic(void)
 {
     Update_Data();
 
-    Yaw = INS_angle_DrawUI[0];
+    float Yaw = INS_angle_DrawUI[0];
 
     static uint16_t i;
 
@@ -126,4 +118,5 @@ static void DrawUI_Dynamic(void)
         ui_Chassis_Ungroup_NewLine->end_y = out_y;
     }
 }
+
 

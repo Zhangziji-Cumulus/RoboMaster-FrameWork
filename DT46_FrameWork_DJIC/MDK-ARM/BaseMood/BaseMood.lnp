@@ -81,7 +81,7 @@
 "basemood\vtcenter.o"
 "basemood\vt03protocol.o"
 "basemood\vtcenter_instance.o"
-"basemood\playerui.o"
+"basemood\playerui_task.o"
 "basemood\ui_interface.o"
 "basemood\drawui.o"
 "basemood\drawui_extend.o"

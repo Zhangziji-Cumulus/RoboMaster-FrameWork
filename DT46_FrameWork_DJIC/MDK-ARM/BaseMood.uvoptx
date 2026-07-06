@@ -1877,7 +1877,7 @@
 
   <Group>
     <GroupName>ABModule/PlayerUI</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1888,8 +1888,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\ABModule\PlayerUI\PlayerUI.c</PathWithFileName>
-      <FilenameWithoutPath>PlayerUI.c</FilenameWithoutPath>
+      <PathWithFileName>.\ABModule\PlayerUI\PlayerUI_Task.c</PathWithFileName>
+      <FilenameWithoutPath>PlayerUI_Task.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1900,8 +1900,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\ABModule\PlayerUI\PlayerUI.h</PathWithFileName>
-      <FilenameWithoutPath>PlayerUI.h</FilenameWithoutPath>
+      <PathWithFileName>.\ABModule\PlayerUI\PlayerUI_Task.h</PathWithFileName>
+      <FilenameWithoutPath>PlayerUI_Task.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
