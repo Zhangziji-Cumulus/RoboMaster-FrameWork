@@ -1,5 +1,6 @@
 #include "DrawUI.h"
 
+#if(BOARD_ID == CHASSIS_BOARD)
 
 static const referee_all_data_t* Referee_DrawUI;
 static const float* INS_angle_DrawUI;
@@ -103,31 +104,40 @@ static void Update_Data(void)
     CMD_DrawUI =  CMD_Get_point();
 } 
 
-//使用这个函数来更新动态值
 static void DrawUI_Dynamic(void)
 {
     Update_Data();
+    /***** 绘制姿态角 *****/
+
+    //更新绘制开火标志位
+    {
+        //是否按了开火键
+        if(CMD_DrawUI->Shooting.Fire  == ON)
+        {
+            ui_Dynamic_Fire_FireFlag->color = 1;
+        }
+        else
+        {
+            ui_Dynamic_Fire_FireFlag->color = 8;
+        }
+
+        //跟新小陀螺是否开启
+        if(CMD_DrawUI->Move == NORMAL)
+        {
+            ui_Dynamic_Fire_SpinFlag ->color = 8;
+        }
+        else
+        {
+            ui_Dynamic_Fire_SpinFlag ->color = 1;
+        }
+    }
+
+    /***** 绘制姿态角 *****/
 
     float Yaw = INS_angle_DrawUI[0];
     float Pitch = INS_angle_DrawUI[2];
 
-    uint32_t now = HAL_GetTick();       /* 统一使用硬件tick，不受FreeRTOS调度影响 */
-
-    //绘制自瞄状态标志
-    {
-        uint32_t phase = now % 1000;
-        if (phase < 200) {
-            ui_Dynamic_Fire_AutoAimLock->color = 2;
-            ui_Dynamic_Fire_AutoAimLock->width = 3;
-            ui_Dynamic_Fire_AutoAimLock->r = 200;
-        } else {
-            ui_Dynamic_Fire_AutoAimLock->color = 0;
-            ui_Dynamic_Fire_AutoAimLock->width = 5;
-            ui_Dynamic_Fire_AutoAimLock->r = 150;
-        }
-    }
-
-    //绘制地盘方向
+    //更新绘制地盘方向
     {
         float out_x, out_y;
         RotateLineUI(
@@ -142,7 +152,7 @@ static void DrawUI_Dynamic(void)
         ui_Dynamic_Chassis_ChassisFront->end_y = out_y;
     }
 
-    //绘制云台角度
+    //跟新绘制云台角度
     {
         float out_x, out_y;
         PitchLineUI(
@@ -157,36 +167,94 @@ static void DrawUI_Dynamic(void)
         ui_Dynamic_Gimbal_PitchLine->end_y = out_y;
     }
 
-    //显示云台角度（Pitch为弧度，先转角度，再转定点数，如12.345°→12345）
-    ui_Dynamic_Gimbal_PitchAngle->number = (int32_t)(Pitch * 180.0f / (float)M_PI * 1000.0f);
-    
-
-    //绘制开火标志位
-    {
-        uint32_t phase = now % 2000;
-        if (phase < 1000) {
-            ui_Dynamic_Fire_FireFlag->color = 1;
-            ui_Dynamic_Fire_AutoAimFlag->color = 2;
-            ui_Dynamic_Fire_LoadFlag->color = 3;
-            ui_Dynamic_Fire_SpinFlag ->color = 4;
-
-        } else {
-            ui_Dynamic_Fire_FireFlag->color = 8;
-            ui_Dynamic_Fire_AutoAimFlag->color = 8;
-            ui_Dynamic_Fire_LoadFlag->color = 8;
-            ui_Dynamic_Fire_SpinFlag ->color = 8;
-        }
-    }
-
-    //绘制超电容量：2.1s 锯齿波 0→100
-    {
-        float powertest = (float)(now % 2100) * 100.0f / 2100.0f;
-        ui_Dynamic_Chassis_SuperPower->start_angle = LerpAngle(
-            ui_Dynamic_Chassis_SuperPower->end_angle,
-            -60.0f,
-            powertest,
-            1);
-    }
 }
 
+//下面是测试函数
 
+// //使用这个函数来更新动态值
+// static void DrawUI_DynamicTesty(void)
+// {
+//     Update_Data();
+
+//     float Yaw = INS_angle_DrawUI[0];
+//     float Pitch = INS_angle_DrawUI[2];
+
+//     uint32_t now = HAL_GetTick();       /* 统一使用硬件tick，不受FreeRTOS调度影响 */
+
+//     //绘制自瞄状态标志
+//     {
+//         uint32_t phase = now % 1000;
+//         if (phase < 200) {
+//             ui_Dynamic_Fire_AutoAimLock->color = 2;
+//             ui_Dynamic_Fire_AutoAimLock->width = 3;
+//             ui_Dynamic_Fire_AutoAimLock->r = 200;
+//         } else {
+//             ui_Dynamic_Fire_AutoAimLock->color = 0;
+//             ui_Dynamic_Fire_AutoAimLock->width = 5;
+//             ui_Dynamic_Fire_AutoAimLock->r = 150;
+//         }
+//     }
+
+//     //绘制地盘方向
+//     {
+//         float out_x, out_y;
+//         RotateLineUI(
+//             ui_Dynamic_Chassis_ChassisFront->start_x,
+//             ui_Dynamic_Chassis_ChassisFront->start_y,
+//             50,
+//             Yaw,
+//             &out_x,
+//             &out_y
+//         );
+//         ui_Dynamic_Chassis_ChassisFront->end_x = out_x;
+//         ui_Dynamic_Chassis_ChassisFront->end_y = out_y;
+//     }
+
+//     //绘制云台角度
+//     {
+//         float out_x, out_y;
+//         PitchLineUI(
+//             ui_Dynamic_Gimbal_PitchLine->start_x,
+//             ui_Dynamic_Gimbal_PitchLine->start_y,
+//             50,
+//             Pitch,
+//             &out_x,
+//             &out_y
+//         );
+//         ui_Dynamic_Gimbal_PitchLine->end_x = out_x;
+//         ui_Dynamic_Gimbal_PitchLine->end_y = out_y;
+//     }
+
+//     //显示云台角度（Pitch为弧度，先转角度，再转定点数，如12.345°→12345）
+//     ui_Dynamic_Gimbal_PitchAngle->number = (int32_t)(Pitch * 180.0f / (float)M_PI * 1000.0f);
+    
+
+//     //绘制开火标志位
+//     {
+//         uint32_t phase = now % 2000;
+//         if (phase < 1000) {
+//             ui_Dynamic_Fire_FireFlag->color = 1;
+//             ui_Dynamic_Fire_AutoAimFlag->color = 2;
+//             ui_Dynamic_Fire_LoadFlag->color = 3;
+//             ui_Dynamic_Fire_SpinFlag ->color = 4;
+
+//         } else {
+//             ui_Dynamic_Fire_FireFlag->color = 8;
+//             ui_Dynamic_Fire_AutoAimFlag->color = 8;
+//             ui_Dynamic_Fire_LoadFlag->color = 8;
+//             ui_Dynamic_Fire_SpinFlag ->color = 8;
+//         }
+//     }
+
+//     //绘制超电容量：2.1s 锯齿波 0→100
+//     {
+//         float powertest = (float)(now % 2100) * 100.0f / 2100.0f;
+//         ui_Dynamic_Chassis_SuperPower->start_angle = LerpAngle(
+//             ui_Dynamic_Chassis_SuperPower->end_angle,
+//             -60.0f,
+//             powertest,
+//             1);
+//     }
+// }
+
+#endif

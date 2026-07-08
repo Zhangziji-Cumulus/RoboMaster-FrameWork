@@ -71,6 +71,7 @@ basemood\shooting_task.o: ./ABModule/VT/VTCenter.h
 basemood\shooting_task.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\shooting_task.o: ./ABModule/VT/VT03Protocol.h
 basemood\shooting_task.o: ./AAA/A_CommonSystem.h
+basemood\shooting_task.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\shooting_task.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\shooting_task.o: ./ABModule/CMDCenter.h
 basemood\shooting_task.o: ./ABModule/Buzzer/sound_effects_task.h

@@ -2298,6 +2298,16 @@
               <FileType>5</FileType>
               <FilePath>.\ABModule\VT\VTCenter_Instance.h</FilePath>
             </File>
+            <File>
+              <FileName>AdvancedKeyOperation.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\VT\AdvancedKeyOperation.c</FilePath>
+            </File>
+            <File>
+              <FileName>AdvancedKeyOperation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\VT\AdvancedKeyOperation.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

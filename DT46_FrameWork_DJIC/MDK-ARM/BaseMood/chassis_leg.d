@@ -71,6 +71,7 @@ basemood\chassis_leg.o: ./ABModule/VT/VTCenter.h
 basemood\chassis_leg.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\chassis_leg.o: ./ABModule/VT/VT03Protocol.h
 basemood\chassis_leg.o: ./AAA/A_CommonSystem.h
+basemood\chassis_leg.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\chassis_leg.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\chassis_leg.o: ./ABModule/CMDCenter.h
 basemood\chassis_leg.o: ./ABModule/Buzzer/sound_effects_task.h

@@ -210,13 +210,13 @@ static void Chassis_Update_Target(uint8_t state)
     float Theta_Degree = Chassis_Instance.Calc.Theta.Degree;
     float Theta_Radian = Chassis_Instance.Calc.Theta.Radian;
 
-    if(state == Normal)
+    if(state == NORMAL)
     {
         Chassis_Instance.Calc.Target.FB = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.FB);
         Chassis_Instance.Calc.Target.LR = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.LR);
         Chassis_Instance.Calc.Target.RO = PID_Calculate_CycleAngle(&Chassis_Follow_PID,Theta_Degree,0.0f); //MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.RO);
     }
-    else if(state == Spin_CW)
+    else if(state == SPIN_CW)
     {
         Chassis_Instance.Calc.Target.FB = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.LR) * sin(Theta_Radian) 
                                                 + MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.FB) * cos(Theta_Radian);
@@ -226,7 +226,7 @@ static void Chassis_Update_Target(uint8_t state)
 
         Chassis_Instance.Calc.Target.RO = CHASSIS_MAX_SPIN_SPEED;   //顺时针
     }
-    else if(state == Spin_CCW)
+    else if(state == SPIN_CCW)
     {
         Chassis_Instance.Calc.Target.FB = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.LR) * sin(Theta_Radian) 
                                                 + MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.FB) * cos(Theta_Radian);

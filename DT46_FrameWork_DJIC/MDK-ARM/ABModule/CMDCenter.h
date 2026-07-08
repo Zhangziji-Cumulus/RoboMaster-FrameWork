@@ -9,6 +9,8 @@
 #include "VTCenter.h"
 #include "IMU_Get.h"
 #include "Dual_Board_Transmit.h"
+#include "AdvancedKeyOperation.h"
+#include "Math_Lib.h"
 
 //** #################################################################################################### **//
 //** ============================================= 宏定义 =============================================== **//
@@ -33,9 +35,9 @@ typedef enum
 //移动模式
 typedef enum
 {
-    Normal      = 0,//正常模式(地盘跟随)
-    Spin_CW     = 1,//小陀螺模式，CW 
-    Spin_CCW    = 2,//小陀螺模式，CCW
+    NORMAL      = 0,//正常模式(地盘跟随)
+    SPIN_CW     = 1,//小陀螺模式，CW 
+    SPIN_CCW    = 2,//小陀螺模式，CCW
 } MoveMode_e;
 
 // 通用开关状态
@@ -78,6 +80,10 @@ typedef struct CMD_t{
         ONOFF_State_e Aim;
         ONOFF_State_e Navigation;
     }Auto;
+
+    struct{
+        ONOFF_State_e RefreshUI ;
+    }other;
 
 }CMD_t;
 

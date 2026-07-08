@@ -71,14 +71,15 @@ basemood\user_callback.o: ./AADrivers/Dual_board_Transmit.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
 basemood\user_callback.o: ./AADrivers/IMU/IMU_Get.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
+basemood\user_callback.o: ./ABModule/VT/AdvancedKeyOperation.h
+basemood\user_callback.o: ABModule\Math_Lib.h
+basemood\user_callback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
 basemood\user_callback.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\user_callback.o: ./ABModule/CMDCenter.h
 basemood\user_callback.o: ./AADrivers/bsp_CAN.h
 basemood\user_callback.o: ./ACApplication/Auto/AutoAim.h
 basemood\user_callback.o: ./AAA/A_MCommon.h
 basemood\user_callback.o: ./AAA/A_CommonSystem.h
-basemood\user_callback.o: ./ABModule/Math_Lib.h
-basemood\user_callback.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
 basemood\user_callback.o: ./ABModule/Buzzer/sound_effects_task.h
 basemood\user_callback.o: ./ABModule/Buzzer/buzzer_TIM_init.h
 basemood\user_callback.o: ./ABModule/Buzzer/bsp_buzzer_driver.h

@@ -26,15 +26,19 @@
     首先要先初始化静态UI，并将静态UI更新上去，然后才初始化
 */
 
+#if(BOARD_ID == CHASSIS_BOARD)
 
 #include "ui.h"
 #include "RefereeCenter.h"
 #include "DrawUI_Extend.h"
 #include "A_CommonSystem.h"
 #include "A_MCommon.h"
+#include "Dual_Board_Transmit.h"
 
 void DrawUI_Init(void);
 
 void DrawUI_Update(void);
+
+#endif
 
 #endif // DRAWUI_H_

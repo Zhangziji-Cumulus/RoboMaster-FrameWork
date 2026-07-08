@@ -17,7 +17,7 @@
 #define VTX_CHANNEL_MAX 1684
 
 //鼠标移动速度最小值、最大值、未移动为0
-#define VTX_MOUSE_VELMIN -32768
+#define VTX_MOUSE_MIN -32768
 #define VTX_MOUSE_STOP 0
 #define VTX_MOUSE_MAX 32767
 

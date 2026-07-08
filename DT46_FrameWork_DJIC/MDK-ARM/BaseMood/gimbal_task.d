@@ -71,6 +71,7 @@ basemood\gimbal_task.o: ./ABModule/VT/VTCenter.h
 basemood\gimbal_task.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\gimbal_task.o: ./ABModule/VT/VT03Protocol.h
 basemood\gimbal_task.o: ./AAA/A_CommonSystem.h
+basemood\gimbal_task.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\gimbal_task.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\gimbal_task.o: ./ABModule/CMDCenter.h
 basemood\gimbal_task.o: ./ABModule/Buzzer/sound_effects_task.h

@@ -1,5 +1,7 @@
 #include "PlayerUI_Task.h"
 
+#if(BOARD_ID == CHASSIS_BOARD)
+
 static UBaseType_t remain_PlyerUITask;
 __attribute__((used)) void PlyerUITask(void *argument)
 {
@@ -15,3 +17,5 @@ __attribute__((used)) void PlyerUITask(void *argument)
         osDelay(10);
     }
 }
+
+#endif

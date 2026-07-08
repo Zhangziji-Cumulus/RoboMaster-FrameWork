@@ -45,6 +45,9 @@ int16_t MyMath_Limit_Int16(int16_t value, int16_t min, int16_t max, int is_cycle
 /* @brief 将输入整数 "映射" 到目标范围[target_min, target_max] */
 int16_t MyMath_Map_Range_Int16(int16_t input, int16_t input_min, int16_t input_max, int16_t target_min, int16_t target_max);
 
+/* @brief 对输入整数进行比例缩放，结果限制在[min, max]范围内 */
+int16_t MyMath_Scale_Int16(int16_t input, float scale, int16_t min, int16_t max);
+
 //** #################################################################################################### **//
 //** ============================================ 功能类 ================================================ **//
 //** #################################################################################################### **//

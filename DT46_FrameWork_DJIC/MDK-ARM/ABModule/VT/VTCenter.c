@@ -7,6 +7,7 @@
 static uint8_t vt03_rx_buf[64];
 static VT03_Data_t vt03_data;
 static VT_Instance_t vt03_inst;
+
 const VT_Config_t VT03_CFG = {
     .frame_len = 21,
     .rx_buf_len = 64,
@@ -40,10 +41,10 @@ __attribute__((used)) void VTTask(void *argument)
 
         //测试键盘功能是否正常
         
-        if(VT03_KeyTest(&vt03_data) || VT03_MouseTest(&vt03_data))
-        {
-            buzzer->sound_effect = B_;
-        }
+        // if(VT03_KeyTest(&vt03_data) || VT03_MouseTest(&vt03_data))
+        // {
+        //     buzzer->sound_effect = B_;
+        // }
 
         // 栈余量监控
         remain_VTTask = uxTaskGetStackHighWaterMark(NULL);

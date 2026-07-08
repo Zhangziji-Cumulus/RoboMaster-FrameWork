@@ -196,6 +196,25 @@ int16_t MyMath_Map_Range_Int16(int16_t input, int16_t input_min, int16_t input_m
     return (int16_t)mapped_value;
 }
 
+/**
+ * @brief 对输入整数进行比例缩放，结果限制在[min, max]范围内
+ * 
+ * @param input 输入值
+ * @param scale 缩放比例
+ * @param min   最小值
+ * @param max   最大值
+ * @return int16_t 缩放并限幅后的结果
+ */
+int16_t MyMath_Scale_Int16(int16_t input, float scale, int16_t min, int16_t max)
+{
+    float result = (float)input * scale;
+    
+    if (result > (float)max) return max;
+    if (result < (float)min) return min;
+    
+    return (int16_t)result;
+}
+
 //** #################################################################################################### **//
 //** ============================================ 功能类 ================================================ **//
 //** #################################################################################################### **//

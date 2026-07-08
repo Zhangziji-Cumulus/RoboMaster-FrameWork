@@ -83,6 +83,7 @@ basemood\drawui.o: ./ABModule/VT/VTCenter.h
 basemood\drawui.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\drawui.o: ./ABModule/VT/VT03Protocol.h
 basemood\drawui.o: ./AAA/A_CommonSystem.h
+basemood\drawui.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\drawui.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\drawui.o: ./ABModule/CMDCenter.h
 basemood\drawui.o: ./ABModule/Buzzer/sound_effects_task.h

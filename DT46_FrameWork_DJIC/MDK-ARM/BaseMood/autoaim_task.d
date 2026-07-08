@@ -71,6 +71,7 @@ basemood\autoaim_task.o: ./ABModule/VT/VTCenter.h
 basemood\autoaim_task.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\autoaim_task.o: ./ABModule/VT/VT03Protocol.h
 basemood\autoaim_task.o: ./AAA/A_CommonSystem.h
+basemood\autoaim_task.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\autoaim_task.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\autoaim_task.o: ./ABModule/CMDCenter.h
 basemood\autoaim_task.o: ./ABModule/Buzzer/sound_effects_task.h

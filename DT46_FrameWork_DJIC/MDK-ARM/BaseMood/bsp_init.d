@@ -71,6 +71,7 @@ basemood\bsp_init.o: ./ABModule/VT/VTCenter.h
 basemood\bsp_init.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\bsp_init.o: ./ABModule/VT/VT03Protocol.h
 basemood\bsp_init.o: ./AAA/A_CommonSystem.h
+basemood\bsp_init.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\bsp_init.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\bsp_init.o: ./ABModule/CMDCenter.h
 basemood\bsp_init.o: ./ABModule/Buzzer/sound_effects_task.h

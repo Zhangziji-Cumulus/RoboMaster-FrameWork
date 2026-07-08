@@ -62,17 +62,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -406,7 +407,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x69C7839D)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AAA/A_CommonSystem.h)(0x6A127011)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h)(0x69C7833D)
 I (../Core/Inc/FreeRTOSConfig.h)(0x69E799F7)
@@ -480,17 +481,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -1384,7 +1386,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x69C7833D
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x69C7833D)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x69C7833D)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/stream_buffer.h)(0x69C7833D)
-F (../Middlewares/Third_Party/FreeRTOS/Source/tasks.c)(0x69C7833D)(--c99 -c --cpu Cortex-M4.fp -g -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\tasks.o --omf_browse basemood\tasks.crf --depend basemood\tasks.d)
+F (../Middlewares/Third_Party/FreeRTOS/Source/tasks.c)(0x6A4E455B)(--c99 -c --cpu Cortex-M4.fp -g -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\tasks.o --omf_browse basemood\tasks.crf --depend basemood\tasks.d)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x69C7833D)
@@ -1594,17 +1596,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -1678,7 +1681,7 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 F (.\AADrivers\bsp_SBUS.h)(0x6A12700B)()
 F (.\AADrivers\Dual_board_Transmit.c)(0x6A144C2D)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\dual_board_transmit.o --omf_browse basemood\dual_board_transmit.crf --depend basemood\dual_board_transmit.d)
-I (AADrivers\Dual_Board_Transmit.h)(0x6A487B37)
+I (AADrivers\Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AAA/A_CommonSystem.h)(0x6A127011)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
@@ -1733,10 +1736,10 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (AADrivers\bsp_CAN.h)(0x6A06F4B7)
-F (.\AADrivers\Dual_board_Transmit.h)(0x6A487B37)()
+F (.\AADrivers\Dual_board_Transmit.h)(0x6A4DBA76)()
 F (.\AADrivers\Dual_Board_Transmit_Task.c)(0x6A3FC7DA)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\dual_board_transmit_task.o --omf_browse basemood\dual_board_transmit_task.crf --depend basemood\dual_board_transmit_task.d)
 I (AADrivers\Dual_Board_Transmit_Task.h)(0x6A3FC79F)
-I (AADrivers\Dual_Board_Transmit.h)(0x6A487B37)
+I (AADrivers\Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AAA/A_CommonSystem.h)(0x6A127011)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
@@ -1790,13 +1793,16 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
+I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 F (.\AADrivers\Dual_Board_Transmit_Task.h)(0x6A3FC79F)()
 F (.\AADrivers\IMU\BMI088\AHRS.h)(0x5F00260D)()
@@ -2314,8 +2320,8 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 F (.\ABModule\PID_Lib.h)(0x6A127268)()
-F (.\ABModule\CMDCenter.c)(0x6A463C5B)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\cmdcenter.o --omf_browse basemood\cmdcenter.crf --depend basemood\cmdcenter.d)
-I (ABModule\CMDCenter.h)(0x6A48E969)
+F (.\ABModule\CMDCenter.c)(0x6A4E47B5)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\cmdcenter.o --omf_browse basemood\cmdcenter.crf --depend basemood\cmdcenter.d)
+I (ABModule\CMDCenter.h)(0x6A4E4086)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69E1D2D7)
@@ -2371,20 +2377,27 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
-I (./AADrivers/Dual_board_Transmit.h)(0x6A487B37)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./AADrivers/Dual_board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
+I (ABModule\Math_Lib.h)(0x6A4E46E7)
+I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
-F (.\ABModule\CMDCenter.h)(0x6A48E969)()
-F (.\ABModule\Math_Lib.c)(0x6A15BBB6)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\math_lib.o --omf_browse basemood\math_lib.crf --depend basemood\math_lib.d)
-I (ABModule\Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
+I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
+I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
+I (./ABModule/Buzzer/bsp_buzzer_driver.h)(0x6A0ABC00)
+I (./AADrivers/IMU/BMI088/struct_typedef.h)(0x5F00260D)
+F (.\ABModule\CMDCenter.h)(0x6A4E4086)()
+F (.\ABModule\Math_Lib.c)(0x6A4E46EF)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\math_lib.o --omf_browse basemood\math_lib.crf --depend basemood\math_lib.d)
+I (ABModule\Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-F (.\ABModule\Math_Lib.h)(0x6A0F0D22)()
+F (.\ABModule\Math_Lib.h)(0x6A4E46E7)()
 F (.\ABModule\MotorCtrl_DJI.c)(0x6A157D99)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\motorctrl_dji.o --omf_browse basemood\motorctrl_dji.crf --depend basemood\motorctrl_dji.d)
 I (./AAA/A_CommonDrivers.h)(0x6A44DB31)
 I (./AADrivers/bsp_CAN.h)(0x6A06F4B7)
@@ -2442,22 +2455,23 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x69C7833D)
 I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h)(0x69C7833D)
 I (../Core/Inc/usart.h)(0x6A1CEC0C)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
-I (./AADrivers/Dual_board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_board_Transmit.h)(0x6A4DBA76)
 I (./ABModule/User_Callback.h)(0x6A44D99F)
 I (./ABModule/MotorCtrl_DJI.h)(0x6A157E00)
 I (./ABModule/PID_Lib.h)(0x6A127268)
 I (./ABModule/ZDT/ZDT_CAN_Bsp.h)(0x6A197904)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
+I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ACApplication/Auto/AutoAim.h)(0x6A48EF8C)
 I (./AAA/A_MCommon.h)(0x6A48F099)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
-I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/bsp_buzzer_driver.h)(0x6A0ABC00)
@@ -2472,7 +2486,7 @@ I (./AADrivers/IMU/BMI088/INS_task.h)(0x6A48E864)
 F (.\ABModule\MotorCtrl_DJI.h)(0x6A157E00)()
 F (.\ABModule\MotorCtrl_ZDT.c)(0x6A0ABC00)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\motorctrl_zdt.o --omf_browse basemood\motorctrl_zdt.crf --depend basemood\motorctrl_zdt.d)
 F (.\ABModule\MotorCtrl_ZDT.h)(0x6A0B0E32)()
-F (.\ABModule\Remote_Ctrl.c)(0x6A3D277B)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\remote_ctrl.o --omf_browse basemood\remote_ctrl.crf --depend basemood\remote_ctrl.d)
+F (.\ABModule\Remote_Ctrl.c)(0x6A4DF7EA)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\remote_ctrl.o --omf_browse basemood\remote_ctrl.crf --depend basemood\remote_ctrl.d)
 I (ABModule\Remote_Ctrl.h)(0x6A1D8570)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
@@ -2587,21 +2601,22 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (ABModule\MotorCtrl_DJI.h)(0x6A157E00)
 I (ABModule\PID_Lib.h)(0x6A127268)
 I (./ABModule/ZDT/ZDT_CAN_Bsp.h)(0x6A197904)
-I (ABModule\CMDCenter.h)(0x6A48E969)
+I (ABModule\CMDCenter.h)(0x6A4E4086)
 I (ABModule\Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
-I (./AADrivers/Dual_board_Transmit.h)(0x6A487B37)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./AADrivers/Dual_board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
+I (ABModule\Math_Lib.h)(0x6A4E46E7)
+I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./AADrivers/bsp_CAN.h)(0x6A06F4B7)
 I (./ACApplication/Auto/AutoAim.h)(0x6A48EF8C)
 I (./AAA/A_MCommon.h)(0x6A48F099)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
-I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/bsp_buzzer_driver.h)(0x6A0ABC00)
@@ -3044,12 +3059,12 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (ABModule\Referee\RefereeProtocol.h)(0x6A48C9BA)
 I (.\ABModule\CRC\CRC.h)(0x6A47AF2F)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 F (.\ABModule\Referee\RefereeCenter.h)(0x6A48C9BA)()
-F (.\ABModule\VT\VTCenter.c)(0x6A4879E7)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\vtcenter.o --omf_browse basemood\vtcenter.crf --depend basemood\vtcenter.d)
-I (ABModule\VT\VTCenter.h)(0x6A48785C)
+F (.\ABModule\VT\VTCenter.c)(0x6A4E204B)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\vtcenter.o --omf_browse basemood\vtcenter.crf --depend basemood\vtcenter.d)
+I (ABModule\VT\VTCenter.h)(0x6A4DF22E)
 I (ABModule\VT\VTCenter_Instance.h)(0x6A487876)
-I (ABModule\VT\VT03Protocol.h)(0x6A463F2F)
+I (ABModule\VT\VT03Protocol.h)(0x6A4DDF18)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69E1D2D7)
@@ -3103,14 +3118,14 @@ I (../Core/Inc/usart.h)(0x6A1CEC0C)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_board_Transmit.h)(0x6A4DBA76)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/bsp_buzzer_driver.h)(0x6A0ABC00)
 I (./AADrivers/IMU/BMI088/struct_typedef.h)(0x5F00260D)
-F (.\ABModule\VT\VTCenter.h)(0x6A48785C)()
+F (.\ABModule\VT\VTCenter.h)(0x6A4DF22E)()
 F (.\ABModule\VT\VT03Protocol.c)(0x6A463F1C)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\vt03protocol.o --omf_browse basemood\vt03protocol.crf --depend basemood\vt03protocol.d)
-I (ABModule\VT\VT03Protocol.h)(0x6A463F2F)
+I (ABModule\VT\VT03Protocol.h)(0x6A4DDF18)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69E1D2D7)
@@ -3147,10 +3162,10 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x69C7839D)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
-F (.\ABModule\VT\VT03Protocol.h)(0x6A463F2F)()
+F (.\ABModule\VT\VT03Protocol.h)(0x6A4DDF18)()
 F (.\ABModule\VT\VTCenter_Instance.c)(0x6A487884)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\vtcenter_instance.o --omf_browse basemood\vtcenter_instance.crf --depend basemood\vtcenter_instance.d)
 I (ABModule\VT\VTCenter_Instance.h)(0x6A487876)
-I (ABModule\VT\VT03Protocol.h)(0x6A463F2F)
+I (ABModule\VT\VT03Protocol.h)(0x6A4DDF18)
 I (../Core/Inc/main.h)(0x69E0CEA8)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x69C7839D)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x69E1D2D7)
@@ -3205,7 +3220,12 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 F (.\ABModule\VT\VTCenter_Instance.h)(0x6A487876)()
-F (.\ABModule\PlayerUI\PlayerUI_Task.c)(0x6A4BB090)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\playerui_task.o --omf_browse basemood\playerui_task.crf --depend basemood\playerui_task.d)
+F (.\ABModule\VT\AdvancedKeyOperation.c)(0x6A4E3F8D)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\advancedkeyoperation.o --omf_browse basemood\advancedkeyoperation.crf --depend basemood\advancedkeyoperation.d)
+I (ABModule\VT\AdvancedKeyOperation.h)(0x6A4E3DE1)
+I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
+I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stddef.h)(0x588B8344)
+F (.\ABModule\VT\AdvancedKeyOperation.h)(0x6A4E3DE1)()
+F (.\ABModule\PlayerUI\PlayerUI_Task.c)(0x6A4DF2EE)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\playerui_task.o --omf_browse basemood\playerui_task.crf --depend basemood\playerui_task.d)
 I (ABModule\PlayerUI\PlayerUI_Task.h)(0x6A4B0E93)
 I (./AAA/A_CommonSystem.h)(0x6A127011)
 I (../Core/Inc/main.h)(0x69E0CEA8)
@@ -3260,7 +3280,7 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (ABModule\PlayerUI\DrawUI.h)(0x6A4B1224)
+I (ABModule\PlayerUI\DrawUI.h)(0x6A4DF2DE)
 I (ABModule\PlayerUI\ui.h)(0x6A4B9CD3)
 I (ABModule\PlayerUI\ui_interface.h)(0x6A4BB04F)
 I (ABModule\PlayerUI\ui_types.h)(0x6A48CA96)
@@ -3270,19 +3290,20 @@ I (ABModule\PlayerUI\ui_static.h)(0x6A4B9974)
 I (./ABModule/Referee/RefereeCenter.h)(0x6A48C9BA)
 I (./ABModule/Referee/RefereeProtocol.h)(0x6A48C9BA)
 I (.\ABModule\CRC\CRC.h)(0x6A47AF2F)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (ABModule\PlayerUI\DrawUI_Extend.h)(0x6A4B9745)
 I (./AAA/A_MCommon.h)(0x6A48F099)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -3343,8 +3364,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x69C7839D)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x69C7839D)
 F (.\ABModule\PlayerUI\ui_interface.h)(0x6A4BB04F)()
 F (.\ABModule\PlayerUI\ui_types.h)(0x6A48CA96)()
-F (.\ABModule\PlayerUI\DrawUI.c)(0x6A4BB19E)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\drawui.o --omf_browse basemood\drawui.crf --depend basemood\drawui.d)
-I (ABModule\PlayerUI\DrawUI.h)(0x6A4B1224)
+F (.\ABModule\PlayerUI\DrawUI.c)(0x6A4DF2C7)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\drawui.o --omf_browse basemood\drawui.crf --depend basemood\drawui.d)
+I (ABModule\PlayerUI\DrawUI.h)(0x6A4DF2DE)
 I (ABModule\PlayerUI\ui.h)(0x6A4B9CD3)
 I (ABModule\PlayerUI\ui_interface.h)(0x6A4BB04F)
 I (ABModule\PlayerUI\ui_types.h)(0x6A48CA96)
@@ -3407,19 +3428,20 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (./ABModule/Referee/RefereeProtocol.h)(0x6A48C9BA)
 I (.\ABModule\CRC\CRC.h)(0x6A47AF2F)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (ABModule\PlayerUI\DrawUI_Extend.h)(0x6A4B9745)
 I (./AAA/A_MCommon.h)(0x6A48F099)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -3435,7 +3457,7 @@ I (./ACApplication/Auto/Auto_Config.h)(0x6A1EEDF4)
 I (./ACApplication/Auto/AutoAim.h)(0x6A48EF8C)
 I (./AADrivers/IMU/BMI088/INS_task.h)(0x6A48E864)
 I (./ACApplication/RobotConfig/Robot_Hero_Config.h)(0x6A3FB5E0)
-F (.\ABModule\PlayerUI\DrawUI.h)(0x6A4B1224)()
+F (.\ABModule\PlayerUI\DrawUI.h)(0x6A4DF2DE)()
 F (.\ABModule\PlayerUI\DrawUI_Extend.c)(0x6A4B9E0C)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\drawui_extend.o --omf_browse basemood\drawui_extend.crf --depend basemood\drawui_extend.d)
 I (ABModule\PlayerUI\DrawUI_Extend.h)(0x6A4B9745)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
@@ -3628,17 +3650,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -3715,17 +3738,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -3799,17 +3823,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -3826,7 +3851,7 @@ I (./ACApplication/Auto/AutoAim.h)(0x6A48EF8C)
 I (./AADrivers/IMU/BMI088/INS_task.h)(0x6A48E864)
 I (./ACApplication/RobotConfig/Robot_Hero_Config.h)(0x6A3FB5E0)
 F (.\ACApplication\Chassis\Chassis_leg.h)(0x6A12712F)()
-F (.\ACApplication\Chassis\Chassis_Mecanu.c)(0x6A48F06F)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\chassis_mecanu.o --omf_browse basemood\chassis_mecanu.crf --depend basemood\chassis_mecanu.d)
+F (.\ACApplication\Chassis\Chassis_Mecanu.c)(0x6A4DCCF8)(--c99 -c --cpu Cortex-M4.fp -g -W -O2 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./UserAppliction -I ./UserDrive -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ./AAA -I ./AADrivers -I ./AADrivers/IMU -I ./AADrivers/IMU/BMI088 -I ./ABModule -I ./ABModule/Buzzer -I ./ACApplication -I ./ACApplication/Auto -I ./ACApplication/Chassis -I ./ACApplication/Gimbal -I ./ACApplication/RobotConfig -I ./ACApplication/Shooting -I ./ACApplication/MotorAPP -I ./ABModule/ZDT -I ./ABModule/Referee -I ./ABModule/VT -I .\ABModule\PlayerUI -I .\ABModule\CRC -I .\ABModule\RefereeTx-I.\RTE\_BaseMood-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\A_Study & Work\STM32\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o basemood\chassis_mecanu.o --omf_browse basemood\chassis_mecanu.crf --depend basemood\chassis_mecanu.d)
 I (ACApplication\Chassis\Chassis_Mecanu.h)(0x6A48EFE3)
 I (./AAA/A_MCommon.h)(0x6A48F099)
 I (./AAA/A_CommonSystem.h)(0x6A127011)
@@ -3882,17 +3907,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -3969,17 +3995,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -4053,17 +4080,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -4136,17 +4164,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -4223,17 +4252,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -4306,17 +4336,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)
@@ -4391,17 +4422,18 @@ I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
-I (./AADrivers/Dual_Board_Transmit.h)(0x6A487B37)
+I (./AADrivers/Dual_Board_Transmit.h)(0x6A4DBA76)
 I (./AADrivers/IMU/IMU_Get.h)(0x6A1273B6)
 I (./ABModule/PID_Lib.h)(0x6A127268)
-I (./ABModule/Math_Lib.h)(0x6A0F0D22)
+I (./ABModule/Math_Lib.h)(0x6A4E46E7)
 I (D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\include\float.h)(0x588B8344)
-I (./ABModule/CMDCenter.h)(0x6A48E969)
+I (./ABModule/CMDCenter.h)(0x6A4E4086)
 I (./ABModule/Remote_Ctrl.h)(0x6A1D8570)
 I (./AADrivers/bsp_SBUS.h)(0x6A12700B)
-I (./ABModule/VT/VTCenter.h)(0x6A48785C)
+I (./ABModule/VT/VTCenter.h)(0x6A4DF22E)
 I (./ABModule/VT/VTCenter_Instance.h)(0x6A487876)
-I (./ABModule/VT/VT03Protocol.h)(0x6A463F2F)
+I (./ABModule/VT/VT03Protocol.h)(0x6A4DDF18)
+I (./ABModule/VT/AdvancedKeyOperation.h)(0x6A4E3DE1)
 I (./AADrivers/Dual_Board_Transmit_Data.h)(0x6A3FCB5C)
 I (./ABModule/Buzzer/sound_effects_task.h)(0x6A0ABC00)
 I (./ABModule/Buzzer/buzzer_TIM_init.h)(0x6A0ABC00)

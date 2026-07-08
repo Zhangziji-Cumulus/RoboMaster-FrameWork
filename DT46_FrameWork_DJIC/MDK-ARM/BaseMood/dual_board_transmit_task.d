@@ -65,5 +65,8 @@ basemood\dual_board_transmit_task.o: ./ABModule/VT/VT03Protocol.h
 basemood\dual_board_transmit_task.o: ./AAA/A_CommonSystem.h
 basemood\dual_board_transmit_task.o: ./AADrivers/IMU/IMU_Get.h
 basemood\dual_board_transmit_task.o: ./AAA/A_CommonSystem.h
+basemood\dual_board_transmit_task.o: ./ABModule/VT/AdvancedKeyOperation.h
+basemood\dual_board_transmit_task.o: ./ABModule/Math_Lib.h
+basemood\dual_board_transmit_task.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
 basemood\dual_board_transmit_task.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\dual_board_transmit_task.o: ./ABModule/CMDCenter.h

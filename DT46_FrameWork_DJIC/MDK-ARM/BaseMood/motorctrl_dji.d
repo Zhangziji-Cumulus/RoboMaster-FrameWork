@@ -73,13 +73,14 @@ basemood\motorctrl_dji.o: ./ABModule/VT/VT03Protocol.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
 basemood\motorctrl_dji.o: ./AADrivers/IMU/IMU_Get.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
+basemood\motorctrl_dji.o: ./ABModule/VT/AdvancedKeyOperation.h
+basemood\motorctrl_dji.o: ./ABModule/Math_Lib.h
+basemood\motorctrl_dji.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
 basemood\motorctrl_dji.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\motorctrl_dji.o: ./ABModule/CMDCenter.h
 basemood\motorctrl_dji.o: ./ACApplication/Auto/AutoAim.h
 basemood\motorctrl_dji.o: ./AAA/A_MCommon.h
 basemood\motorctrl_dji.o: ./AAA/A_CommonSystem.h
-basemood\motorctrl_dji.o: ./ABModule/Math_Lib.h
-basemood\motorctrl_dji.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\float.h
 basemood\motorctrl_dji.o: ./ABModule/Buzzer/sound_effects_task.h
 basemood\motorctrl_dji.o: ./ABModule/Buzzer/buzzer_TIM_init.h
 basemood\motorctrl_dji.o: ./ABModule/Buzzer/bsp_buzzer_driver.h

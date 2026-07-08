@@ -85,6 +85,7 @@ basemood\playerui_task.o: ./ABModule/VT/VTCenter.h
 basemood\playerui_task.o: ./ABModule/VT/VTCenter_Instance.h
 basemood\playerui_task.o: ./ABModule/VT/VT03Protocol.h
 basemood\playerui_task.o: ./AAA/A_CommonSystem.h
+basemood\playerui_task.o: ./ABModule/VT/AdvancedKeyOperation.h
 basemood\playerui_task.o: ./AADrivers/Dual_Board_Transmit_Data.h
 basemood\playerui_task.o: ./ABModule/CMDCenter.h
 basemood\playerui_task.o: ./ABModule/Buzzer/sound_effects_task.h

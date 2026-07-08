@@ -83,7 +83,7 @@ static void HORRC_HT10A_GET_Ctl(void)
 		
 		//返回旋钮线性值
 		RC_Ctl.Knob.L_linear = sbusData->channels[8];
-	  RC_Ctl.Knob.R_linear = sbusData->channels[9];
+	  	RC_Ctl.Knob.R_linear = sbusData->channels[9];
 		//返回旋钮离散值
 		RC_Ctl.Knob.L_state = Knob_Set(sbusData->channels[8],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
 		RC_Ctl.Knob.R_state = Knob_Set(sbusData->channels[9],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
