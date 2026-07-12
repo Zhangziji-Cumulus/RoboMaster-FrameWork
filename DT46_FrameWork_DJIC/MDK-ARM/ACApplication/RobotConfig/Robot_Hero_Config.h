@@ -110,7 +110,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //** ------------------------------------------------------------ **//
 
 /* 系统配置 */
-#define SHOOTING_TASK_TIME_MS   1               //射击任务循环时间
+#define SHOOTING_TASK_TIME_MS   1                  //射击任务循环时间
 
 /** ===== 摩擦轮配置 ===== **/
 
@@ -212,7 +212,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 /* 电流检测相关 */
 
-#define PUSHROD_CURRENT_MAX        1500                 //最大电流(mA)
+#define PUSHROD_CURRENT_MAX       2000                  //阈值最大电流(mA)
 
 /* 推杆电机控制 */
 
@@ -223,6 +223,11 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define PUSHROD_CAN_ID             1                    //推杆实际CAN ID / Address
 
 //#define PUSHROD_MOTOR_ID_FBK       PUSHROD_CAN_ID - 1      //推杆电机 反馈 ID （CAN ID - 1）
+
+/* ==== 自动上弹 ==== */
+#define AUTOLOAD_THRESH_CUR_DIAL 5000 //自动上弹拨盘电流阈值
+
+#define AUTOLOAD_THRESH_CUR_FRICTION 1000 //自动上弹拨盘电流阈值
 
 //** ------------------------------------------------------------ **//
 //** ==================== Chassis Config ======================== **//

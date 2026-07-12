@@ -48,21 +48,19 @@ void Shooting_Init(void)
     PID_Init(&PID_SFri_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
 	//摩擦轮PID
-	PID_Init(&PID_SFri_UL_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&PID_SFri_UL_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&PID_SFri_UL_In,1.0f,0.0f,0.2f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&PID_SFri_UL_Ex,10.0f,0.001f,30.0f,-10000,10000,-500.0f, 500.0f);
 	
-	PID_Init(&PID_SFri_UR_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&PID_SFri_UR_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&PID_SFri_UR_In,1.0f,0.0f,0.2f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&PID_SFri_UR_Ex,10.0f,0.001f,30.0f,-10000,10000,-500.0f, 500.0f);
 	
-	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&PID_SFri_DM_Ex,30.0f,0.0f,0.0f,-10000,10000,-10.0f, 10.0f);
+	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.2f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&PID_SFri_DM_Ex,10.0f,0.001f,30.0f,-10000,10000,-500.0f, 500.0f);
 	
     Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_L_DEG;
     Shooting_Instance.Calc.PushRod.CtlFlag = 1;
     Shooting_State_Machine.Push_Stroke == PUSHPL;
     
-    //Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ING;
-
 	//X_V2_Auto_Return_Sys_Params_Timed(1,S_CPHA,15);//读取张大头步进电机的实际工作电流
 }
 
@@ -100,6 +98,14 @@ void Shooting_SetMode(void)
     
 }
 
+//检测是否发弹
+uint32_t sum = 0;
+uint32_t Maxsum = 0;
+uint16_t I_avg = 0;
+uint16_t MaxI_avg = 0;
+uint16_t shoottest_cnt = 0;
+uint16_t stable = 0;
+
 //更新目标量
 void Shooting_RefreshTarget(void)
 {
@@ -107,6 +113,45 @@ void Shooting_RefreshTarget(void)
     Fire_Run();
     Load_Run();
     Friction_Update_Target();
+
+    sum = abs(Shooting_Instance.DJI_Motordata.DM.current_ma) +
+                  abs(Shooting_Instance.DJI_Motordata.UL.current_ma) +
+                  abs(Shooting_Instance.DJI_Motordata.UR.current_ma);
+
+
+
+    I_avg = sum / 3;
+
+    if(sum > Maxsum)
+    {
+        Maxsum = sum;
+    }
+
+    if(I_avg > MaxI_avg)
+    {
+        MaxI_avg = I_avg;
+    }
+
+        //条件：平均电流超限 或者 任意一路电机电流超限
+    if(I_avg > 1000)
+    {
+        shoottest_cnt++;
+    }
+    else
+    {
+        shoottest_cnt = 0;
+    }
+    
+    if(shoottest_cnt >= 5)
+    {
+        stable = 1;
+        shoottest_cnt = 5;
+    }
+    else
+    {
+        stable = 0;
+    }
+
     // PuahRod_Update_Target();
 }
 
@@ -303,23 +348,32 @@ static void PuahRod_Update_Target(void)
 // //点C位置
 // #define PUSHROD_POSITION_C_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_C_MM,PUSHROD_SCREW_LEAD_MM)   
 
-//检测是否发弹
 uint8_t Detect_Fied(void)
 {
     static uint16_t shoot_cnt = 0;
-    const int16_t CURRENT_THRESHOLD = 2000;
+    const int16_t CURRENT_THRESHOLD = AUTOLOAD_THRESH_CUR_FRICTION;
 
-    int32_t sum = Shooting_Instance.DJI_Motordata.DM.current_ma +
-                  Shooting_Instance.DJI_Motordata.UL.current_ma +
-                  Shooting_Instance.DJI_Motordata.UR.current_ma;
+    // sum = abs(Shooting_Instance.DJI_Motordata.DM.current_ma) +
+    //               abs(Shooting_Instance.DJI_Motordata.UL.current_ma) +
+    //               abs(Shooting_Instance.DJI_Motordata.UR.current_ma);
 
-    int16_t I_avg = sum / 3;
+
+
+    // I_avg = sum / 3;
+
+    // if(sum > Maxsum)
+    // {
+    //     Maxsum = sum;
+    // }
+
+    // if(I_avg > MaxI_avg)
+    // {
+    //     MaxI_avg = I_avg;
+    // }
+
 
     //条件：平均电流超限 或者 任意一路电机电流超限
-    if(I_avg > CURRENT_THRESHOLD
-        || Shooting_Instance.DJI_Motordata.DM.current_ma > CURRENT_THRESHOLD
-        || Shooting_Instance.DJI_Motordata.UL.current_ma > CURRENT_THRESHOLD
-        || Shooting_Instance.DJI_Motordata.UR.current_ma > CURRENT_THRESHOLD)
+    if(I_avg > CURRENT_THRESHOLD)
     {
         shoot_cnt++;
     }
@@ -587,9 +641,8 @@ void Shooting_Init(void)
     PID_Init(&Dial_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
 	//拨盘PID
-	PID_Init(&Dial_In,1.1f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	//PID_Init(&Dial_Ex,50.0f,0.003f,50.0f,-10000,10000,-1000.0f, 1000.0f);
-    PID_Init(&Dial_Ex,10.0f,0.003f,50.0f,-10000,10000,-1000.0f, 1000.0f);
+	PID_Init(&Dial_In,0.8f,0.0f,0.15f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+    PID_Init(&Dial_Ex,50.0f,0.003f,65.0f,-15000,15000,-1000.0f, 1000.0f);
 
 }          
 
@@ -704,7 +757,7 @@ static void Dial_Update_Target(void)
 static uint8_t Detect_Load(void)
 {
     static uint16_t shoot_cnt = 0;
-    const int16_t CURRENT_THRESHOLD = 2000;
+    const int16_t CURRENT_THRESHOLD = AUTOLOAD_THRESH_CUR_DIAL;
 
     if(fabs(Shooting_Instance.DJI_Motordata.DIAL.current_ma) > CURRENT_THRESHOLD)
     {

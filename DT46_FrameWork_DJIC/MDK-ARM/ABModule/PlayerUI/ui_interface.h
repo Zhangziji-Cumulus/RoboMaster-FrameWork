@@ -20,7 +20,7 @@ void print_message(const uint8_t* message, int length);
 //     } \
 // } while(0)
 
-#define SEND_MESSAGE(message, len) HAL_UART_Transmit_DMA(&huart6, message, len); osDelay(15);
+#define SEND_MESSAGE(message, len) HAL_UART_Transmit_DMA(&huart6, message, len); osDelay(30);
 
 // User Code End
 

@@ -14,7 +14,7 @@ __attribute__((used)) void PlyerUITask(void *argument)
         DrawUI_Update();
         //=============================检测剩余栈=================================//
         remain_PlyerUITask = uxTaskGetStackHighWaterMark(NULL);
-        osDelay(10);
+        osDelay(30);
     }
 }
 

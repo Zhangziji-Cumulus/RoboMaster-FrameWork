@@ -10,7 +10,7 @@ static const CMD_t* CMD_DrawUI;
 //使用这个函数来更新交互、数据
 static void Update_Data(void);
 static void DrawUI_Dynamic(void);
-static void DrawUI_ReInit(uint32_t timems);
+static void DrawUI_ReInit(void);
 
 void DrawUI_Init(void)
 {
@@ -55,26 +55,25 @@ void DrawUI_Update(void)
     ui_update_Dynamic();
 
     //自动重初始化UI
-    DrawUI_ReInit(2000);
+    //DrawUI_ReInit(2000);
 
 }
 
 //重新初始化UI手动触发、自动触发（每隔 timems 毫秒执行一次，基于 HAL 滴答）
-static void DrawUI_ReInit(uint32_t timems)
+static void DrawUI_ReInit(void)
 {
-    static uint32_t last_tick = 0;
-    uint32_t now = HAL_GetTick();
+    // static uint32_t last_tick = 0;
+    // uint32_t now = HAL_GetTick();
 
-    if (now - last_tick < timems)
-        return;
-    last_tick = now;
+    // if (now - last_tick < timems)
+    //     return;
+    // last_tick = now;
 
     //获取裁判系统数据
     Referee_DrawUI = Referee_GetData();
     //自动获取当前机器人ID,发送和接受要对应上UI才能上去
     ui_self_id = Referee_DrawUI->_robot_status.robot_id; 
     
-    // osDelay(30);
     // ui_init_Static_Text1();
     // osDelay(30);
     // ui_init_Static_Text2();
@@ -86,11 +85,11 @@ static void DrawUI_ReInit(uint32_t timems)
     // ui_init_Static_Text5();
     // osDelay(30);
     // ui_init_Static_Graphic();
-    // osDelay(200);
+    // osDelay(50);
 
+    //初始化动态UI
     ui_init_Dynamic();
-    
-    //osDelay(50);
+    osDelay(50);
 }
 
 //使用这个函数来更新交互、数据
@@ -165,6 +164,17 @@ static void DrawUI_Dynamic(void)
         );
         ui_Dynamic_Gimbal_PitchLine->end_x = out_x;
         ui_Dynamic_Gimbal_PitchLine->end_y = out_y;
+
+        //显示云台角度（Pitch为弧度，先转角度，再转定点数，如12.345°→12345）
+        ui_Dynamic_Gimbal_PitchAngle->number = (int32_t)(Pitch * 180.0f / (float)M_PI * 1000.0f);
+    }
+
+
+
+    //刷新UI
+    if(CMD_DrawUI->other.RefreshUI  == ON)
+    {
+        DrawUI_ReInit();
     }
 
 }
