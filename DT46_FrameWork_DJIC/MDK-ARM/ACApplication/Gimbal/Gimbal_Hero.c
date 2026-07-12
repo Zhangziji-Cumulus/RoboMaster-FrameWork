@@ -53,9 +53,10 @@ void Gimbal_Init(void)
     //PITCH轴PID
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_Ex,600.0f,0.01f,1500.0f,-1500,1500,-1000.0f, 1000.0f);
+	PID_Init(&Gimbal_Pitch_Ex,600.0f,0.01f,1500.0f,-2800,2800,-1000.0f, 1000.0f);
 
 }
+
 //更新状态函数
 void Gimbal_Update(void)
 {
@@ -102,16 +103,16 @@ void Gimbal_SetMode(void)
 //更新目标量
 void Gimbal_RefreshTarget(void)
 {
-
     if (Gimbal_Instance.CMD.ctrl == STOP_MODE)
     {
         Gimbal_SetSafe_Vel();
     }
     else
     {
-        Gimbal_Update_Target();
-    }
 
+        Gimbal_Update_Target();
+
+    }
 }
 //计算控制量
 void Gimbal_CtrlCalc(void)
@@ -204,6 +205,7 @@ static void Gimbal_Update_Target(void)
     Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Pitch.T_Angle,
                                             -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
+
 #endif
 
 #if(AUTOAIM_IFOPEN == AUTOAIM_NOPEN)

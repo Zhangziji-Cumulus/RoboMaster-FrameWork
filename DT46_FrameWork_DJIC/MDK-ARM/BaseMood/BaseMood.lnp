@@ -101,7 +101,6 @@
 "basemood\chassis_task.o"
 "basemood\gimbal_task.o"
 "basemood\gimbal_hero.o"
-"basemood\dial.o"
 "basemood\shooting_task.o"
 "basemood\shooting_hero.o"
 "basemood\load_task.o"

@@ -156,47 +156,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sum,0x0A</ItemText>
+          <ItemText>Chassis_Follow_PID</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Maxsum</ItemText>
+          <ItemText>Gimbal_Instance</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>I_avg,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>\\BaseMood\ACApplication/Shooting/Shooting_Hero.c\MaxI_avg,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Shooting_Instance.DJI_Motordata.DM.current_ma,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>PID_SFri_UL_In</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>PID_SFri_UL_Ex</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>shoottest_cnt</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>stable</ItemText>
+          <ItemText>Gimbal_Yaw_FF</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -2264,7 +2234,7 @@
 
   <Group>
     <GroupName>ACApplication/Chassis</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -2492,37 +2462,13 @@
 
   <Group>
     <GroupName>ACApplication/Shooting</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>20</GroupNumber>
       <FileNumber>175</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\ACApplication\Shooting\Dial.c</PathWithFileName>
-      <FilenameWithoutPath>Dial.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>20</GroupNumber>
-      <FileNumber>176</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\ACApplication\Shooting\Dial.h</PathWithFileName>
-      <FilenameWithoutPath>Dial.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>20</GroupNumber>
-      <FileNumber>177</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2534,7 +2480,7 @@
     </File>
     <File>
       <GroupNumber>20</GroupNumber>
-      <FileNumber>178</FileNumber>
+      <FileNumber>176</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2546,7 +2492,7 @@
     </File>
     <File>
       <GroupNumber>20</GroupNumber>
-      <FileNumber>179</FileNumber>
+      <FileNumber>177</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2558,7 +2504,7 @@
     </File>
     <File>
       <GroupNumber>20</GroupNumber>
-      <FileNumber>180</FileNumber>
+      <FileNumber>178</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2570,7 +2516,7 @@
     </File>
     <File>
       <GroupNumber>20</GroupNumber>
-      <FileNumber>181</FileNumber>
+      <FileNumber>179</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2582,7 +2528,7 @@
     </File>
     <File>
       <GroupNumber>20</GroupNumber>
-      <FileNumber>182</FileNumber>
+      <FileNumber>180</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2594,7 +2540,7 @@
     </File>
     <File>
       <GroupNumber>20</GroupNumber>
-      <FileNumber>183</FileNumber>
+      <FileNumber>181</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2614,7 +2560,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>21</GroupNumber>
-      <FileNumber>184</FileNumber>
+      <FileNumber>182</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -2626,7 +2572,7 @@
     </File>
     <File>
       <GroupNumber>21</GroupNumber>
-      <FileNumber>185</FileNumber>
+      <FileNumber>183</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

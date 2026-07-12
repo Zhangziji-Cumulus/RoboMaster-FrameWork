@@ -98,14 +98,6 @@ void Shooting_SetMode(void)
     
 }
 
-//检测是否发弹
-uint32_t sum = 0;
-uint32_t Maxsum = 0;
-uint16_t I_avg = 0;
-uint16_t MaxI_avg = 0;
-uint16_t shoottest_cnt = 0;
-uint16_t stable = 0;
-
 //更新目标量
 void Shooting_RefreshTarget(void)
 {
@@ -113,44 +105,6 @@ void Shooting_RefreshTarget(void)
     Fire_Run();
     Load_Run();
     Friction_Update_Target();
-
-    sum = abs(Shooting_Instance.DJI_Motordata.DM.current_ma) +
-                  abs(Shooting_Instance.DJI_Motordata.UL.current_ma) +
-                  abs(Shooting_Instance.DJI_Motordata.UR.current_ma);
-
-
-
-    I_avg = sum / 3;
-
-    if(sum > Maxsum)
-    {
-        Maxsum = sum;
-    }
-
-    if(I_avg > MaxI_avg)
-    {
-        MaxI_avg = I_avg;
-    }
-
-        //条件：平均电流超限 或者 任意一路电机电流超限
-    if(I_avg > 1000)
-    {
-        shoottest_cnt++;
-    }
-    else
-    {
-        shoottest_cnt = 0;
-    }
-    
-    if(shoottest_cnt >= 5)
-    {
-        stable = 1;
-        shoottest_cnt = 5;
-    }
-    else
-    {
-        stable = 0;
-    }
 
     // PuahRod_Update_Target();
 }
@@ -348,29 +302,32 @@ static void PuahRod_Update_Target(void)
 // //点C位置
 // #define PUSHROD_POSITION_C_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_C_MM,PUSHROD_SCREW_LEAD_MM)   
 
+//检测是否发弹
+uint32_t sum = 0;
+uint32_t Maxsum = 0;
+uint16_t I_avg = 0;
+uint16_t MaxI_avg = 0;
+
 uint8_t Detect_Fied(void)
 {
     static uint16_t shoot_cnt = 0;
     const int16_t CURRENT_THRESHOLD = AUTOLOAD_THRESH_CUR_FRICTION;
 
-    // sum = abs(Shooting_Instance.DJI_Motordata.DM.current_ma) +
-    //               abs(Shooting_Instance.DJI_Motordata.UL.current_ma) +
-    //               abs(Shooting_Instance.DJI_Motordata.UR.current_ma);
+    sum = abs(Shooting_Instance.DJI_Motordata.DM.current_ma) +
+                  abs(Shooting_Instance.DJI_Motordata.UL.current_ma) +
+                  abs(Shooting_Instance.DJI_Motordata.UR.current_ma);
 
+    I_avg = sum / 3;
 
+    if(sum > Maxsum)
+    {
+        Maxsum = sum;
+    }
 
-    // I_avg = sum / 3;
-
-    // if(sum > Maxsum)
-    // {
-    //     Maxsum = sum;
-    // }
-
-    // if(I_avg > MaxI_avg)
-    // {
-    //     MaxI_avg = I_avg;
-    // }
-
+    if(I_avg > MaxI_avg)
+    {
+        MaxI_avg = I_avg;
+    }
 
     //条件：平均电流超限 或者 任意一路电机电流超限
     if(I_avg > CURRENT_THRESHOLD)
@@ -433,10 +390,10 @@ uint8_t Detect_Fied(void)
 
 
 /************************* 时间参数配置（按实际调试修改） *************************/
-#define TIME_A_TO_B        1000    // A→B 推杆运动时间(ms)
-#define TIME_B_DETECT      1000    // B点发射检测超时时间(ms)
+#define TIME_A_TO_B        100    // A→B 推杆运动时间(ms)
+#define TIME_B_DETECT      300    // B点发射检测超时时间(ms)
 #define TIME_B_TO_C        1000    // B→C 推杆运动时间(ms)
-#define TIME_C_TO_L        1000    // C→L 推杆返回时间(ms)
+#define TIME_C_TO_L        2000    // C→L 推杆返回时间(ms)
 #define FIRE_FILTER_MS     300     // 开火信号消抖时间(ms)
 
 /************************* 状态机主函数 *************************/
@@ -769,7 +726,7 @@ static uint8_t Detect_Load(void)
     }
 
     //连续5帧超标才确认击发，消除尖峰毛刺
-    if(shoot_cnt >= 5)
+    if(shoot_cnt >= 20)
     {
         shoot_cnt = 0; //防止计数溢出
         return 1;

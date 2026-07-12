@@ -3,7 +3,7 @@
 <title>Static Call Graph - [BaseMood\BaseMood.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image BaseMood\BaseMood.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sun Jul 12 12:06:32 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sun Jul 12 16:42:08 2026
 <BR><P>
 <H3>Maximum Stack Usage =        336 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1165,8 +1165,10 @@ Global Symbols
 <P><STRONG><a name="[11]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[ff]"></a>Detect_Fied</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, shooting_hero.o(i.Detect_Fied))
-<BR><BR>[Called By]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Fire_Run
+<P><STRONG><a name="[ff]"></a>Detect_Fied</STRONG> (Thumb, 104 bytes, Stack size 8 bytes, shooting_hero.o(i.Detect_Fied))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Detect_Fied
+</UL>
+<BR>[Called By]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Fire_Run
 </UL>
 
 <P><STRONG><a name="[6e]"></a>DualBoardTask</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, dual_board_transmit_task.o(i.DualBoardTask))
@@ -1266,8 +1268,8 @@ Global Symbols
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_RegisterInstance
 </UL>
 
-<P><STRONG><a name="[fd]"></a>Fire_Run</STRONG> (Thumb, 306 bytes, Stack size 48 bytes, shooting_hero.o(i.Fire_Run))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Fire_Run
+<P><STRONG><a name="[fd]"></a>Fire_Run</STRONG> (Thumb, 316 bytes, Stack size 48 bytes, shooting_hero.o(i.Fire_Run))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Fire_Run &rArr; Detect_Fied
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Detect_Fied
@@ -2343,8 +2345,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_CtrlCalc
 </UL>
 
-<P><STRONG><a name="[10b]"></a>PID_FF_Calculate_CycleAngle</STRONG> (Thumb, 212 bytes, Stack size 40 bytes, pid_lib.o(i.PID_FF_Calculate_CycleAngle))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = PID_FF_Calculate_CycleAngle &rArr; __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
+<P><STRONG><a name="[10b]"></a>PID_FF_Calculate_CycleAngle</STRONG> (Thumb, 202 bytes, Stack size 32 bytes, pid_lib.o(i.PID_FF_Calculate_CycleAngle))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = PID_FF_Calculate_CycleAngle &rArr; __hardfp_fmodf &rArr; _frem &rArr; __fpl_fnaninf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_FF_CalcCore
 <LI><a href="#[1a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_AngleShortestError
@@ -2538,7 +2540,7 @@ Global Symbols
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShootingTask
 </UL>
 
-<P><STRONG><a name="[1b3]"></a>Shooting_RefreshTarget</STRONG> (Thumb, 116 bytes, Stack size 8 bytes, shooting_hero.o(i.Shooting_RefreshTarget))
+<P><STRONG><a name="[1b3]"></a>Shooting_RefreshTarget</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, shooting_hero.o(i.Shooting_RefreshTarget))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = Shooting_RefreshTarget &rArr; Friction_Update_Target &rArr; calc_motor_rpm_from_speed &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Load_Run

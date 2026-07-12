@@ -72,7 +72,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define GIMBAL_MAX_SPEED_PITCH_M_S     1
 
 #define GIMBAL_MAX_ANGLE_STEP_DEG_YAW           0.25    //云台目标角度增量的最大值，单位：度
-#define GIMBAL_MAX_ANGLE_STEP_DEG_PITCH         0.1     //云台目标角度增量的最大值，单位：度
+#define GIMBAL_MAX_ANGLE_STEP_DEG_PITCH         0.03     //云台目标角度增量的最大值，单位：度
 
 /* 云台陀螺仪 */
 
@@ -192,7 +192,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define PUSHROD_POSTION_BACK_MM             110.0f    //推杆后位置
 
 #define PUSHROD_POSITION_L_MM            110.0f     //上弹位置
-#define PUSHROD_POSITION_A_MM            100.0f     //预发弹位置
+#define PUSHROD_POSITION_A_MM            95.0f     //预发弹位置
 #define PUSHROD_POSITION_B_MM            50.0f      //发射第一颗弹位置
 #define PUSHROD_POSITION_C_MM            5.0f       //发射第二颗弹位置
 
@@ -225,9 +225,9 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //#define PUSHROD_MOTOR_ID_FBK       PUSHROD_CAN_ID - 1      //推杆电机 反馈 ID （CAN ID - 1）
 
 /* ==== 自动上弹 ==== */
-#define AUTOLOAD_THRESH_CUR_DIAL 5000 //自动上弹拨盘电流阈值
+#define AUTOLOAD_THRESH_CUR_DIAL 6500 //自动上弹拨盘电流阈值
 
-#define AUTOLOAD_THRESH_CUR_FRICTION 1000 //自动上弹拨盘电流阈值
+#define AUTOLOAD_THRESH_CUR_FRICTION 1000 //自动上弹发射电流阈值
 
 //** ------------------------------------------------------------ **//
 //** ==================== Chassis Config ======================== **//
@@ -244,7 +244,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /* 地盘速度相关 */
 #define CHASSIS_MAX_SPEED            1.0f           //底盘最大移动速度（单位：m/s）
 #define CHASSIS_MAX_SPEED_FOLLOWING  1.5f           //底盘最大跟随速度（单位：m/s）
-#define CHASSIS_MAX_SPIN_SPEED       2.5f           //底盘最大旋转速度（单位：rad/s）
+#define CHASSIS_MAX_SPIN_SPEED       0.5f           //底盘最大旋转速度（单位：rad/s）
 
 /* 地盘的物理参数 */
 #define CHASSIS_WHEEL_RADIUS_MM     76.0f           //轮子半径（单位：mm）

@@ -5,43 +5,6 @@
 //** ========================================= PID 基础函数 ============================================= **//
 //** #################################################################################################### **//
 
-// /**
-//  * @brief  基础 PID 计算函数，支持积分限幅与输出限幅
-//  * @param  pid: PID 句柄指针
-//  * @param  error: 当前误差值 (目标值 - 当前值)
-//  * @return PID 输出值
-//  */
-// static float PID_CalcCore(PID_HandleTypeDef *pid, float error) {
-//     // 1. 比例项
-//     float p_out = pid->kp * error;
-
-//     // 2. 积分项，先累加误差再限幅
-//     pid->error_sum += error;
-//     if (pid->error_sum > pid->integral_max) {
-//         pid->error_sum = pid->integral_max;
-//     } else if (pid->error_sum < pid->integral_min) {
-//         pid->error_sum = pid->integral_min;
-//     }
-//     float i_out = pid->ki * pid->error_sum;
-
-//     // 3. 微分项
-//     float d_out = pid->kd * (error - pid->last_error);
-
-//     // 4. 叠加 PID 输出并限幅
-//     float total_out = p_out + i_out + d_out;
-//     if (total_out > pid->output_max) {
-//         total_out = pid->output_max;
-//     } else if (total_out < pid->output_min) {
-//         total_out = pid->output_min;
-//     }
-
-//     // 5. 更新状态并返回结果
-//     pid->last_error = error;
-//     pid->Output = total_out;
-
-//     return total_out;
-// }
-
 /**
  * @brief  PID 初始化函数
  */
@@ -440,14 +403,12 @@ static inline float PID_AngleShortestError(float from, float to) {
 /**
  * @brief 前馈角度 PID 计算，支持循环角度处理
  */
-float ff_value = 0.0f;
-
 float PID_FF_Calculate_CycleAngle(PID_FF_HandleTypeDef *pid, float current, float target) {
     if (pid == NULL || !pid->enable) return pid ? pid->output : 0.0f;
 
     // 1. 计算目标增量前馈
     float delta_target = PID_AngleShortestError(pid->last_target, target);
-    ff_value = pid->kff * delta_target; // kff 用于估计目标变化率
+    float ff_value = pid->kff * delta_target; // kff 用于估计目标变化率
 
     // 2. 将当前角度统一到 [-180, 180)
     pid->current = fmodf(current, 360.0f);

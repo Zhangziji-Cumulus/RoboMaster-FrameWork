@@ -2564,16 +2564,6 @@
           <GroupName>ACApplication/Shooting</GroupName>
           <Files>
             <File>
-              <FileName>Dial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ACApplication\Shooting\Dial.c</FilePath>
-            </File>
-            <File>
-              <FileName>Dial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ACApplication\Shooting\Dial.h</FilePath>
-            </File>
-            <File>
               <FileName>Shooting_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Shooting\Shooting_Config.h</FilePath>
