@@ -305,6 +305,7 @@ void PID_FF_Reset(PID_FF_HandleTypeDef *pid) {
     pid->error_sum = 0.0f;
     pid->last_error = 0.0f;
     pid->last_target = 0.0f;
+    pid->last_current = 0.0f;
     pid->target = 0.0f;
     pid->current = 0.0f;
     pid->output = 0.0f;
@@ -316,27 +317,45 @@ void PID_FF_Reset(PID_FF_HandleTypeDef *pid) {
 
 /**
  * @brief 前馈 PID 核心计算，包含 P、I、D 以及前馈分量
+ * @note  微分项对测量值（PV）求导，避免目标跳变引起的 Derivative Kick
+ * @note  积分项采用条件积分抗饱和，输出饱和时停止累加
  */
 static float PID_FF_CalcCore(PID_FF_HandleTypeDef *pid, float error, float ff_out) {
     // 1. 比例项
     float p_out = pid->kp * error;
 
-    // 2. 积分项，先累加误差再限幅
-    pid->error_sum += error;
-    if (pid->error_sum > pid->integral_max) {
-        pid->error_sum = pid->integral_max;
-    } else if (pid->error_sum < pid->integral_min) {
-        pid->error_sum = pid->integral_min;
+    // 2. 微分项：对测量值(PV)求导，提供真实速度阻尼
+    //    d_out = -kd * (current - last_current)
+    //    目标变化时电流不会突变，因此不会产生 Derivative Kick
+    float d_out = pid->kd * (-(pid->current - pid->last_current));
+
+    // 3. 积分项：条件积分抗饱和
+    //    预估总输出，若已饱和且误差方向会加剧饱和则停止积分
+    float i_tmp = pid->ki * pid->error_sum;
+    float pre_total = p_out + i_tmp + d_out + ff_out;
+    bool integrate = true;
+    if (pre_total >= pid->output_max && error > 0.0f) {
+        integrate = false; // 正向饱和，误差为正，停止积分
+    } else if (pre_total <= pid->output_min && error < 0.0f) {
+        integrate = false; // 负向饱和，误差为负，停止积分
     }
+    if (integrate) {
+        pid->error_sum += error;
+    }
+
     float i_out = pid->ki * pid->error_sum;
 
-    // 3. 微分项
-    float d_out = pid->kd * (error - pid->last_error);
+    // 4. 积分输出硬性限幅（对 i_out 本身限幅，物理意义明确）
+    if (i_out > pid->integral_max) {
+        i_out = pid->integral_max;
+        if (pid->ki > 1e-6f) pid->error_sum = i_out / pid->ki;
+    } else if (i_out < pid->integral_min) {
+        i_out = pid->integral_min;
+        if (pid->ki > 1e-6f) pid->error_sum = i_out / pid->ki;
+    }
 
-    // 4. 前馈与 PID 叠加
+    // 5. 叠加输出与输出限幅
     float total_out = p_out + i_out + d_out + ff_out;
-
-    // 5. 输出限幅
     if (total_out > pid->output_max) {
         total_out = pid->output_max;
     } else if (total_out < pid->output_min) {
@@ -345,6 +364,7 @@ static float PID_FF_CalcCore(PID_FF_HandleTypeDef *pid, float error, float ff_ou
 
     // 6. 更新状态
     pid->last_error = error;
+    pid->last_current = pid->current;
     pid->output = total_out;
 
     return total_out;

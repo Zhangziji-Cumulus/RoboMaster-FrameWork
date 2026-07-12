@@ -78,6 +78,7 @@ typedef struct {
     float current;      // 当前反馈值
     float output;       // 最终输出值
     float last_target;  // 上一拍目标值（用于速度前馈）
+    float last_current; // 上一拍当前值（用于微分对测量值，防止 Derivative Kick）
 
     // 限幅参数
     float output_max;

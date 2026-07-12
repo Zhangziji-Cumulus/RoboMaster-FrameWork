@@ -46,7 +46,7 @@ void Gimbal_Init(void)
   	PID_Init(&Gimbal_Motor_STOP,3.0f,0.0f,0.0f,-DJI_STOP_A,DJI_STOP_A,-5.0f, 5.0f);
 
     //YAW轴PID
-	PID_FF_Init(&Gimbal_Yaw_FF,3800.0f,0.05f,48000.0f,1000.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+	PID_FF_Init(&Gimbal_Yaw_FF,3800.0f,0.05f,320000.0f,1500.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
 	PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
    
@@ -54,7 +54,6 @@ void Gimbal_Init(void)
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_Ex,600.0f,0.01f,1500.0f,-2800,2800,-1000.0f, 1000.0f);
-
 }
 
 //更新状态函数
@@ -109,9 +108,7 @@ void Gimbal_RefreshTarget(void)
     }
     else
     {
-
         Gimbal_Update_Target();
-
     }
 }
 //计算控制量

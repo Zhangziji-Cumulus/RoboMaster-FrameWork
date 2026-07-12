@@ -32,7 +32,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /* 云台PID相关 */
 
 //YAW轴PID控制模式
-#define PID_CTRL_MODE_YAW           PID_CTRL_MODE_SINGLE_FF
+#define PID_CTRL_MODE_YAW           PID_CTRL_MODE_SINGLE_FF //PID_CTRL_MODE_SINGLE_FF
 #define PID_CTRL_MODE_PITCH         PID_CTRL_MODE_DOUBLE_LOOP
 
 //多环PID控制精度（允许偏差/阈值）
