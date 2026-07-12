@@ -169,7 +169,7 @@ void Gimbal_SendCmd(void)
 
 static void Gimbal_Update_Target(void)
 {
-#if(AUTOAIM_IFOPEN)
+#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
     /* 更新云台Yaw Pitch角度的目标值 */
 
     float ManualYaw = MyMath_Map_Range_Float(Gimbal_Instance.CMD.Gimbal.Yaw,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_YAW,GIMBAL_MAX_ANGLE_STEP_DEG_YAW);

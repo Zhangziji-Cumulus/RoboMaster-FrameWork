@@ -29,6 +29,8 @@ static void Chassis_Mecanu_Calc(void);
 //** ====================================== 对外若定义覆盖函数 =========================================== **//
 //** #################################################################################################### **//
 
+
+
 //初始化函数
 void Chassis_Init(void)
 {
@@ -55,6 +57,8 @@ void Chassis_Init(void)
 	
 	PID_Init(&Chassis_Follow_PID,0.05f,0.0,0.15f,-CHASSIS_MAX_SPEED_FOLLOWING,CHASSIS_MAX_SPEED_FOLLOWING,-0.75f,0.75f);
 
+
+    GyroSmoothRand_Init(0.70f,1.20f);
 }          
 
 //更新数据函数
@@ -205,10 +209,15 @@ void Chassis_SendCmd(void)
 //** #################################################################################################### **//
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
+
+float SpinSpeed;
+
 static void Chassis_Update_Target(uint8_t state)
 {
     float Theta_Degree = Chassis_Instance.Calc.Theta.Degree;
     float Theta_Radian = Chassis_Instance.Calc.Theta.Radian;
+
+    SpinSpeed = GyroSmoothRand_Run();
 
     if(state == NORMAL)
     {
