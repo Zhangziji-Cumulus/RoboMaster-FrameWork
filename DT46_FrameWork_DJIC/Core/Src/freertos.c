@@ -241,6 +241,18 @@ const osThreadAttr_t PlyerUI_attributes = {
   .stack_size = sizeof(PlyerUIBuffer),
   .priority = (osPriority_t) osPriorityHigh7,
 };
+/* Definitions for Printf */
+osThreadId_t PrintfHandle;
+uint32_t PrintfBuffer[ 1024 ];
+osStaticThreadDef_t PrintfControlBlock;
+const osThreadAttr_t Printf_attributes = {
+  .name = "Printf",
+  .cb_mem = &PrintfControlBlock,
+  .cb_size = sizeof(PrintfControlBlock),
+  .stack_mem = &PrintfBuffer[0],
+  .stack_size = sizeof(PrintfBuffer),
+  .priority = (osPriority_t) osPriorityNormal,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -262,6 +274,7 @@ void AutoAimTask(void *argument);
 void RefereeTask(void *argument);
 void VTTask(void *argument);
 void PlyerUITask(void *argument);
+void PrintfTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -343,6 +356,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of PlyerUI */
   PlyerUIHandle = osThreadNew(PlyerUITask, NULL, &PlyerUI_attributes);
+
+  /* creation of Printf */
+  PrintfHandle = osThreadNew(PrintfTask, NULL, &Printf_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -632,6 +648,24 @@ __weak void PlyerUITask(void *argument)
     osDelay(1);
   }
   /* USER CODE END PlyerUITask */
+}
+
+/* USER CODE BEGIN Header_PrintfTask */
+/**
+* @brief Function implementing the Printf thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_PrintfTask */
+__weak void PrintfTask(void *argument)
+{
+  /* USER CODE BEGIN PrintfTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END PrintfTask */
 }
 
 /* Private application code --------------------------------------------------*/

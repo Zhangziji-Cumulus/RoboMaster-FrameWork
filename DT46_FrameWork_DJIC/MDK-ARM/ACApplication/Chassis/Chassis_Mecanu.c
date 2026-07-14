@@ -57,7 +57,6 @@ void Chassis_Init(void)
 	
 	PID_Init(&Chassis_Follow_PID,0.05f,0.0,0.15f,-CHASSIS_MAX_SPEED_FOLLOWING,CHASSIS_MAX_SPEED_FOLLOWING,-0.75f,0.75f);
 
-
     GyroSmoothRand_Init();
 }          
 
@@ -67,8 +66,6 @@ float SpinSpeed;
 void Chassis_Update(void)
 {
     SpinSpeed = GyroSmoothRand_Run();
-
-
 
     //获取控制命令数据结构体指针
     Chassis_Instance.CMD = *CMD_Get_point();

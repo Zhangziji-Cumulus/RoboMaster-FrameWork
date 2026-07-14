@@ -94,3 +94,4 @@ basemood\motorctrl_dji.o: ./ACApplication/Auto/AutoAim.h
 basemood\motorctrl_dji.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
 basemood\motorctrl_dji.o: ./ACApplication/Chassis/Chassis_Advanced.h
 basemood\motorctrl_dji.o: ./AADrivers/IMU/BMI088/INS_task.h
+basemood\motorctrl_dji.o: ./AADrivers/bsp_usart.h

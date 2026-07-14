@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT;.\ABModule\PlayerUI;.\ABModule\CRC;.\ABModule\RefereeTx</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT;./ABModule/PlayerUI;./ABModule/CRC;./ABModule/RefereeTx;./ABModule/Printf</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1918,6 +1918,16 @@
               <FileType>5</FileType>
               <FilePath>.\AADrivers\Dual_Board_Transmit_Task.h</FilePath>
             </File>
+            <File>
+              <FileName>bsp_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\AADrivers\bsp_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\AADrivers\bsp_usart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2407,6 +2417,31 @@
               <FileName>CRC.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\CRC\CRC.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ABModule/Printf</GroupName>
+          <Files>
+            <File>
+              <FileName>Printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\Printf\Printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>Printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\Printf\Printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>Printf_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\Printf\Printf_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Printf_Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\Printf\Printf_Task.h</FilePath>
             </File>
           </Files>
         </Group>

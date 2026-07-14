@@ -2,6 +2,7 @@
 #define CHASSIS_MECANU_H_
 
 #include "A_MCommon.h"
+#include "bsp_usart.h"
 
 #if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == CHASSIS_BOARD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 

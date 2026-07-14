@@ -8,6 +8,7 @@
 #include "User_Callback.h" //用户回调函数声明
 #include "VTCenter.h" //图传传输UART驱动
 #include "IMU_Get.h"//获取陀螺仪数据
+#include "bsp_usart.h"
 
 #endif // A_COMMONDRIVERS_H_
 

@@ -62,7 +62,7 @@ basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdlib
 basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 basemood\drawui.o: D:\A_Study & Work\STM32\Keil5\ARM\ARMCC\Bin\..\include\string.h
 basemood\drawui.o: ./ABModule/Referee/RefereeProtocol.h
-basemood\drawui.o: .\ABModule\CRC\CRC.h
+basemood\drawui.o: ./ABModule/CRC/CRC.h
 basemood\drawui.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\drawui.o: ./AAA/A_CommonSystem.h
 basemood\drawui.o: ABModule\PlayerUI\DrawUI_Extend.h

@@ -28,14 +28,14 @@ void GyroSmoothRand_Init(void)
 
     // ===================== 反自瞄突降波形 默认参数 =====================
     gyro_rand.param.alpha          = 0.02f;
-    gyro_rand.param.min_spd        = 1.0f;
-    gyro_rand.param.max_spd        = 1.5f;
+    gyro_rand.param.min_spd        = 1.8f;
+    gyro_rand.param.max_spd        = 2.2f;
     gyro_rand.param.min_period     = 1.5f;
     gyro_rand.param.max_period     = 2.5f;
-    gyro_rand.param.amp_min_ratio  = 0.20f;
-    gyro_rand.param.amp_max_ratio  = 0.35f;
-    gyro_rand.param.noise_ratio    = 0.05f;
-    gyro_rand.param.drop_ratio     = 0.12f;    // 12%周期完成陡降，突降很急促
+    gyro_rand.param.amp_min_ratio  = 0.10f;
+    gyro_rand.param.amp_max_ratio  = 0.50f;
+    gyro_rand.param.noise_ratio    = 0.01f;
+    gyro_rand.param.drop_ratio     = 0.10f;    // 12%周期完成陡降，突降很急促
     gyro_rand.param.drop_depth_ratio = 1.0f;   // 降到本轮波动最大谷底
     // =================================================================
 

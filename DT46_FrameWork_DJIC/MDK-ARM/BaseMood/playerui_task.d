@@ -64,7 +64,7 @@ basemood\playerui_task.o: ABModule\PlayerUI\ui_static.h
 basemood\playerui_task.o: ./ABModule/Referee/RefereeCenter.h
 basemood\playerui_task.o: ./AAA/A_CommonSystem.h
 basemood\playerui_task.o: ./ABModule/Referee/RefereeProtocol.h
-basemood\playerui_task.o: .\ABModule\CRC\CRC.h
+basemood\playerui_task.o: ./ABModule/CRC/CRC.h
 basemood\playerui_task.o: ./AADrivers/Dual_Board_Transmit.h
 basemood\playerui_task.o: ./AAA/A_CommonSystem.h
 basemood\playerui_task.o: ABModule\PlayerUI\DrawUI_Extend.h

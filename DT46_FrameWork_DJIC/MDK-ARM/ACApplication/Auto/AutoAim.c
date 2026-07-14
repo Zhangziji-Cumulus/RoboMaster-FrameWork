@@ -120,7 +120,7 @@ void AutoAim_UpdateTx(void)
     //AutoAim_Instance.Tx.Match = 999;
 }
 
-//** ===================== 循环模式发送函数 ====================== **//
+//** ===================== 普通模式发送函数 ====================== **//
 void AutoAim_SendData(void)
 {
     HAL_UART_Transmit_DMA(&AUTO_USART_HANDLE, (uint8_t*)&AutoAim_Instance.Tx, sizeof(AutoAim_Tx_t));

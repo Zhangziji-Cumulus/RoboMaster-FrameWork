@@ -94,4 +94,4 @@ basemood\stm32f4xx_it.o: ./ACApplication/Chassis/Chassis_Advanced.h
 basemood\stm32f4xx_it.o: ./ABModule/Referee/RefereeCenter.h
 basemood\stm32f4xx_it.o: ./AAA/A_CommonSystem.h
 basemood\stm32f4xx_it.o: ./ABModule/Referee/RefereeProtocol.h
-basemood\stm32f4xx_it.o: .\ABModule\CRC\CRC.h
+basemood\stm32f4xx_it.o: ./ABModule/CRC/CRC.h
