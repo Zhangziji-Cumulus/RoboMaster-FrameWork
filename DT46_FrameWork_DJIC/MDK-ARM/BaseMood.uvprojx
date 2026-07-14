@@ -2518,6 +2518,16 @@
               <FileType>5</FileType>
               <FilePath>.\ACApplication\Chassis\Chassis_Task.h</FilePath>
             </File>
+            <File>
+              <FileName>Chassis_Advanced.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ACApplication\Chassis\Chassis_Advanced.c</FilePath>
+            </File>
+            <File>
+              <FileName>Chassis_Advanced.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ACApplication\Chassis\Chassis_Advanced.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

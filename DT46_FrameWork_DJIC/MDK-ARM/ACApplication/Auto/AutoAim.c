@@ -1,5 +1,7 @@
 #include "AutoAim.h"
 
+#if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == GIMBAL_BOARD )|| BOARD_MODE == BOARD_MODE_SINGLE)
+
 #if(AUTOAIM_IFOPEN)
 
 static AutoAim_Instance_t  AutoAim_Instance;//自瞄实例
@@ -115,7 +117,7 @@ void AutoAim_UpdateTx(void)
     AutoAim_Instance.Tx.IMU_Pitch = AutoAim_Instance.MCUData.INS_angle[IMU_INDEX_PITCH];
     AutoAim_Instance.Tx.IMU_Yaw = AutoAim_Instance.MCUData.INS_angle[IMU_INDEX_YAW];
 
-    AutoAim_Instance.Tx.Match = 999;
+    //AutoAim_Instance.Tx.Match = 999;
 }
 
 //** ===================== 循环模式发送函数 ====================== **//
@@ -127,31 +129,6 @@ void AutoAim_SendData(void)
 //** ------------------------------------------------------------ **//
 //** ======================== 接收解析函数 ======================= **//
 //** ------------------------------------------------------------ **//
-void ResetMatch(void)
-{
-    // 静态变量只会初始化一次
-    static uint32_t last_change_tick = 0;  // 记录Match最后一次变化的系统时间
-    static uint8_t  last_Match = 0;        // 上一帧的Match值
-
-    uint8_t now_Match = AutoAim_Instance.Rx.Match;
-
-    // ====================== 1. Match 发生变化 ======================
-    if (now_Match != last_Match)
-    {
-        last_Match = now_Match;           // 更新旧值
-        last_change_tick = HAL_GetTick(); // 更新【最后变化时间】
-    }
-    // ====================== 2. Match 长时间没变化 ======================
-    else
-    {
-        // 判断：距离上一次变化 超过 1500ms（1.5秒）
-        if (HAL_GetTick() - last_change_tick >= 1500)
-        {
-            AutoAim_Instance.Rx.Match = 0; // 超时重置Match
-            // 这里不清除时间戳，避免反复触发
-        }
-    }
-}
 
 void AutoAim_ReceiveProcess(void)
 {
@@ -159,29 +136,37 @@ void AutoAim_ReceiveProcess(void)
 
     // 帧头校验
     if(rx_buf->Frame_head != AUTO_USART_HEADER)
+    {
+        AutoAim_Instance.Rx_OnlineFlag = 0;
         return;
+    }
     AutoAim_Instance.Rx = *rx_buf;
+    AutoAim_Instance.Rx_OnlineFlag = 1;
+    AutoAim_Instance.Rx_LastTick = HAL_GetTick();
 }
 
 void AutoAim_UpdateRx(void)
 {
-    ResetMatch();
+    // 超时检测：超过 AUTOAIM_RX_TIMEOUT_MS 未收到有效帧 → 置离线
+    if (HAL_GetTick() - AutoAim_Instance.Rx_LastTick > AUTOAIM_RX_TIMEOUT_MS)
+    {
+        AutoAim_Instance.Rx_OnlineFlag = 0;
+    }
 
-    //在线状态暂时设置为0
-    if(AutoAim_Instance.Rx.Match != 0)
-    {
-        AutoAim_Ctrl.Yaw = AutoAim_Instance.Rx.Yaw;
-        AutoAim_Ctrl.Pitch = AutoAim_Instance.Rx.Pitch;
-        AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
-        AutoAim_Ctrl.IsOnline = 1;
-    }
-    else
-    {
-        AutoAim_Ctrl.Yaw = 0;
-        AutoAim_Ctrl.Pitch = 0;
-        AutoAim_Ctrl.FireOK = 0;
-        AutoAim_Ctrl.IsOnline = 0;
-    }
+   if(AutoAim_Instance.Rx_OnlineFlag)
+   {
+       AutoAim_Ctrl.Yaw = AutoAim_Instance.Rx.Yaw;
+       AutoAim_Ctrl.Pitch = AutoAim_Instance.Rx.Pitch;
+       AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
+       AutoAim_Ctrl.IsOnline = 1;
+   }
+   else
+   {
+       AutoAim_Ctrl.Yaw = 0;
+       AutoAim_Ctrl.Pitch = 0;
+       AutoAim_Ctrl.FireOK = 0;
+       AutoAim_Ctrl.IsOnline = 0;
+   }
 }
 
 //** ------------------------------------------------------------ **//
@@ -206,5 +191,7 @@ void AutoAim_UART_IRQHandler(void)
         AutoAim_ReceiveProcess();
     }
 }
+
+#endif
 
 #endif

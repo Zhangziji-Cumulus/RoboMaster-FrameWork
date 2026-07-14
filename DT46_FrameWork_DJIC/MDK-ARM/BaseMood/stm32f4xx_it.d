@@ -90,6 +90,7 @@ basemood\stm32f4xx_it.o: ./ACApplication/Auto/AutoAim.h
 basemood\stm32f4xx_it.o: ./AAA/A_MCommon.h
 basemood\stm32f4xx_it.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\stm32f4xx_it.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\stm32f4xx_it.o: ./ACApplication/Chassis/Chassis_Advanced.h
 basemood\stm32f4xx_it.o: ./ABModule/Referee/RefereeCenter.h
 basemood\stm32f4xx_it.o: ./AAA/A_CommonSystem.h
 basemood\stm32f4xx_it.o: ./ABModule/Referee/RefereeProtocol.h

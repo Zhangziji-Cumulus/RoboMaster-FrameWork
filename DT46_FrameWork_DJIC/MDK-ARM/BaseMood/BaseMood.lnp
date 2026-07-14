@@ -99,6 +99,7 @@
 "basemood\chassis_omni.o"
 "basemood\chassis_steering.o"
 "basemood\chassis_task.o"
+"basemood\chassis_advanced.o"
 "basemood\gimbal_task.o"
 "basemood\gimbal_hero.o"
 "basemood\shooting_task.o"

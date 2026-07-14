@@ -58,12 +58,18 @@ void Chassis_Init(void)
 	PID_Init(&Chassis_Follow_PID,0.05f,0.0,0.15f,-CHASSIS_MAX_SPEED_FOLLOWING,CHASSIS_MAX_SPEED_FOLLOWING,-0.75f,0.75f);
 
 
-    GyroSmoothRand_Init(0.70f,1.20f);
+    GyroSmoothRand_Init();
 }          
+
+float SpinSpeed;
 
 //更新数据函数
 void Chassis_Update(void)
 {
+    SpinSpeed = GyroSmoothRand_Run();
+
+
+
     //获取控制命令数据结构体指针
     Chassis_Instance.CMD = *CMD_Get_point();
 
@@ -86,14 +92,15 @@ void Chassis_Update(void)
     //限幅云台的夹角，并且重映射电机零位
     if(Chassis_Instance.Calc.Yaw_Angle.YAW.is_online == 1)
     {
-				Chassis_Instance.Calc.Theta.Degree = MyMath_cal_output_angle(Chassis_Instance.Calc.Yaw_Angle.YAW.angle_deg - YAW_ZERO_ANGLE,GIMBAL_YAW_RATIO);//使用函数计算减速比后的地盘、云台角度
+		Chassis_Instance.Calc.Theta.Degree = MyMath_cal_output_angle(Chassis_Instance.Calc.Yaw_Angle.YAW.angle_deg - YAW_ZERO_ANGLE,GIMBAL_YAW_RATIO);//使用函数计算减速比后的地盘、云台角度
     }
         
     //Chassis_Instance.Calc.Theta.Degree = MyMath_normalize_m180_to_p180(Chassis_Instance.Calc.Theta.Degree);//规范角度范围
 		
-		Chassis_Instance.Calc.Theta.Degree = MyMath_normalize_0_to_360(Chassis_Instance.Calc.Theta.Degree);//规范角度范围
+	Chassis_Instance.Calc.Theta.Degree = MyMath_normalize_0_to_360(Chassis_Instance.Calc.Theta.Degree);//规范角度范围
 		
     Chassis_Instance.Calc.Theta.Radian = MyMath_Degrees_To_Radians(Chassis_Instance.Calc.Theta.Degree);//弧度制云台地盘角度
+
 }         
 
 //异常处理函数
@@ -186,9 +193,6 @@ void Chassis_SendCmd(void)
 			PIDSTOP[3] = 0;
 			ESC_Control_Raw_Group(&CHASSIS_CAN_CTRL,CHASSIS_CAN_GROUP,PIDSTOP);
         }
-				
-				
-				
     }
     else
     {
@@ -210,14 +214,10 @@ void Chassis_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
-float SpinSpeed;
-
 static void Chassis_Update_Target(uint8_t state)
 {
     float Theta_Degree = Chassis_Instance.Calc.Theta.Degree;
     float Theta_Radian = Chassis_Instance.Calc.Theta.Radian;
-
-    SpinSpeed = GyroSmoothRand_Run();
 
     if(state == NORMAL)
     {
@@ -233,7 +233,7 @@ static void Chassis_Update_Target(uint8_t state)
         Chassis_Instance.Calc.Target.LR = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.LR) * cos(Theta_Radian) 
                                                 - MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.FB) * sin(Theta_Radian);
 
-        Chassis_Instance.Calc.Target.RO = CHASSIS_MAX_SPIN_SPEED;   //顺时针
+        Chassis_Instance.Calc.Target.RO = SpinSpeed;//CHASSIS_MAX_SPIN_SPEED;   //顺时针
     }
     else if(state == SPIN_CCW)
     {
@@ -243,7 +243,7 @@ static void Chassis_Update_Target(uint8_t state)
         Chassis_Instance.Calc.Target.LR = MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.LR) * cos(Theta_Radian) 
                                                 - MAP_CMD_RANGE_TO_M_S(Chassis_Instance.CMD.Chassis.FB) * sin(Theta_Radian);
 
-        Chassis_Instance.Calc.Target.RO = -CHASSIS_MAX_SPIN_SPEED;  //逆时针
+        Chassis_Instance.Calc.Target.RO = -SpinSpeed;//CHASSIS_MAX_SPIN_SPEED;  //逆时针
     }
 }
 

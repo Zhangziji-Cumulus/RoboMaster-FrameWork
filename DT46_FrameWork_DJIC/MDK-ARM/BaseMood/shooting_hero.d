@@ -90,6 +90,7 @@ basemood\shooting_hero.o: ./ACApplication/Auto/AutoAim.h
 basemood\shooting_hero.o: ./AAA/A_MCommon.h
 basemood\shooting_hero.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\shooting_hero.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\shooting_hero.o: ./ACApplication/Chassis/Chassis_Advanced.h
 basemood\shooting_hero.o: ./ABModule/User_CallBack.h
 basemood\shooting_hero.o: ./AAA/A_CommonSystem.h
 basemood\shooting_hero.o: ./AADrivers/bsp_CAN.h

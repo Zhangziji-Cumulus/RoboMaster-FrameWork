@@ -90,3 +90,4 @@ basemood\gimbal_hero.o: ./ACApplication/Auto/AutoAim.h
 basemood\gimbal_hero.o: ./AAA/A_MCommon.h
 basemood\gimbal_hero.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\gimbal_hero.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\gimbal_hero.o: ./ACApplication/Chassis/Chassis_Advanced.h

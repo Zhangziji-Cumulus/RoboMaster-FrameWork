@@ -119,7 +119,6 @@ int main(void)
   //X_V2_En_Control(1,false,false);
 	
 	
-	
 	// while(1)
 	// {
 	// 	//HAL_Delay(1);

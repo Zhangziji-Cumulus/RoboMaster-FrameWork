@@ -104,3 +104,4 @@ basemood\playerui_task.o: ./ACApplication/Auto/AutoAim.h
 basemood\playerui_task.o: ./AAA/A_MCommon.h
 basemood\playerui_task.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\playerui_task.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\playerui_task.o: ./ACApplication/Chassis/Chassis_Advanced.h

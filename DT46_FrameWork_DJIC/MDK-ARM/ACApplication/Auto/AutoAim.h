@@ -5,6 +5,9 @@
 #include "INS_task.h"
 
 
+/* 自瞄接收超时时间 (ms)：超过此时间未收到有效帧视为离线 */
+#define AUTOAIM_RX_TIMEOUT_MS   1500
+
 /* 自瞄结构体自己对齐可以确定结构体的大小 */
 #pragma pack(push, 1)   // 1字节对齐（通信必备）
 
@@ -15,17 +18,19 @@
 typedef struct
 {
     uint8_t Frame_head;//帧头 0x5A
-    uint8_t reserved0;// 填充
-    uint8_t reserved1;// 填充
-    uint8_t reserved2;// 填充（4字节对齐）
+
+    // uint8_t reserved0;// 填充
+    // uint8_t reserved1;// 填充
+    // uint8_t reserved2;// 填充（4字节对齐）
 
     float Yaw;        // 4
     float Pitch;      // 4
     int8_t Fire;      // 1
-    int8_t reserved3; // 1
-    int8_t reserved4; // 1
-    int8_t reserved5; // 1
-    int32_t Match;    // 4
+
+    // int8_t reserved3; // 1
+    // int8_t reserved4; // 1
+    // int8_t reserved5; // 1
+    // int32_t Match;    // 4
 
 } AutoAim_Rx_t;       // 总：4+4+4+1+1+1+1+4 = 20 字节
 
@@ -38,8 +43,9 @@ typedef struct
 {
     uint8_t Frame_head;   // 帧头 0x5A
     uint8_t Enemy_Color;  // 敌方颜色
-    uint8_t reserved0;    // 填充
-    uint8_t reserved1;    // 填充（4字节对齐）
+    
+    // uint8_t reserved0;    // 填充
+    // uint8_t reserved1;    // 填充（4字节对齐）
 
     float IMU_Roll;       // 4
     float IMU_Pitch;      // 4
@@ -73,6 +79,8 @@ typedef struct
     AutoAim_Rx_t Rx_Buf[2];    //双DMA接收缓冲
     uint8_t Rx_ActiveBuf;      //DMA当前使用缓存索引
     AutoAim_Rx_t Rx_ParseBuf;  //独立解析缓存
+    uint32_t Rx_LastTick;       //最后有效帧的时间戳(ms)
+    uint8_t Rx_OnlineFlag;
 
     // 通信发送
     AutoAim_Tx_t Tx;    

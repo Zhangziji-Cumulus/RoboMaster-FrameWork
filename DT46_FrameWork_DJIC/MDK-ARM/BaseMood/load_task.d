@@ -90,3 +90,4 @@ basemood\load_task.o: ./ACApplication/Auto/AutoAim.h
 basemood\load_task.o: ./AAA/A_MCommon.h
 basemood\load_task.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\load_task.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\load_task.o: ./ACApplication/Chassis/Chassis_Advanced.h

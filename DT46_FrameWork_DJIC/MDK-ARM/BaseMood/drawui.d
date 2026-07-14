@@ -102,3 +102,4 @@ basemood\drawui.o: ./ACApplication/Auto/AutoAim.h
 basemood\drawui.o: ./AAA/A_MCommon.h
 basemood\drawui.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\drawui.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\drawui.o: ./ACApplication/Chassis/Chassis_Advanced.h

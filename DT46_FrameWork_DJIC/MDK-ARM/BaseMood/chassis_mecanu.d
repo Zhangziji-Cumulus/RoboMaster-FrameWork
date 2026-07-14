@@ -90,3 +90,4 @@ basemood\chassis_mecanu.o: ./ACApplication/Auto/AutoAim.h
 basemood\chassis_mecanu.o: ./AAA/A_MCommon.h
 basemood\chassis_mecanu.o: ./AADrivers/IMU/BMI088/INS_task.h
 basemood\chassis_mecanu.o: ./ACApplication/RobotConfig/Robot_Hero_Config.h
+basemood\chassis_mecanu.o: ./ACApplication/Chassis/Chassis_Advanced.h

@@ -34,5 +34,6 @@
 #include "Auto_Config.h"
 #include "AutoAim.h"
 #include "Robot_Hero_Config.h"
+#include "Chassis_Advanced.h"
 
 #endif // A_MCOMMON_H_

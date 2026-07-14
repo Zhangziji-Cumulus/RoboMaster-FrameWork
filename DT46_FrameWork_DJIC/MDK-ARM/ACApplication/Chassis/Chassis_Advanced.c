@@ -1,75 +1,105 @@
 #include "Chassis_Advanced.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include <math.h>
+#include <stddef.h>
 
-// 全局静态变量，保持状态（1ms中断调用）
-typedef struct
+GyroSmoothRand_t gyro_rand;
+static uint32_t lfsr_rand = 0;
+
+static uint32_t LFSR_Next(void)
 {
-    float current_speed;      // 当前平滑输出速度
-    float phase;              // 波形相位
-    float period;             // 当前随机周期 (秒)
-    float base_amp;           // 当前随机振幅
-    float alpha;              // 一阶滤波系数
-    float min_spd;
-    float max_spd;
-    uint32_t tick;            // 计时tick(1ms)
-    uint32_t period_tick;     // 当前周期总tick数
-} GyroSmoothRand_t;
-
-static GyroSmoothRand_t gyro_rand = {0};
-const float dt = 0.001f;    // 1ms
-
-// 初始化函数，上电调用一次
-void GyroSmoothRand_Init(float min_speed, float max_speed)
-{
-    srand((unsigned int)time(NULL));
-    gyro_rand.min_spd = min_speed;
-    gyro_rand.max_spd = max_speed;
-    gyro_rand.alpha = 0.03f; // 滤波系数，越小越丝滑、响应越慢
-    gyro_rand.current_speed = (min_speed + max_speed) * 0.5f;
-    gyro_rand.phase = 0.0f;
-    gyro_rand.tick = 0;
-    // 初始随机周期：0.5 ~ 3 秒
-    float rand_period = 0.5f + 2.5f * ((float)rand() / RAND_MAX);
-    gyro_rand.period = rand_period;
-    gyro_rand.period_tick = (uint32_t)(rand_period / dt);
-    // 随机振幅
-    gyro_rand.base_amp = (max_speed - min_speed) * (0.3f + 0.4f * ((float)rand() / RAND_MAX));
+    lfsr_rand ^= lfsr_rand >> 13;
+    lfsr_rand ^= lfsr_rand << 17;
+    lfsr_rand ^= lfsr_rand >> 5;
+    return lfsr_rand;
 }
 
-// 每1ms调用一次，返回平滑随机变速
+static float GetRandFloat(float min, float max)
+{
+    uint32_t r = LFSR_Next();
+    float f = (float)r / (float)UINT32_MAX;
+    return min + f * (max - min);
+}
+
+void GyroSmoothRand_Init(void)
+{
+    lfsr_rand = xTaskGetTickCount() ^ (uint32_t)&gyro_rand;
+
+    // ===================== 反自瞄突降波形 默认参数 =====================
+    gyro_rand.param.alpha          = 0.02f;
+    gyro_rand.param.min_spd        = 1.0f;
+    gyro_rand.param.max_spd        = 1.5f;
+    gyro_rand.param.min_period     = 1.5f;
+    gyro_rand.param.max_period     = 2.5f;
+    gyro_rand.param.amp_min_ratio  = 0.20f;
+    gyro_rand.param.amp_max_ratio  = 0.35f;
+    gyro_rand.param.noise_ratio    = 0.05f;
+    gyro_rand.param.drop_ratio     = 0.12f;    // 12%周期完成陡降，突降很急促
+    gyro_rand.param.drop_depth_ratio = 1.0f;   // 降到本轮波动最大谷底
+    // =================================================================
+
+    gyro_rand.current_speed = (gyro_rand.param.min_spd + gyro_rand.param.max_spd) * 0.5f;
+    gyro_rand.phase         = 0.0f;
+    gyro_rand.tick          = 0;
+
+    float rand_period = GetRandFloat(gyro_rand.param.min_period, gyro_rand.param.max_period);
+    gyro_rand.period = rand_period;
+    gyro_rand.period_tick = (uint32_t)(rand_period / DT_SEC);
+
+    gyro_rand.base_amp = (gyro_rand.param.max_spd - gyro_rand.param.min_spd)
+                       * GetRandFloat(gyro_rand.param.amp_min_ratio, gyro_rand.param.amp_max_ratio);
+}
+
 float GyroSmoothRand_Run(void)
 {
+    GyroSmoothRand_Param_t *p = &gyro_rand.param;
     gyro_rand.tick++;
 
-    // 到达周期终点：重新随机周期和振幅
+    // 周期重置
     if(gyro_rand.tick >= gyro_rand.period_tick)
     {
         gyro_rand.tick = 0;
-        // 新随机周期：0.5 ~ 3.0 秒
-        float new_period = 0.5f + 2.5f * ((float)rand() / RAND_MAX);
+        float new_period = GetRandFloat(p->min_period, p->max_period);
         gyro_rand.period = new_period;
-        gyro_rand.period_tick = (uint32_t)(new_period / dt);
-        // 新随机振幅
-        gyro_rand.base_amp = (gyro_rand.max_spd - gyro_rand.min_spd) * (0.3f + 0.4f * ((float)rand() / RAND_MAX));
-        // 重置相位
-        gyro_rand.phase = 0.0f;
+        gyro_rand.period_tick = (uint32_t)(new_period / DT_SEC);
+        gyro_rand.base_amp = (p->max_spd - p->min_spd)
+                           * GetRandFloat(p->amp_min_ratio, p->amp_max_ratio);
+        gyro_rand.phase = 0.0f; // phase 归一化：0 ~ 1
     }
 
-    // 更新相位
-    float omega = 2.0f * (float)M_PI / gyro_rand.period;
-    gyro_rand.phase += omega * dt;
+    // 归一化相位 0~1
+    float phase_norm = (float)gyro_rand.tick / (float)gyro_rand.period_tick;
+    float wave = 0.0f;
 
-    // 主慢变正弦 + 小幅随机扰动（增加自然忽快忽慢）
-    float main_wave = sinf(gyro_rand.phase) * gyro_rand.base_amp;
-    // 叠加微小随机噪声（低频慢扰动）
-    float small_rand = (0.1f * (gyro_rand.max_spd - gyro_rand.min_spd)) * ((float)rand()/RAND_MAX - 0.5f);
-    float target_spd = (gyro_rand.min_spd + gyro_rand.max_spd)/2.0f + main_wave + small_rand;
+    // ========== 非对称波形逻辑：高速 -> 快速突降 -> 缓慢回升 ==========
+    if (phase_norm < p->drop_ratio)
+    {
+        // 阶段1：快速陡降
+        float t = phase_norm / p->drop_ratio;
+        wave = 1.0f - t * p->drop_depth_ratio;
+    }
+    else
+    {
+        // 阶段2：缓慢回升回到高速
+        float t = (phase_norm - p->drop_ratio) / (1.0f - p->drop_ratio);
+        // 缓升余弦曲线，恢复到高位速度
+        wave = -cosf(t * M_PI) * 0.5f + 0.5f;
+    }
+    wave = (wave - 0.5f) * 2.0f * gyro_rand.base_amp;
+    // ================================================================
 
-    // 硬限幅保证不超出范围
-    if(target_spd < gyro_rand.min_spd) target_spd = gyro_rand.min_spd;
-    if(target_spd > gyro_rand.max_spd) target_spd = gyro_rand.max_spd;
+    // 微小随机扰动
+    float small_rand = (p->max_spd - p->min_spd) * p->noise_ratio * GetRandFloat(-0.5f, 0.5f);
+    float mid_spd = (p->min_spd + p->max_spd) / 2.0f;
+    float target_spd = mid_spd + wave + small_rand;
 
-    // 一阶低通滤波丝滑过渡
-    gyro_rand.current_speed = gyro_rand.alpha * target_spd + (1 - gyro_rand.alpha) * gyro_rand.current_speed;
+    // 硬限幅
+    if(target_spd < p->min_spd) target_spd = p->min_spd;
+    if(target_spd > p->max_spd) target_spd = p->max_spd;
+
+    // 一阶滤波顺滑
+    gyro_rand.current_speed = p->alpha * target_spd + (1 - p->alpha) * gyro_rand.current_speed;
 
     return gyro_rand.current_speed;
 }
