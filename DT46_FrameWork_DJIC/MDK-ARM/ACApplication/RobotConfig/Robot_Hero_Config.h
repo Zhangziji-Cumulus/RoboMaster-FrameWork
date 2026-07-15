@@ -84,7 +84,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define GIMBAL_YAW_RATIO    2       //Yaw轴减速比为 2:1
 
 //云台俯仰角范围
-#define GIMBAL_PITCH_MAX_ELE    43.0f   //仰角（抬头）
+#define GIMBAL_PITCH_MAX_ELE    42.0f   //仰角（抬头）
 #define GIMBAL_PITCH_MAX_DEP    17.0f   //俯角（低头）
 
 /* 云台电机控制 */

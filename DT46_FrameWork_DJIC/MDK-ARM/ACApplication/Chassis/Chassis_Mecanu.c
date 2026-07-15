@@ -159,10 +159,27 @@ void Chassis_SendCmd(void)
     static uint32_t stop_start_time = 0;
     static bool is_stopping = false;
 
+    //停止滤波
+    static uint8_t StopfilterCnt = 0;
+
+    if(Chassis_Instance.CMD.ctrl == STOP_MODE)
+    {
+        StopfilterCnt = 0;
+    }
+    else
+    {
+        StopfilterCnt++;
+
+        if(StopfilterCnt >= STOP_FILTER_MAXCNT)
+        {
+            StopfilterCnt = STOP_FILTER_MAXCNT;
+        }
+    }
+
     // 获取当前系统时间(ms)
     uint32_t now_time = HAL_GetTick();
 
-    if(Chassis_Instance.CMD.ctrl == STOP_MODE)
+    if(StopfilterCnt < STOP_FILTER_MAXCNT)
     {
         int16_t PIDSTOP[4] = { 0 };
 				

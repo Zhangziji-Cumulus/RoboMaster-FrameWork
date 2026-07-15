@@ -52,8 +52,8 @@ void Gimbal_Init(void)
    
     //PITCH轴PID
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2000,2000,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_Ex,600.0f,0.01f,1500.0f,-2800,2800,-1000.0f, 1000.0f);
+	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2600,2600,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_Ex,800.0f,0.01f,1500.0f,-2400,2400,-1000.0f, 1000.0f);
 }
 
 //更新状态函数
@@ -124,10 +124,27 @@ void Gimbal_SendCmd(void)
     static uint32_t stop_start_time = 0;
     static bool is_stopping = false;
 
+    //停止滤波，信号稳定时才能启动
+    static uint8_t StopfilterCnt = 0;
+
+    if(Gimbal_Instance.CMD.ctrl == STOP_MODE)
+    {
+        StopfilterCnt = 0;
+    }
+    else
+    {
+        StopfilterCnt++;
+
+        if(StopfilterCnt >= STOP_FILTER_MAXCNT)
+        {
+            StopfilterCnt = STOP_FILTER_MAXCNT;
+        }
+    }
+
     // 获取当前系统时间(ms)
     uint32_t now_time = HAL_GetTick();
 
-    if (Gimbal_Instance.CMD.ctrl == STOP_MODE)
+    if (StopfilterCnt < STOP_FILTER_MAXCNT)
     {
 			
         // 首次进入停止模式，记录时间
@@ -167,6 +184,9 @@ void Gimbal_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
+float detect1;
+float detect2;
+
 static void Gimbal_Update_Target(void)
 {
 #if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
@@ -189,6 +209,9 @@ static void Gimbal_Update_Target(void)
                                               Gimbal_Instance.Auto.Aim.IsOnline,
                                              -GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,
                                               GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
+
+    detect1  = ManualYaw;                              
+    detect2 = FusionYaw;
 
     if(Gimbal_Instance.CMD.Auto.Aim == AUTOAIM_ON)
     {
@@ -280,6 +303,7 @@ static void Gimbal_PitchStable_Calc(void)
     #endif
 
     #if(PID_CTRL_MODE_PITCH == PID_CTRL_MODE_DOUBLE_LOOP)
+
     Gimbal_Instance.Calc.Pitch.Ctrl_Vel = PID_Double_CycleAngle(
                                             &Gimbal_Pitch_In,
                                             &Gimbal_Pitch_Ex,

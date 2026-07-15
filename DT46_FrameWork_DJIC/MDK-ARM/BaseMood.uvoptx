@@ -156,47 +156,27 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gyro_rand</ItemText>
+          <ItemText>Gimbal_Instance</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>SpinSpeed</ItemText>
+          <ItemText>Gimbal_Pitch_In</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remain_ChassisTask,0x0A</ItemText>
+          <ItemText>Gimbal_Pitch_Ex</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>AutoAim_Ctrl</ItemText>
+          <ItemText>detect1</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>AutoAim_Instance</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>SpinSpeed</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>remain_PrintfTask,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Chassis_MotorBR_Ex</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Chassis_MotorBR_In</ItemText>
+          <ItemText>detect2</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

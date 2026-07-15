@@ -58,16 +58,16 @@ float AutoAim_WeightFusion_Float(float manual, float auto_val, uint8_t aim_valid
 {
     float output;
 
-    if (aim_valid == 0)
-    {
-        output = manual;
-    }
-    else
-    {
+    // if (aim_valid == 0)
+    // {
+    //     output = manual;
+    // }
+    // else
+    // {
         output =  auto_val * AUTOAIM_WEIGHT_AUTO +
                   manual  * AUTOAIM_WEIGHT_MANUAL;
         output /= 100.0f;
-    }
+    //}
 
     if (output > max_out)
         output = max_out;

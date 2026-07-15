@@ -1,6 +1,6 @@
 #include "Printf_Task.h"
 
-extern float SpinSpeed;
+//extern float SpinSpeed;
 
 static UBaseType_t remain_PrintfTask;
 __attribute__((used)) void PrintfTask(void *argument)
@@ -10,7 +10,7 @@ __attribute__((used)) void PrintfTask(void *argument)
   for(;;)
   {
 
-    Printf("Float: %.2f\r\n", SpinSpeed); 
+    //Printf("Float: %.2f\r\n", SpinSpeed); 
 
     //=============================检测剩余栈=================================//
 	  remain_PrintfTask = uxTaskGetStackHighWaterMark(NULL);
