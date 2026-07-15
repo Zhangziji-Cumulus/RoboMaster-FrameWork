@@ -1,0 +1,45 @@
+# Keil MDK 编译产物 & 缓存
+*.o
+*.obj
+*.elf
+*.axf
+*.bin
+*.hex
+*.srec
+*.map
+*.i
+*.lst
+*.htm
+*.dep
+*.d
+*.crf
+*.tra
+*.bak
+*.uvopt.bak
+*.uvguix*
+*.uvgui*
+
+# Keil 编译输出文件夹（常见命名）
+Obj/
+obj/
+List/
+list/
+Debug/
+debug/
+Release/
+release/
+build/
+
+# 调试/日志/临时文件
+*.log
+*.tmp
+*.txt
+*.__i
+*.iex
+
+# IDE、系统杂项
+.vs/
+.vscode/
+__pycache__/
+.DS_Store
+Thumbs.db
