@@ -3,7 +3,7 @@
 <title>Static Call Graph - [BaseMood\BaseMood.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image BaseMood\BaseMood.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Jul 15 10:48:02 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Jul 15 13:57:05 2026
 <BR><P>
 <H3>Maximum Stack Usage =        336 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -548,9 +548,9 @@ Global Symbols
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DualBoard_SendStruct
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DualBoard_ParseStruct
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoAim_ReceiveProcess
-<LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_Init
 <LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shooting_Update
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Update
+<LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_Init
 </UL>
 
 <P><STRONG><a name="[97]"></a>__rt_memcpy</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
@@ -1037,7 +1037,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[73]"></a>CMDUpdateTask</STRONG> (Thumb, 786 bytes, Stack size 24 bytes, cmdcenter.o(i.CMDUpdateTask))
+<P><STRONG><a name="[73]"></a>CMDUpdateTask</STRONG> (Thumb, 1192 bytes, Stack size 24 bytes, cmdcenter.o(i.CMDUpdateTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = CMDUpdateTask &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -1618,13 +1618,13 @@ Global Symbols
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyLongPress_Process
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoAim_UpdateRx
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoAim_ReceiveProcess
-<LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_ResetReceiver
-<LI><a href="#[1c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_Process
-<LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_Init
 <LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shooting_SendCmd
 <LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Load_Run
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Fire_Run
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_SendCmd
+<LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_ResetReceiver
+<LI><a href="#[1c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_Process
+<LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_Init
 </UL>
 
 <P><STRONG><a name="[137]"></a>HAL_I2C_Init</STRONG> (Thumb, 376 bytes, Stack size 16 bytes, stm32f4xx_hal_i2c.o(i.HAL_I2C_Init))
@@ -2729,8 +2729,8 @@ Global Symbols
 <P><STRONG><a name="[80]"></a>VT03_ParseCallback</STRONG> (Thumb, 204 bytes, Stack size 32 bytes, vt03protocol.o(i.VT03_ParseCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = VT03_ParseCallback &rArr; verify_crc16_check_sum
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verify_crc16_check_sum
-<LI><a href="#[1c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
+<BR>[Calls]<UL><LI><a href="#[1c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
+<LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verify_crc16_check_sum
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> vtcenter.o(i.VTTask)
 </UL>
@@ -2756,10 +2756,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
-<LI><a href="#[1cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_RegisterInstance
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[1cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_RegisterInstance
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VTTask
 </UL>
@@ -2768,8 +2768,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = VT_Process &rArr; VT_ResetReceiver &rArr; HAL_UART_Receive_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_ResetReceiver
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VT_ResetReceiver
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VTTask
 </UL>
@@ -2808,8 +2808,8 @@ Global Symbols
 <P><STRONG><a name="[1b9]"></a>X_V2_Traj_Pos_LC_Control</STRONG> (Thumb, 212 bytes, Stack size 72 bytes, zdt_x_v2.o(i.X_V2_Traj_Pos_LC_Control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = X_V2_Traj_Pos_LC_Control &rArr; can_SendCmd &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;can_SendCmd
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[1ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;can_SendCmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shooting_SendCmd
 </UL>
@@ -3260,10 +3260,10 @@ Global Symbols
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoAimTask
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintfTask
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VTTask
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LoadTask
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShootingTask
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalTask
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VTTask
 </UL>
 
 <P><STRONG><a name="[1fa]"></a>osKernelInitialize</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, cmsis_os2.o(i.osKernelInitialize))
@@ -3355,10 +3355,10 @@ Global Symbols
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisTask
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoAimTask
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintfTask
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VTTask
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LoadTask
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShootingTask
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalTask
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VTTask
 </UL>
 
 <P><STRONG><a name="[22c]"></a>vApplicationGetIdleTaskMemory</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, cmsis_os2.o(i.vApplicationGetIdleTaskMemory))
@@ -4489,7 +4489,7 @@ Local Symbols
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESC_Control_Raw_Group
 </UL>
 
-<P><STRONG><a name="[178]"></a>HORRC_HT10A_GET_Ctl</STRONG> (Thumb, 182 bytes, Stack size 24 bytes, remote_ctrl.o(i.HORRC_HT10A_GET_Ctl))
+<P><STRONG><a name="[178]"></a>HORRC_HT10A_GET_Ctl</STRONG> (Thumb, 322 bytes, Stack size 24 bytes, remote_ctrl.o(i.HORRC_HT10A_GET_Ctl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = HORRC_HT10A_GET_Ctl &rArr; Switch_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_SBUS_Data_point

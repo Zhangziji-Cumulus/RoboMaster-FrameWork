@@ -66,36 +66,58 @@ static uint8_t Knob_Set(uint16_t ChValue,uint16_t min_Val,uint16_t mid_Val,uint1
 
 static RC_Ctl_t RC_Ctl;
 
+// ==================== 摇杆通道滤波宏 ====================
+/**
+ * @brief 摇杆通道滤波宏，带死区检测和防抖计数
+ * @param idx   SBUS通道索引 (0~15)
+ * @param out   输出变量名 (如 RC_Ctl.Stick.LX)
+ * @note  每个 idx 自动生成独立的静态计数器，初始值为 RC_FILTER_CNT_INIT
+ */
+#define RC_FILTER_CH(idx, out) do { \
+    static uint8_t __fcnt_##idx = RC_FILTER_CNT_INIT; \
+    if(abs(sbusData->channels[idx] - HOTRC_MID_VEL) < RC_STICK_DEADZONE) \
+        __fcnt_##idx = 0; \
+    if(__fcnt_##idx < 250) \
+        __fcnt_##idx++; \
+    if(__fcnt_##idx > RC_FILTER_THRESHOLD) \
+        out = sbusData->channels[idx] - HOTRC_MID_VEL; \
+    else \
+        out = 0; \
+} while(0)
+
 //解析对应遥控器数据
 static void HORRC_HT10A_GET_Ctl(void)
 {
     const SbusData_t *sbusData = get_SBUS_Data_point();
 
-		RC_Ctl.Stick.LX = sbusData->channels[3] - HOTRC_MID_VEL;
-		RC_Ctl.Stick.LY = sbusData->channels[2] - HOTRC_MID_VEL;
-		RC_Ctl.Stick.RX = sbusData->channels[0] - HOTRC_MID_VEL;
-		RC_Ctl.Stick.RY = sbusData->channels[1] - HOTRC_MID_VEL;
+	// 摇杆通道滤波（带死区防抖，防止回中附近抖动导致数据跳变）
+	RC_FILTER_CH(3, RC_Ctl.Stick.LX);
+	RC_FILTER_CH(2, RC_Ctl.Stick.LY);
+	RC_FILTER_CH(0, RC_Ctl.Stick.RX);
+	RC_FILTER_CH(1, RC_Ctl.Stick.RY);
+
+
 	
-		RC_Ctl.Switch.S2_L = Switch_Set(sbusData->channels[5],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
-		RC_Ctl.Switch.S2_R = Switch_Set(sbusData->channels[6],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
-		RC_Ctl.Switch.S3_L = Switch_Set(sbusData->channels[4],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
-		RC_Ctl.Switch.S3_R = Switch_Set(sbusData->channels[7],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+	RC_Ctl.Switch.S2_L = Switch_Set(sbusData->channels[5],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+	RC_Ctl.Switch.S2_R = Switch_Set(sbusData->channels[6],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+	RC_Ctl.Switch.S3_L = Switch_Set(sbusData->channels[4],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+	RC_Ctl.Switch.S3_R = Switch_Set(sbusData->channels[7],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
 		
-		//返回旋钮线性值
-		RC_Ctl.Knob.L_linear = sbusData->channels[8];
-	  	RC_Ctl.Knob.R_linear = sbusData->channels[9];
-		//返回旋钮离散值
-		RC_Ctl.Knob.L_state = Knob_Set(sbusData->channels[8],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
-		RC_Ctl.Knob.R_state = Knob_Set(sbusData->channels[9],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+	//返回旋钮线性值
+	RC_Ctl.Knob.L_linear = sbusData->channels[8];
+	RC_Ctl.Knob.R_linear = sbusData->channels[9];
+	//返回旋钮离散值
+	RC_Ctl.Knob.L_state = Knob_Set(sbusData->channels[8],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
+	RC_Ctl.Knob.R_state = Knob_Set(sbusData->channels[9],HOTRC_MIN_VEL,HOTRC_MID_VEL,HOTRC_MAX_VEL);
 
-		RC_Ctl.Flag.ch17 = sbusData->ch17;
-		RC_Ctl.Flag.ch18 = sbusData->ch18;
-		RC_Ctl.Flag.failsafe = sbusData->failsafe;
-		RC_Ctl.Flag.frameLost = sbusData->frameLost;
-		RC_Ctl.is_valid = sbusData->is_valid;
+	RC_Ctl.Flag.ch17 = sbusData->ch17;
+	RC_Ctl.Flag.ch18 = sbusData->ch18;
+	RC_Ctl.Flag.failsafe = sbusData->failsafe;
+	RC_Ctl.Flag.frameLost = sbusData->frameLost;
+	RC_Ctl.is_valid = sbusData->is_valid;
 
-		RC_Ctl.Range.Max =  (HOTRC_MAX_VEL - HOTRC_MID_VEL);
-		RC_Ctl.Range.Min = -(HOTRC_MAX_VEL - HOTRC_MID_VEL);
+	RC_Ctl.Range.Max =  (HOTRC_MAX_VEL - HOTRC_MID_VEL);
+	RC_Ctl.Range.Min = -(HOTRC_MAX_VEL - HOTRC_MID_VEL);
 }
 
 /** 获取遥控器数据指针（只读） */

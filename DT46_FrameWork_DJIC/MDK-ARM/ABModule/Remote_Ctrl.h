@@ -28,6 +28,11 @@
 
 //#define HOTRC_RANGE 600 //接受到的数据的范围
 
+// ==================== 摇杆数据滤波配置 ====================
+#define RC_STICK_DEADZONE      5     // 摇杆死区阈值（原始通道值与中值的差小于此值视为回中）
+#define RC_FILTER_THRESHOLD    5     // 滤波判定阈值（计数超过此值才输出有效值）
+#define RC_FILTER_CNT_INIT     6     // 滤波计数器初始值（默认 > RC_FILTER_THRESHOLD）
+
 //拨杆的位置
 #define HOTRC_SWITCH_UP    1
 #define HOTRC_SWITCH_MID   2

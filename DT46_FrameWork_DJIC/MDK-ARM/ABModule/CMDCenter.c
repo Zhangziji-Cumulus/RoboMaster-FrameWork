@@ -12,6 +12,59 @@ static KeyHandle_t Key_AutoAim;
 static KeyHandle_t Key_Fire;
 static KeyHandle_t Key_RefreshUI;
 
+// ==================== CMD值二次滤波宏 ====================
+/**
+ * @brief 对映射后的CMD值做二次滤波防抖，防止残余抖动导致底盘/云台微动
+ * @param member  CMD结构体成员（如 CMD.Chassis.FB）
+ * @param idx     唯一索引编号 (0~15)，用于生成独立的静态计数器
+ * @note  每个 idx 自动生成独立的静态计数器，初始值为 CMD_FILTER_CNT_INIT
+ */
+#define CMD_FILTER(member, idx) do { \
+    static uint8_t __cfcnt_##idx = CMD_FILTER_CNT_INIT; \
+    if(abs(member) < CMD_DEADZONE) \
+        __cfcnt_##idx = 0; \
+    if(__cfcnt_##idx < 250) \
+        __cfcnt_##idx++; \
+    if(__cfcnt_##idx <= CMD_FILTER_THRESHOLD) \
+        (member) = 0; \
+} while(0)
+
+// ==================== CMD状态二次滤波宏 ====================
+/**
+ * @brief 对离散的ON/OFF、枚举状态做防抖滤波
+ *        状态变化需连续稳定 N 帧才生效，期间任何一帧跳回则重置计数
+ * @param state  状态变量（如 CMD.Shooting.Fire）
+ * @param idx    唯一索引编号，用于生成独立的静态计数器和稳定值缓存
+ * @note  首次运行时立即接受当前状态
+ */
+#define CMD_STATE_FILTER(state, idx) do { \
+    static uint8_t __sfcnt_##idx = 0; \
+    static uint8_t __sflast_##idx = 0; \
+    static uint8_t __sffirst_##idx = 1; \
+    uint8_t __sfcur_##idx = (uint8_t)(state); \
+    if(__sffirst_##idx) \
+    { \
+        __sflast_##idx = __sfcur_##idx; \
+        __sffirst_##idx = 0; \
+    } \
+    else if(__sfcur_##idx != __sflast_##idx) \
+    { \
+        __sfcnt_##idx++; \
+        if(__sfcnt_##idx >= CMD_STATE_DEBOUNCE_SAMPLES) \
+        { \
+            __sflast_##idx = __sfcur_##idx; \
+        } \
+        else \
+        { \
+            (state) = (__sflast_##idx); \
+        } \
+    } \
+    else \
+    { \
+        __sfcnt_##idx = 0; \
+    } \
+} while(0)
+
 #if(BOARD_ID == GIMBAL_BOARD)
 
 //** ================================================================================ **//
@@ -331,6 +384,20 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
     {
       CMD.ctrl = STOP_MODE;
     }
+
+    // CMD值二次滤波（防止映射后的残余抖动导致底盘/云台微动）
+    CMD_FILTER(CMD.Chassis.FB,   0);
+    CMD_FILTER(CMD.Chassis.LR,   1);
+    CMD_FILTER(CMD.Chassis.RO,   2);
+    CMD_FILTER(CMD.Gimbal.Yaw,   3);
+    CMD_FILTER(CMD.Gimbal.Pitch, 4);
+    
+    // CMD状态二次滤波（防止拨杆临界抖动导致状态跳变）
+    CMD_STATE_FILTER(CMD.Move,             9);
+    CMD_STATE_FILTER(CMD.Shooting.Fire,     5);
+    CMD_STATE_FILTER(CMD.Shooting.Load,     6);
+    CMD_STATE_FILTER(CMD.Shooting.Friction, 7);
+    CMD_STATE_FILTER(CMD.Auto.Aim,          8);
 
     //=============================检测剩余栈=================================//
 	  remain_CMDUpdateTask = uxTaskGetStackHighWaterMark(NULL);
