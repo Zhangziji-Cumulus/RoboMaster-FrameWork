@@ -7,6 +7,7 @@
 #include "CMDCenter.h"
 #include "bsp_CAN.h"
 #include "AutoAim.h"
+#include "dm_bsp_can.h"
 
 /* 定义一个结构体，用来把 CAN 数据传给任务 */
 typedef struct {

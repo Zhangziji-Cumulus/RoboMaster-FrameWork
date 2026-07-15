@@ -38,6 +38,7 @@ void dm_motor_init(void)
 	motor[Motor1].tmp.VMAX		= 30.0f;
 	motor[Motor1].tmp.TMAX		= 10.0f;
 }
+
 /**
 ************************************************************************
 * @brief:      	read_all_motor_data: 读取电机的所有寄存器的数据信息

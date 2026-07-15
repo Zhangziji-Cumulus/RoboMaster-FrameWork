@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT;./ABModule/PlayerUI;./ABModule/CRC;./ABModule/RefereeTx;./ABModule/Printf</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserAppliction;./UserDrive;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;./AAA;./AADrivers;./AADrivers/IMU;./AADrivers/IMU/BMI088;./ABModule;./ABModule/Buzzer;./ACApplication;./ACApplication/Auto;./ACApplication/Chassis;./ACApplication/Gimbal;./ACApplication/RobotConfig;./ACApplication/Shooting;./ACApplication/MotorAPP;./ABModule/ZDT;./ABModule/Referee;./ABModule/VT;./ABModule/PlayerUI;./ABModule/CRC;./ABModule/RefereeTx;./ABModule/Printf;.\ABModule\DM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2442,6 +2442,41 @@
               <FileName>Printf_Task.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ABModule\Printf\Printf_Task.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ABModule/DM</GroupName>
+          <Files>
+            <File>
+              <FileName>dm_motor_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\DM\dm_motor_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>dm_motor_ctrl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\DM\dm_motor_ctrl.h</FilePath>
+            </File>
+            <File>
+              <FileName>dm_motor_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\DM\dm_motor_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>dm_motor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\DM\dm_motor_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>dm_bsp_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ABModule\DM\dm_bsp_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>dm_bsp_can.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ABModule\DM\dm_bsp_can.h</FilePath>
             </File>
           </Files>
         </Group>

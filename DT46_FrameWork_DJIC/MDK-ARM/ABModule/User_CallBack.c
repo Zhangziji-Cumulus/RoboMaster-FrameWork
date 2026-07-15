@@ -34,6 +34,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     CAN_RxHeaderTypeDef Temp_RxHeader;
     uint8_t Temp_RxData[8];
 
+    if(hcan->Instance == CAN1) {
+		can1_rx_callback();
+	}
+
 #if defined(CAN1)
     if (hcan->Instance == CAN1)
     {
