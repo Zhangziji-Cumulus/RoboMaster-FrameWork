@@ -4,8 +4,10 @@
 
 #if(AUTOAIM_IFOPEN)
 
-static AutoAim_Instance_t  AutoAim_Instance;//自瞄实例
-static AutoAim_Ctrl_t AutoAim_Ctrl;//自瞄控制量
+//static 
+	AutoAim_Instance_t  AutoAim_Instance;//自瞄实例
+//static 
+	AutoAim_Ctrl_t AutoAim_Ctrl;//自瞄控制量
 
 //** ================================================================================ **//
 //** ================================== 融合算法 ==================================== **//

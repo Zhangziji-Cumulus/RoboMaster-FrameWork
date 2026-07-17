@@ -83,7 +83,7 @@
 #define BOARD_MODE  BOARD_MODE_DUAL
 
 /* 停止滤波计数 */
-#define STOP_FILTER_MAXCNT  10
+#define STOP_FILTER_MAXCNT  20
 
 /* 陀螺仪类 */
 

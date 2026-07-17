@@ -10,7 +10,8 @@
 //** ====================================== 定义数据、结构体 ============================================= **//
 //** #################################################################################################### **//
 
-static Shooting_Instance_t Shooting_Instance;
+//static 
+	Shooting_Instance_t Shooting_Instance;
 Shooting_State_Machine_t Shooting_State_Machine;
 
 PID_HandleTypeDef PID_SFri_STOP;
@@ -29,7 +30,7 @@ PID_HandleTypeDef PID_SFri_DM_Ex;
 //** #################################################################################################### **//
 
 static void Friction_Update_Target(void);
-static void PuahRod_Update_Target(void);
+// static void PuahRod_Update_Target(void);
 
 void Fire_Run(void);
 void Load_Run(void);
@@ -41,6 +42,8 @@ void Load_Run(void);
 //初始化函数
 void Shooting_Init(void)
 {
+    osDelay(500);
+
     //初始模式STOP
     Shooting_Instance.CMD.ctrl = STOP_MODE;
 
@@ -104,8 +107,8 @@ void Shooting_RefreshTarget(void)
 
     Fire_Run();
     Load_Run();
-    Friction_Update_Target();
 
+    Friction_Update_Target();
     // PuahRod_Update_Target();
 }
 
@@ -291,22 +294,22 @@ static void Friction_Update_Target(void)
     }
 }
 
-static void PuahRod_Update_Target(void)
-{
+// static void PuahRod_Update_Target(void)
+// {
 
-    if((Shooting_Instance.CMD.Shooting.Fire == ON) && (Shooting_Instance.Calc.PushRod.State == PUSH_FRONT_ING))
-    {
-        Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ENTER;
+//     if((Shooting_Instance.CMD.Shooting.Fire == ON) && (Shooting_Instance.Calc.PushRod.State == PUSH_FRONT_ING))
+//     {
+//         Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ENTER;
 
-        Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
-    }
-    else if((Shooting_Instance.CMD.Shooting.Fire == OFF) && (Shooting_Instance.Calc.PushRod.State == PUSH_BACK_ING))
-    {
-        Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ENTER;
+//         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
+//     }
+//     else if((Shooting_Instance.CMD.Shooting.Fire == OFF) && (Shooting_Instance.Calc.PushRod.State == PUSH_BACK_ING))
+//     {
+//         Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ENTER;
 
-        Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
-    }
-}
+//         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
+//     }
+// }
 
 
 
@@ -410,7 +413,7 @@ uint8_t Detect_Fied(void)
 #define TIME_A_TO_B        100    // A→B 推杆运动时间(ms)
 #define TIME_B_DETECT      300    // B点发射检测超时时间(ms)
 #define TIME_B_TO_C        1000    // B→C 推杆运动时间(ms)
-#define TIME_C_TO_L        2000    // C→L 推杆返回时间(ms)
+#define TIME_C_TO_L        1200    // C→L 推杆返回时间(ms)
 #define FIRE_FILTER_MS     300     // 开火信号消抖时间(ms)
 
 /************************* 状态机主函数 *************************/
@@ -609,14 +612,12 @@ void Shooting_Init(void)
     //初始模式STOP
     Shooting_Instance.CMD.ctrl = STOP_MODE;
     
-    // //初始化拨盘状态
-    // Shooting_Instance.Logic.LoadState = LOAD_STOP;
-
+    //初始化拨盘状态
     PID_Init(&Dial_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
 	//拨盘PID
 	PID_Init(&Dial_In,0.8f,0.0f,0.15f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-    PID_Init(&Dial_Ex,50.0f,0.003f,65.0f,-15000,15000,-1000.0f, 1000.0f);
+    PID_Init(&Dial_Ex,80.0f,0.003f,100.0f,-20000,20000,-1000.0f, 1000.0f);
 
 }          
 

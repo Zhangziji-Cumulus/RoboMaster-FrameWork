@@ -399,6 +399,17 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
     CMD_STATE_FILTER(CMD.Shooting.Friction, 7);
     CMD_STATE_FILTER(CMD.Auto.Aim,          8);
 
+    static uint8_t fireis;
+    
+    if(CMD.Shooting.Fire == ON)
+    {
+        fireis = 1;
+    }
+    else
+    {
+       fireis = 0;
+    }
+
     //=============================检测剩余栈=================================//
 	  remain_CMDUpdateTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(1);

@@ -223,7 +223,7 @@ static void Gimbal_Update_Target(void)
         Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
         Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - ManualPitch;
     }
-        
+    
     //限幅角度-180 ~ 180 循环模式
     Gimbal_Instance.Calc.Yaw.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Yaw.T_Angle,

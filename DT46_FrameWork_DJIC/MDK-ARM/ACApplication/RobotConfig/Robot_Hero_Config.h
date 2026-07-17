@@ -142,7 +142,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /** ===== 拨盘配置 ===== **/
 
 /* 拨盘速度相关 */
-#define DIAL_MAX_SPEED_M_S      0.1f                   //拨盘最大线速度
+#define DIAL_MAX_SPEED_M_S      0.15f                   //拨盘最大线速度
 
 /* 拨盘物理参数 */
 
@@ -225,7 +225,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //#define PUSHROD_MOTOR_ID_FBK       PUSHROD_CAN_ID - 1      //推杆电机 反馈 ID （CAN ID - 1）
 
 /* ==== 自动上弹 ==== */
-#define AUTOLOAD_THRESH_CUR_DIAL 6500 //自动上弹拨盘电流阈值
+#define AUTOLOAD_THRESH_CUR_DIAL 7500 //自动上弹拨盘电流阈值
 
 #define AUTOLOAD_THRESH_CUR_FRICTION 1000 //自动上弹发射电流阈值
 
