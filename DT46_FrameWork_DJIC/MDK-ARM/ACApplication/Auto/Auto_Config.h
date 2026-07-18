@@ -27,7 +27,7 @@
 #define AUTOAIM_ON      1       //打开自瞄
 
 //自瞄权重
-#define AUTOAIM_WEIGHT_AUTO         50  
+#define AUTOAIM_WEIGHT_AUTO         80
 #define AUTOAIM_WEIGHT_MANUAL      (100 - AUTOAIM_WEIGHT_AUTO)
 
 void AutoAim_UART_IRQHandler(void);//自瞄串口中断处理函数

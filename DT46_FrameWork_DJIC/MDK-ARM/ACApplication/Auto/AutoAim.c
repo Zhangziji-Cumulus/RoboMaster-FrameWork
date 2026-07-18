@@ -142,6 +142,7 @@ void AutoAim_ReceiveProcess(void)
         AutoAim_Instance.Rx_OnlineFlag = 0;
         return;
     }
+
     AutoAim_Instance.Rx = *rx_buf;
     AutoAim_Instance.Rx_OnlineFlag = 1;
     AutoAim_Instance.Rx_LastTick = HAL_GetTick();
@@ -154,11 +155,10 @@ void AutoAim_UpdateRx(void)
     {
         AutoAim_Instance.Rx_OnlineFlag = 0;
     }
-
    if(AutoAim_Instance.Rx_OnlineFlag)
    {
-       AutoAim_Ctrl.Yaw = AutoAim_Instance.Rx.Yaw;
-       AutoAim_Ctrl.Pitch = AutoAim_Instance.Rx.Pitch;
+       AutoAim_Ctrl.Yaw = (AutoAim_Instance.Rx.Yaw * 0.1);
+       AutoAim_Ctrl.Pitch = (AutoAim_Instance.Rx.Pitch * 0.1);
        AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
        AutoAim_Ctrl.IsOnline = 1;
    }
