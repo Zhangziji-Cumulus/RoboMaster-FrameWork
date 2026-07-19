@@ -34,14 +34,16 @@
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\MDK-ARM\\ABModule\\RefereeTx",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\MDK-ARM\\ABModule\\Printf",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\MDK-ARM\\ABModule\\DM",
-                "D:\\A_Study & Work\\STM32\\Keil5\\ARM\\ARMCC\\include",
-                "D:\\A_Study & Work\\STM32\\Keil5\\ARM\\ARMCC\\include\\rw",
+                "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\MDK-ARM\\ABModule\\SuperPower",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\MDK-ARM",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Core\\Src",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Drivers\\STM32F4xx_HAL_Driver\\Src",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Middlewares\\Third_Party\\FreeRTOS\\Source",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang",
-                "${default}"
+                "${default}",
+                "D:/MDK536/ARM/ARMCC/include",
+                "D:/MDK536/ARM/CMSIS/5.8.0/CMSIS/Core/Include",
+                "D:/MDK536/ARM/CMSIS/5.8.0/CMSIS/DSP/Include"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
@@ -124,7 +126,8 @@
                 "__yield()=",
                 "__vfp_status(x,y)=0"
             ],
-            "intelliSenseMode": "${default}"
+            "intelliSenseMode": "gcc-arm",
+            "compilerPath": "D:\\MDK536\\ARM\\ARMCC\\bin\\armcc.exe"
         }
     ],
     "version": 4

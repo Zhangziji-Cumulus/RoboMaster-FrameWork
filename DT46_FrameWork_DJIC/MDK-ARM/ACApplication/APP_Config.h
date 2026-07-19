@@ -112,9 +112,9 @@
 #define AUTOAIM_IFOPEN    AUTOAIM_OPEN     //是否打开自瞄系统，0不编译自瞄，1编译自瞄s
 
 //自瞄插帧
-#define AUTOAIM_SMOOTH_OFF      0
+#define AUTOAIM_SMOOTH_OFF       0
 #define AUTOAIM_SMOOTH_ON        1
-#define AUTOAIM_SMOOTH          AUTOAIM_SMOOTH_ON
+#define AUTOAIM_SMOOTH           AUTOAIM_SMOOTH_ON
 
 //** #################################################################################################### **//
 //** ========================================= 枚举、结构体 ============================================= **//

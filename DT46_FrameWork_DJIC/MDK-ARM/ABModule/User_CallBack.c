@@ -1,4 +1,6 @@
 #include "User_CallBack.h"
+#include "SuperPower.h"
+
 
 //** ####################################### **//
 //** ================= 串口 ================= **//
@@ -34,10 +36,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     CAN_RxHeaderTypeDef Temp_RxHeader;
     uint8_t Temp_RxData[8];
 
-//    if(hcan->Instance == CAN1) {
-//		can1_rx_callback();
-//	}
-
 #if defined(CAN1)
     if (hcan->Instance == CAN1)
     {
@@ -45,7 +43,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
         {
             if (Temp_RxHeader.IDE == CAN_ID_STD)
             {
+                //DJI 电机解析
                 CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN1, Temp_RxHeader.StdId, Temp_RxData);
+                //SuperPower_Process
+                SuperPower_Process(Temp_RxHeader.StdId,Temp_RxData);
+
             }
             else if (Temp_RxHeader.IDE == CAN_ID_EXT)
             {

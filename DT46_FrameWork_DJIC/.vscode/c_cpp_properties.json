@@ -9,8 +9,30 @@
                 "${workspaceFolder}/MDK-ARM/ACApplication/Chassis",
                 "${workspaceFolder}/MDK-ARM/ACApplication/Gimbal",
                 "${workspaceFolder}/MDK-ARM/ACApplication/Auto",
-                "D:/A_Study & Work/STM32/Keil5/ARM/ARMCC/include",
-                "D:/A_Study & Work/STM32/Keil5/ARM/PACK/ARM/CMSIS/**/Include"
+                "D:/MDK536/ARM/ARMCC/include",
+                "D:/MDK536/ARM/CMSIS/5.8.0/CMSIS/Core/Include",
+                "D:/MDK536/ARM/CMSIS/5.8.0/CMSIS/DSP/Include",
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/MDK-ARM/AAA",
+                "${workspaceFolder}/MDK-ARM/AADrivers",
+                "${workspaceFolder}/MDK-ARM/AADrivers/IMU",
+                "${workspaceFolder}/MDK-ARM/ABModule",
+                "${workspaceFolder}/MDK-ARM/ABModule/Buzzer",
+                "${workspaceFolder}/MDK-ARM/ABModule/CRC",
+                "${workspaceFolder}/MDK-ARM/ABModule/DM",
+                "${workspaceFolder}/MDK-ARM/ABModule/PlayerUI",
+                "${workspaceFolder}/MDK-ARM/ABModule/Printf",
+                "${workspaceFolder}/MDK-ARM/ABModule/Referee",
+                "${workspaceFolder}/MDK-ARM/ABModule/SuperPower",
+                "${workspaceFolder}/MDK-ARM/ABModule/VT",
+                "${workspaceFolder}/MDK-ARM/ABModule/ZDT",
+                "${workspaceFolder}/MDK-ARM/ACApplication",
+                "${workspaceFolder}/MDK-ARM/ACApplication/RobotConfig",
+                "${workspaceFolder}/MDK-ARM/ACApplication/Shooting"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
@@ -94,7 +116,7 @@
                 "__vfp_status(x,y)=0"
             ],
             "intelliSenseMode": "gcc-arm",
-            "compilerPath": "D:\\A_Study & Work\\STM32\\Keil5\\ARM\\ARMCC\\bin\\armcc.exe"
+            "compilerPath": "D:\\MDK536\\ARM\\ARMCC\\bin\\armcc.exe"
         }
     ],
     "version": 4
