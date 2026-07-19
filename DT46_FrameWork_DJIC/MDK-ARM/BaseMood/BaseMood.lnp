@@ -89,7 +89,6 @@
 "basemood\drawui_extend.o"
 "basemood\ui_dynamic.o"
 "basemood\ui_static.o"
-"basemood\ui_dynamic2.o"
 "basemood\crc.o"
 "basemood\printf.o"
 "basemood\printf_task.o"

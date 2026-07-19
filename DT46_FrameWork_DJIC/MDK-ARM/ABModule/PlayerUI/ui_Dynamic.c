@@ -7,15 +7,13 @@
 #include "ui_interface.h"
 #include "ui_Dynamic.h"
 
-#define TOTAL_FIGURE 9
+#define TOTAL_FIGURE 7
 #define TOTAL_STRING 0
 
 ui_interface_figure_t ui_Dynamic_now_figures[TOTAL_FIGURE];
 uint8_t ui_Dynamic_dirty_figure[TOTAL_FIGURE];
 
 uint8_t ui_Dynamic_max_send_count[TOTAL_FIGURE + TOTAL_STRING] = {
-    1,
-    1,
     1,
     1,
     1,
@@ -89,25 +87,6 @@ void ui_init_Dynamic() {
     ui_Dynamic_Fire_LoadFlag->start_y = 250;
     ui_Dynamic_Fire_LoadFlag->width = 10;
     ui_Dynamic_Fire_LoadFlag->r = 10;
-
-    ui_Dynamic_Fire_SpinFlag->figure_type = 2;
-    ui_Dynamic_Fire_SpinFlag->operate_type = 1;
-    ui_Dynamic_Fire_SpinFlag->layer = 0;
-    ui_Dynamic_Fire_SpinFlag->color = 8;
-    ui_Dynamic_Fire_SpinFlag->start_x = 250;
-    ui_Dynamic_Fire_SpinFlag->start_y = 700;
-    ui_Dynamic_Fire_SpinFlag->width = 15;
-    ui_Dynamic_Fire_SpinFlag->r = 10;
-
-    ui_Dynamic_Gimbal_PitchLine->figure_type = 0;
-    ui_Dynamic_Gimbal_PitchLine->operate_type = 1;
-    ui_Dynamic_Gimbal_PitchLine->layer = 0;
-    ui_Dynamic_Gimbal_PitchLine->color = 0;
-    ui_Dynamic_Gimbal_PitchLine->start_x = 1669;
-    ui_Dynamic_Gimbal_PitchLine->start_y = 700;
-    ui_Dynamic_Gimbal_PitchLine->width = 8;
-    ui_Dynamic_Gimbal_PitchLine->end_x = 1620;
-    ui_Dynamic_Gimbal_PitchLine->end_y = 700;
 
     ui_Dynamic_Gimbal_PitchAngle->figure_type = 5;
     ui_Dynamic_Gimbal_PitchAngle->operate_type = 1;

@@ -17,6 +17,6 @@ typedef struct{
 //解析超电返回数据
 void SuperPower_Process(uint32_t std_id, uint8_t* data);
 //获取超电结构体只读指针
-const SuperPower_t* get_superpower_piont(void)
+const SuperPower_t* get_superpower_piont(void);
 
 #endif // SUPERPOWER_H_

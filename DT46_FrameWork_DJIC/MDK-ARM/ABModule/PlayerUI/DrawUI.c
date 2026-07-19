@@ -5,12 +5,14 @@
 static const referee_all_data_t* Referee_DrawUI;
 static const float* INS_angle_DrawUI;
 static const CMD_t* CMD_DrawUI;
+static const SuperPower_t* SuperPower_DrawUI;
 
 
 //使用这个函数来更新交互、数据
 static void Update_Data(void);
 static void DrawUI_Dynamic(void);
 static void DrawUI_ReInit(void);
+
 
 void DrawUI_Init(void)
 {
@@ -62,30 +64,30 @@ void DrawUI_Update(void)
 //重新初始化UI手动触发、自动触发（每隔 timems 毫秒执行一次，基于 HAL 滴答）
 static void DrawUI_ReInit(void)
 {
-    // static uint32_t last_tick = 0;
-    // uint32_t now = HAL_GetTick();
+    static uint32_t last_tick = 0;
+    uint32_t now = HAL_GetTick();
 
-    // if (now - last_tick < timems)
-    //     return;
-    // last_tick = now;
+    if (now - last_tick < 2000)
+        return;
+    last_tick = now;
 
     //获取裁判系统数据
     Referee_DrawUI = Referee_GetData();
     //自动获取当前机器人ID,发送和接受要对应上UI才能上去
     ui_self_id = Referee_DrawUI->_robot_status.robot_id; 
     
-    // ui_init_Static_Text1();
-    // osDelay(30);
-    // ui_init_Static_Text2();
-    // osDelay(30);
-    // ui_init_Static_Text3();
-    // osDelay(30);
-    // ui_init_Static_Text4();
-    // osDelay(30);
-    // ui_init_Static_Text5();
-    // osDelay(30);
-    // ui_init_Static_Graphic();
-    // osDelay(50);
+    ui_init_Static_Text1();
+    osDelay(30);
+    ui_init_Static_Text2();
+    osDelay(30);
+    ui_init_Static_Text3();
+    osDelay(30);
+    ui_init_Static_Text4();
+    osDelay(30);
+    ui_init_Static_Text5();
+    osDelay(30);
+    ui_init_Static_Graphic();
+    osDelay(50);
 
     //初始化动态UI
     ui_init_Dynamic();
@@ -101,13 +103,15 @@ static void Update_Data(void)
     INS_angle_DrawUI = IMU_Get_point();
     //获取控制指令
     CMD_DrawUI =  CMD_Get_point();
+    //获取超电数据指针
+    SuperPower_DrawUI = get_superpower_piont();
 } 
 
 static void DrawUI_Dynamic(void)
 {
     Update_Data();
-    /***** 绘制姿态角 *****/
 
+    /***** 绘制地盘状态 *****/
     //更新绘制开火标志位
     {
         //是否按了开火键
@@ -123,16 +127,15 @@ static void DrawUI_Dynamic(void)
         //跟新小陀螺是否开启
         if(CMD_DrawUI->Move == NORMAL)
         {
-            ui_Dynamic_Fire_SpinFlag ->color = 8;
+            ui_Dynamic_Chassis_ChassisFront->color = 0;
         }
         else
         {
-            ui_Dynamic_Fire_SpinFlag ->color = 1;
+            ui_Dynamic_Chassis_ChassisFront->color = 1;
         }
     }
 
     /***** 绘制姿态角 *****/
-
     float Yaw = INS_angle_DrawUI[0];
     float Pitch = INS_angle_DrawUI[2];
 
@@ -153,23 +156,33 @@ static void DrawUI_Dynamic(void)
 
     //跟新绘制云台角度
     {
-        float out_x, out_y;
-        PitchLineUI(
-            ui_Dynamic_Gimbal_PitchLine->start_x,
-            ui_Dynamic_Gimbal_PitchLine->start_y,
-            50,
-            Pitch,
-            &out_x,
-            &out_y
-        );
-        ui_Dynamic_Gimbal_PitchLine->end_x = out_x;
-        ui_Dynamic_Gimbal_PitchLine->end_y = out_y;
+        // float out_x, out_y;
+        // PitchLineUI(
+        //     ui_Dynamic_Gimbal_PitchLine->start_x,
+        //     ui_Dynamic_Gimbal_PitchLine->start_y,
+        //     50,
+        //     Pitch,
+        //     &out_x,
+        //     &out_y
+        // );
+        // ui_Dynamic_Gimbal_PitchLine->end_x = out_x;
+        // ui_Dynamic_Gimbal_PitchLine->end_y = out_y;
 
         //显示云台角度（Pitch为弧度，先转角度，再转定点数，如12.345°→12345）
         ui_Dynamic_Gimbal_PitchAngle->number = (int32_t)(Pitch * 180.0f / (float)M_PI * 1000.0f);
     }
 
 
+    //绘制超电容量
+    {
+        float Superpower_Prencent = SuperPower_DrawUI->Prencent;
+        ui_Dynamic_Chassis_SuperPower->start_angle 
+            = LerpAngle(ui_Dynamic_Chassis_SuperPower->end_angle,
+                        -60.0f,
+                        Superpower_Prencent,
+                        1);
+    }
+    
 
     //刷新UI
     if(CMD_DrawUI->other.RefreshUI  == ON)

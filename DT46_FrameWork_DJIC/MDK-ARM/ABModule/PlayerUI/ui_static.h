@@ -8,9 +8,15 @@
 
 #include "ui_interface.h"
 
+extern ui_interface_number_t *ui_Static_Gimbal_PitchAngle;
+
+void ui_init_Static_Gimbal();
+void ui_update_Static_Gimbal();
+void ui_remove_Static_Gimbal();
+
 extern ui_interface_round_t *ui_Static_Graphic_ChassisFront;
 extern ui_interface_rect_t *ui_Static_Graphic_AutoAimRange;
-extern ui_interface_round_t *ui_Static_Graphic_Pitch;
+extern ui_interface_rect_t *ui_Static_Graphic_PitchRect;
 extern ui_interface_round_t *ui_Static_Graphic_FireFlag;
 extern ui_interface_round_t *ui_Static_Graphic_AutoAimFlag;
 extern ui_interface_round_t *ui_Static_Graphic_LoadFlag;
@@ -44,7 +50,7 @@ void ui_init_Static_Text4();
 void ui_update_Static_Text4();
 void ui_remove_Static_Text4();
 
-extern ui_interface_string_t *ui_Static_Text5_SpinText;
+extern ui_interface_string_t *ui_Static_Text5_PitchText;
 
 void ui_init_Static_Text5();
 void ui_update_Static_Text5();

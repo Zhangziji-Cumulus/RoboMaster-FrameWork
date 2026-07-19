@@ -8,7 +8,7 @@
 #include "ui_interface.h"
 
 uint8_t seq = 0;
-int ui_self_id = 103;
+int ui_self_id = 1;
 
 ui_string_frame_t _ui_string_frame;
 ui_1_frame_t _ui_1_frame;
@@ -52,7 +52,7 @@ unsigned char calc_crc8(unsigned char *pchMessage, unsigned int dwLength) {
     return (ucCRC8);
 }
 
-static const uint16_t wCRC_Table[256] = {
+const uint16_t wCRC_Table[256] = {
     0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,
     0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7,
     0x1081, 0x0108, 0x3393, 0x221a, 0x56a5, 0x472c, 0x75b7, 0x643e,
@@ -231,5 +231,3 @@ void ui_scan_and_send(const ui_interface_figure_t *ui_now_figures, uint8_t *ui_d
         }
     }
 }
-
-

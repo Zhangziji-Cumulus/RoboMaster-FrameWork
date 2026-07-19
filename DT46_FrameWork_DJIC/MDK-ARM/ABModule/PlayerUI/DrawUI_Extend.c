@@ -104,5 +104,18 @@ float LerpAngle(float start_deg, float range_deg, float percent, int normalize)
             end += 360.0f;
         }
     }
+
+    // 防止结果与起始角完全重合（0%时start_deg == end），避免弧线绘制API将0°弧误判为整圆
+    // 注意：必须向减小的方向偏移，使弧线走向与正常充满方向一致且极小，否则会绕大圈359°几乎又是整圆
+    if (fabsf(end - start_deg) < 0.001f)
+    {
+        end = start_deg - 0.001f;
+        if (normalize)
+        {
+            if (end < 0.0f)      end += 360.0f;
+            else if (end >= 360.0f) end -= 360.0f;
+        }
+    }
+
     return end;
 }

@@ -7,11 +7,72 @@
 
 #include "ui_interface.h"
 
+ui_1_frame_t ui_Static_Gimbal_0;
+
+ui_interface_number_t *ui_Static_Gimbal_PitchAngle = (ui_interface_number_t*)&(ui_Static_Gimbal_0.data[0]);
+
+void _ui_init_Static_Gimbal_0() {
+    for (int i = 0; i < 1; i++) {
+        ui_Static_Gimbal_0.data[i].figure_name[0] = 1;
+        ui_Static_Gimbal_0.data[i].figure_name[1] = 0;
+        ui_Static_Gimbal_0.data[i].figure_name[2] = i + 0;
+        ui_Static_Gimbal_0.data[i].operate_type = 1;
+    }
+    for (int i = 1; i < 1; i++) {
+        ui_Static_Gimbal_0.data[i].operate_type = 0;
+    }
+
+    ui_Static_Gimbal_PitchAngle->figure_type = 5;
+    ui_Static_Gimbal_PitchAngle->operate_type = 1;
+    ui_Static_Gimbal_PitchAngle->layer = 0;
+    ui_Static_Gimbal_PitchAngle->color = 8;
+    ui_Static_Gimbal_PitchAngle->start_x = 1734;
+    ui_Static_Gimbal_PitchAngle->start_y = 710;
+    ui_Static_Gimbal_PitchAngle->width = 3;
+    ui_Static_Gimbal_PitchAngle->font_size = 25;
+    ui_Static_Gimbal_PitchAngle->number = 12345;
+
+
+    ui_proc_1_frame(&ui_Static_Gimbal_0);
+    SEND_MESSAGE((uint8_t *) &ui_Static_Gimbal_0, sizeof(ui_Static_Gimbal_0));
+}
+
+void _ui_update_Static_Gimbal_0() {
+    for (int i = 0; i < 1; i++) {
+        ui_Static_Gimbal_0.data[i].operate_type = 2;
+    }
+
+    ui_proc_1_frame(&ui_Static_Gimbal_0);
+    SEND_MESSAGE((uint8_t *) &ui_Static_Gimbal_0, sizeof(ui_Static_Gimbal_0));
+}
+
+void _ui_remove_Static_Gimbal_0() {
+    for (int i = 0; i < 1; i++) {
+        ui_Static_Gimbal_0.data[i].operate_type = 3;
+    }
+
+    ui_proc_1_frame(&ui_Static_Gimbal_0);
+    SEND_MESSAGE((uint8_t *) &ui_Static_Gimbal_0, sizeof(ui_Static_Gimbal_0));
+}
+
+
+void ui_init_Static_Gimbal() {
+    _ui_init_Static_Gimbal_0();
+}
+
+void ui_update_Static_Gimbal() {
+    _ui_update_Static_Gimbal_0();
+}
+
+void ui_remove_Static_Gimbal() {
+    _ui_remove_Static_Gimbal_0();
+}
+
 ui_7_frame_t ui_Static_Graphic_0;
 
 ui_interface_round_t *ui_Static_Graphic_ChassisFront = (ui_interface_round_t*)&(ui_Static_Graphic_0.data[0]);
 ui_interface_rect_t *ui_Static_Graphic_AutoAimRange = (ui_interface_rect_t*)&(ui_Static_Graphic_0.data[1]);
-ui_interface_round_t *ui_Static_Graphic_Pitch = (ui_interface_round_t*)&(ui_Static_Graphic_0.data[2]);
+ui_interface_rect_t *ui_Static_Graphic_PitchRect = (ui_interface_rect_t*)&(ui_Static_Graphic_0.data[2]);
 ui_interface_round_t *ui_Static_Graphic_FireFlag = (ui_interface_round_t*)&(ui_Static_Graphic_0.data[3]);
 ui_interface_round_t *ui_Static_Graphic_AutoAimFlag = (ui_interface_round_t*)&(ui_Static_Graphic_0.data[4]);
 ui_interface_round_t *ui_Static_Graphic_LoadFlag = (ui_interface_round_t*)&(ui_Static_Graphic_0.data[5]);
@@ -20,7 +81,7 @@ ui_interface_arc_t *ui_Static_Graphic_SuperPower = (ui_interface_arc_t*)&(ui_Sta
 void _ui_init_Static_Graphic_0() {
     for (int i = 0; i < 7; i++) {
         ui_Static_Graphic_0.data[i].figure_name[0] = 1;
-        ui_Static_Graphic_0.data[i].figure_name[1] = 0;
+        ui_Static_Graphic_0.data[i].figure_name[1] = 1;
         ui_Static_Graphic_0.data[i].figure_name[2] = i + 0;
         ui_Static_Graphic_0.data[i].operate_type = 1;
     }
@@ -47,14 +108,15 @@ void _ui_init_Static_Graphic_0() {
     ui_Static_Graphic_AutoAimRange->end_x = 1407;
     ui_Static_Graphic_AutoAimRange->end_y = 804;
 
-    ui_Static_Graphic_Pitch->figure_type = 2;
-    ui_Static_Graphic_Pitch->operate_type = 1;
-    ui_Static_Graphic_Pitch->layer = 0;
-    ui_Static_Graphic_Pitch->color = 0;
-    ui_Static_Graphic_Pitch->start_x = 1670;
-    ui_Static_Graphic_Pitch->start_y = 700;
-    ui_Static_Graphic_Pitch->width = 5;
-    ui_Static_Graphic_Pitch->r = 50;
+    ui_Static_Graphic_PitchRect->figure_type = 1;
+    ui_Static_Graphic_PitchRect->operate_type = 1;
+    ui_Static_Graphic_PitchRect->layer = 0;
+    ui_Static_Graphic_PitchRect->color = 0;
+    ui_Static_Graphic_PitchRect->start_x = 1723;
+    ui_Static_Graphic_PitchRect->start_y = 655;
+    ui_Static_Graphic_PitchRect->width = 2;
+    ui_Static_Graphic_PitchRect->end_x = 1899;
+    ui_Static_Graphic_PitchRect->end_y = 779;
 
     ui_Static_Graphic_FireFlag->figure_type = 2;
     ui_Static_Graphic_FireFlag->operate_type = 1;
@@ -137,7 +199,7 @@ ui_interface_string_t* ui_Static_Text1_AutoAimText = &(ui_Static_Text1_0.option)
 
 void _ui_init_Static_Text1_0() {
     ui_Static_Text1_0.option.figure_name[0] = 1;
-    ui_Static_Text1_0.option.figure_name[1] = 1;
+    ui_Static_Text1_0.option.figure_name[1] = 2;
     ui_Static_Text1_0.option.figure_name[2] = 0;
     ui_Static_Text1_0.option.operate_type = 1;
 
@@ -189,7 +251,7 @@ ui_interface_string_t* ui_Static_Text2_FireText = &(ui_Static_Text2_0.option);
 
 void _ui_init_Static_Text2_0() {
     ui_Static_Text2_0.option.figure_name[0] = 1;
-    ui_Static_Text2_0.option.figure_name[1] = 2;
+    ui_Static_Text2_0.option.figure_name[1] = 3;
     ui_Static_Text2_0.option.figure_name[2] = 0;
     ui_Static_Text2_0.option.operate_type = 1;
 
@@ -241,7 +303,7 @@ ui_interface_string_t* ui_Static_Text3_LoadText = &(ui_Static_Text3_0.option);
 
 void _ui_init_Static_Text3_0() {
     ui_Static_Text3_0.option.figure_name[0] = 1;
-    ui_Static_Text3_0.option.figure_name[1] = 3;
+    ui_Static_Text3_0.option.figure_name[1] = 4;
     ui_Static_Text3_0.option.figure_name[2] = 0;
     ui_Static_Text3_0.option.operate_type = 1;
 
@@ -293,7 +355,7 @@ ui_interface_string_t* ui_Static_Text4_SpinText = &(ui_Static_Text4_0.option);
 
 void _ui_init_Static_Text4_0() {
     ui_Static_Text4_0.option.figure_name[0] = 1;
-    ui_Static_Text4_0.option.figure_name[1] = 4;
+    ui_Static_Text4_0.option.figure_name[1] = 5;
     ui_Static_Text4_0.option.figure_name[2] = 0;
     ui_Static_Text4_0.option.operate_type = 1;
 
@@ -341,24 +403,24 @@ void ui_remove_Static_Text4() {
 
 
 ui_string_frame_t ui_Static_Text5_0;
-ui_interface_string_t* ui_Static_Text5_SpinText = &(ui_Static_Text5_0.option);
+ui_interface_string_t* ui_Static_Text5_PitchText = &(ui_Static_Text5_0.option);
 
 void _ui_init_Static_Text5_0() {
     ui_Static_Text5_0.option.figure_name[0] = 1;
-    ui_Static_Text5_0.option.figure_name[1] = 5;
+    ui_Static_Text5_0.option.figure_name[1] = 6;
     ui_Static_Text5_0.option.figure_name[2] = 0;
     ui_Static_Text5_0.option.operate_type = 1;
 
-    ui_Static_Text5_SpinText->figure_type = 7;
-    ui_Static_Text5_SpinText->operate_type = 1;
-    ui_Static_Text5_SpinText->layer = 0;
-    ui_Static_Text5_SpinText->color = 1;
-    ui_Static_Text5_SpinText->start_x = 1740;
-    ui_Static_Text5_SpinText->start_y = 755;
-    ui_Static_Text5_SpinText->width = 2;
-    ui_Static_Text5_SpinText->font_size = 20;
-    ui_Static_Text5_SpinText->str_length = 5;
-    strcpy(ui_Static_Text5_SpinText->string, "Pitch");
+    ui_Static_Text5_PitchText->figure_type = 7;
+    ui_Static_Text5_PitchText->operate_type = 1;
+    ui_Static_Text5_PitchText->layer = 0;
+    ui_Static_Text5_PitchText->color = 1;
+    ui_Static_Text5_PitchText->start_x = 1740;
+    ui_Static_Text5_PitchText->start_y = 755;
+    ui_Static_Text5_PitchText->width = 2;
+    ui_Static_Text5_PitchText->font_size = 20;
+    ui_Static_Text5_PitchText->str_length = 5;
+    strcpy(ui_Static_Text5_PitchText->string, "Pitch");
 
 
     ui_proc_string_frame(&ui_Static_Text5_0);

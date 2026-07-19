@@ -43,11 +43,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
         {
             if (Temp_RxHeader.IDE == CAN_ID_STD)
             {
-                //DJI 电机解析
                 CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN1, Temp_RxHeader.StdId, Temp_RxData);
-                //SuperPower_Process
-                SuperPower_Process(Temp_RxHeader.StdId,Temp_RxData);
-
             }
             else if (Temp_RxHeader.IDE == CAN_ID_EXT)
             {
@@ -121,6 +117,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
             if (Temp_RxHeader.IDE == CAN_ID_STD)
             {
                 CAN_DJI_Motor_Feedback(DJI_MFeedback_CAN1, Temp_RxHeader.StdId, Temp_RxData);
+                //SuperPower_Process
+                SuperPower_Process(Temp_RxHeader.StdId,Temp_RxData);
             }
             else if (Temp_RxHeader.IDE == CAN_ID_EXT)
             {

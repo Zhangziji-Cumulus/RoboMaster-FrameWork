@@ -34,6 +34,7 @@
 #include "A_CommonSystem.h"
 #include "A_MCommon.h"
 #include "Dual_Board_Transmit.h"
+#include "SuperPower.h"
 
 void DrawUI_Init(void);
 

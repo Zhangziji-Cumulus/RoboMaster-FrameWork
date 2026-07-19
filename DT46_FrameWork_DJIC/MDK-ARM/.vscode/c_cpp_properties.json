@@ -40,10 +40,7 @@
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Drivers\\STM32F4xx_HAL_Driver\\Src",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Middlewares\\Third_Party\\FreeRTOS\\Source",
                 "d:\\A_Code_GitHub\\RoboMaster-FrameWork\\DT46_FrameWork_DJIC\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang",
-                "${default}",
-                "D:/MDK536/ARM/ARMCC/include",
-                "D:/MDK536/ARM/CMSIS/5.8.0/CMSIS/Core/Include",
-                "D:/MDK536/ARM/CMSIS/5.8.0/CMSIS/DSP/Include"
+                "${default}"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
