@@ -184,9 +184,6 @@ void Gimbal_SendCmd(void)
 //** ========================================= 对内算法函数 ============================================== **//
 //** #################################################################################################### **//
 
-float detect1;
-float detect2;
-
 static void Gimbal_Update_Target(void)
 {
 #if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
@@ -209,9 +206,6 @@ static void Gimbal_Update_Target(void)
                                               Gimbal_Instance.Auto.Aim.IsOnline,
                                              -GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,
                                               GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
-
-    detect1  = ManualYaw;                              
-    detect2 = FusionYaw;
 
     if(Gimbal_Instance.CMD.Auto.Aim == AUTOAIM_ON)
     {

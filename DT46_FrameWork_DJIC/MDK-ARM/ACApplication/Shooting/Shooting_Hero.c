@@ -11,7 +11,7 @@
 //** #################################################################################################### **//
 
 //static 
-	Shooting_Instance_t Shooting_Instance;
+    Shooting_Instance_t Shooting_Instance;
 Shooting_State_Machine_t Shooting_State_Machine;
 
 PID_HandleTypeDef PID_SFri_STOP;
@@ -30,7 +30,6 @@ PID_HandleTypeDef PID_SFri_DM_Ex;
 //** #################################################################################################### **//
 
 static void Friction_Update_Target(void);
-// static void PuahRod_Update_Target(void);
 
 void Fire_Run(void);
 void Load_Run(void);
@@ -109,7 +108,18 @@ void Shooting_RefreshTarget(void)
     Load_Run();
 
     Friction_Update_Target();
-    // PuahRod_Update_Target();
+
+    static ONOFF_State_e lastFlag;
+
+
+    //遥控器控制推杆强制回到L点
+    if(Shooting_Instance.CMD.Shooting.Load == ON && lastFlag == OFF)
+    {
+        Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_L_DEG;
+        Shooting_Instance.Calc.PushRod.CtlFlag = 1;
+    }
+    lastFlag = Shooting_Instance.CMD.Shooting.Load;  
+
 }
 
 //计算控制量
@@ -293,25 +303,6 @@ static void Friction_Update_Target(void)
         Shooting_Instance.Calc.Friction.DM.T_rpm = 0;
     }
 }
-
-// static void PuahRod_Update_Target(void)
-// {
-
-//     if((Shooting_Instance.CMD.Shooting.Fire == ON) && (Shooting_Instance.Calc.PushRod.State == PUSH_FRONT_ING))
-//     {
-//         Shooting_Instance.Calc.PushRod.State = PUSH_BACK_ENTER;
-
-//         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_FRONT_DEG;
-//     }
-//     else if((Shooting_Instance.CMD.Shooting.Fire == OFF) && (Shooting_Instance.Calc.PushRod.State == PUSH_BACK_ING))
-//     {
-//         Shooting_Instance.Calc.PushRod.State = PUSH_FRONT_ENTER;
-
-//         Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSTION_BACK_DEG;
-//     }
-// }
-
-
 
 // //点L位置
 // #define PUSHROD_POSITION_L_DEG       PUSHROD_DIST_TO_ANGLE(PUSHROD_POSITION_L_MM,PUSHROD_SCREW_LEAD_MM) 

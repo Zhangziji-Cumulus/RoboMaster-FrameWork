@@ -192,7 +192,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 #define PUSHROD_POSTION_BACK_MM             110.0f    //推杆后位置
 
 #define PUSHROD_POSITION_L_MM            110.0f     //上弹位置
-#define PUSHROD_POSITION_A_MM            95.0f     //预发弹位置
+#define PUSHROD_POSITION_A_MM            95.0f      //预发弹位置
 #define PUSHROD_POSITION_B_MM            50.0f      //发射第一颗弹位置
 #define PUSHROD_POSITION_C_MM            5.0f       //发射第二颗弹位置
 
