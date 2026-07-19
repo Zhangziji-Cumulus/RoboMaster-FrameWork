@@ -220,7 +220,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 
 #define PUSHROD_MOTOR_TYPE         MOTOR_ZTD_42STEP     //推杆电机类型
 
-#define PUSHROD_CAN_ID             1                    //推杆实际CAN ID / Address
+#define PUSHROD_CAN_ID             9                    //推杆实际CAN ID / Address
 
 //#define PUSHROD_MOTOR_ID_FBK       PUSHROD_CAN_ID - 1      //推杆电机 反馈 ID （CAN ID - 1）
 
