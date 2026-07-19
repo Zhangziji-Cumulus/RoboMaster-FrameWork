@@ -40,7 +40,7 @@ __attribute__((used)) void GimbalTask(void *argument)
 
     //=============================== 剩余栈检测 ===============================//
 	remain_GimbalTask = uxTaskGetStackHighWaterMark(NULL);
-    osDelay(CHASSIS_TASK_TIME_MS);
+    osDelay(GIMBAL_TASK_TIME_MS);
   }
 }
 

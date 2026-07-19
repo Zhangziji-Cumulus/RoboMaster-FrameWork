@@ -65,14 +65,19 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 //** ------------------------------------------------------------ **//
 
 /* 系统配置 */
-#define GIMBAL_TASK_TIME_MS        1               //云台任务循环时间
+#define GIMBAL_TASK_TIME_MS        10               //云台任务循环时间
 
 /* 云台运动、速度、增量相关 */
 #define GIMBAL_MAX_SPEED_YAW_M_S       1 
 #define GIMBAL_MAX_SPEED_PITCH_M_S     1
 
-#define GIMBAL_MAX_ANGLE_STEP_DEG_YAW           0.30    //云台目标角度增量的最大值，单位：度
-#define GIMBAL_MAX_ANGLE_STEP_DEG_PITCH         0.03     //云台目标角度增量的最大值，单位：度
+//云台最大角速度(°/s) — 用于速度模式，与控制周期频率无关
+#define GIMBAL_MAX_SPEED_YAW_DEG_S          300.0f   //Yaw最大角速度(等效原0.30°/step@1ms)
+#define GIMBAL_MAX_SPEED_PITCH_DEG_S        30.0f    //Pitch最大角速度(等效原0.03°/step@1ms)
+
+//云台每周期步进角(由角速度×周期时间自动计算，老宏保留兼容)
+#define GIMBAL_MAX_ANGLE_STEP_DEG_YAW           (GIMBAL_MAX_SPEED_YAW_DEG_S   * GIMBAL_TASK_TIME_MS / 1000.0f)
+#define GIMBAL_MAX_ANGLE_STEP_DEG_PITCH         (GIMBAL_MAX_SPEED_PITCH_DEG_S * GIMBAL_TASK_TIME_MS / 1000.0f)
 
 /* 云台陀螺仪 */
 

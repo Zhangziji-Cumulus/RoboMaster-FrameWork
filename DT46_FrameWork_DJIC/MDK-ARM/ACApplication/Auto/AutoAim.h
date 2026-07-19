@@ -96,8 +96,9 @@ typedef struct
 typedef struct{
     float Yaw;
     float Pitch;
-    uint8_t FireOK;//可以视觉瞄准了，可以开火了
-    uint8_t IsOnline;//视觉是否在线标志,0不在线，1在线
+    uint8_t FireOK;     //可以视觉瞄准了，可以开火了
+    uint8_t IsOnline;   //视觉是否在线标志,0不在线，1在线
+    uint32_t RxTick;    //最后有效帧的接收时间戳(ms)，供外部模块检测新数据
 }AutoAim_Ctrl_t;
 
 /* 纯整数 int16_t 自瞄+手动融合函数 */

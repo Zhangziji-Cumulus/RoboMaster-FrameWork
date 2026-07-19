@@ -36,6 +36,20 @@ static void Gimbal_PitchStable_Calc(void);
 //** ====================================== 对外若定义覆盖函数 =========================================== **//
 //** #################################################################################################### **//
 
+/*  控制周期1ms时的PID参数
+
+   //YAW轴PID
+	PID_FF_Init(&Gimbal_Yaw_FF,3800.0f,0.05f,320000.0f,1500.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+	PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+   
+    //PITCH轴PID
+    PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2600,2600,-10.0f, 10.0f);
+	PID_Init(&Gimbal_Pitch_Ex,800.0f,0.01f,1500.0f,-2400,2400,-1000.0f, 1000.0f);
+
+ */
+ 
 //初始化函数
 void Gimbal_Init(void)
 {
@@ -46,14 +60,22 @@ void Gimbal_Init(void)
   	PID_Init(&Gimbal_Motor_STOP,3.0f,0.0f,0.0f,-DJI_STOP_A,DJI_STOP_A,-5.0f, 5.0f);
 
     //YAW轴PID
-	PID_FF_Init(&Gimbal_Yaw_FF,3800.0f,0.05f,320000.0f,1500.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+	PID_FF_Init(&Gimbal_Yaw_FF,4000.0f,0.5f,40000.0f,22000.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
 	PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
    
     //PITCH轴PID
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2600,2600,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_Ex,800.0f,0.01f,1500.0f,-2400,2400,-1000.0f, 1000.0f);
+	PID_Init(&Gimbal_Pitch_Ex,900.0f,0.1f,1500.0f,-2400,2400,-1000.0f, 1000.0f);
+
+    //自瞄线性插值状态初始化
+    Gimbal_Instance.Calc.Yaw.LerpDuration = AUTO_TASK_TIME_MS;   //默认100ms
+    Gimbal_Instance.Calc.Yaw.LerpStartTick = 0;
+    Gimbal_Instance.Calc.Yaw.LerpTick = 0;
+    Gimbal_Instance.Calc.Pitch.LerpDuration = AUTO_TASK_TIME_MS;
+    Gimbal_Instance.Calc.Pitch.LerpStartTick = 0;
+    Gimbal_Instance.Calc.Pitch.LerpTick = 0;
 }
 
 //更新状态函数
@@ -186,7 +208,106 @@ void Gimbal_SendCmd(void)
 
 static void Gimbal_Update_Target(void)
 {
-#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
+
+#if((AUTOAIM_IFOPEN == AUTOAIM_OPEN) && (AUTOAIM_SMOOTH == AUTOAIM_SMOOTH_ON))
+
+    /* 更新云台Yaw Pitch角度的目标值 */
+    float ManualYaw = MyMath_Map_Range_Float(Gimbal_Instance.CMD.Gimbal.Yaw,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_YAW,GIMBAL_MAX_ANGLE_STEP_DEG_YAW);
+    float AutoYaw   = Gimbal_Instance.Auto.Aim.Yaw;
+
+    float ManualPitch = MyMath_Map_Range_Float(Gimbal_Instance.CMD.Gimbal.Pitch,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
+    float AutoPitch   = Gimbal_Instance.Auto.Aim.Pitch;
+
+    if(Gimbal_Instance.CMD.Auto.Aim == AUTOAIM_ON)
+    {
+        /* ============ 自瞄线性插值控制 (Lerp) ============ */
+
+        // 检测新自瞄数据到达（通过 RxTick 变化判断，自瞄~100ms更新一次）
+        if(Gimbal_Instance.Auto.Aim.RxTick != Gimbal_Instance.Calc.Yaw.LerpTick)
+        {
+            // 更新时间戳记录
+            Gimbal_Instance.Calc.Yaw.LerpTick = Gimbal_Instance.Auto.Aim.RxTick;
+            Gimbal_Instance.Calc.Pitch.LerpTick = Gimbal_Instance.Auto.Aim.RxTick;
+
+            if(Gimbal_Instance.Auto.Aim.IsOnline)
+            {
+                // 记录插值起点：当前 T_Angle（防止突变）
+                Gimbal_Instance.Calc.Yaw.LerpStart = Gimbal_Instance.Calc.Yaw.T_Angle;
+                Gimbal_Instance.Calc.Pitch.LerpStart = Gimbal_Instance.Calc.Pitch.T_Angle;
+
+                // 计算插值终点：IMU当前角度 + 自瞄偏移量（绝对角度）
+                Gimbal_Instance.Calc.Yaw.LerpTarget = Gimbal_Instance.Calc.Yaw.C_Angle
+                                                    + Gimbal_Instance.Auto.Aim.Yaw;
+                Gimbal_Instance.Calc.Pitch.LerpTarget = Gimbal_Instance.Calc.Pitch.C_Angle
+                                                      + Gimbal_Instance.Auto.Aim.Pitch;
+
+                // 记录起始时间
+                Gimbal_Instance.Calc.Yaw.LerpStartTick = HAL_GetTick();
+                Gimbal_Instance.Calc.Pitch.LerpStartTick = HAL_GetTick();
+            }
+            else
+            {
+                // 自瞄离线：终端插值，后续走手动分支
+                Gimbal_Instance.Calc.Yaw.LerpStart = Gimbal_Instance.Calc.Yaw.T_Angle;
+                Gimbal_Instance.Calc.Pitch.LerpStart = Gimbal_Instance.Calc.Pitch.T_Angle;
+                Gimbal_Instance.Calc.Yaw.LerpTarget = Gimbal_Instance.Calc.Yaw.T_Angle;
+                Gimbal_Instance.Calc.Pitch.LerpTarget = Gimbal_Instance.Calc.Pitch.T_Angle;
+            }
+        }
+
+        if(Gimbal_Instance.Auto.Aim.IsOnline)
+        {
+            // ===== Yaw：沿最短路径线性插值（循环角度 -180~180） =====
+            float yawDiff = (float)MyMath_angle_diff_shortest(
+                                Gimbal_Instance.Calc.Yaw.LerpTarget,
+                                Gimbal_Instance.Calc.Yaw.LerpStart);
+
+            uint32_t yawElapsed = HAL_GetTick() - Gimbal_Instance.Calc.Yaw.LerpStartTick;
+            float yawT = (float)yawElapsed / (float)Gimbal_Instance.Calc.Yaw.LerpDuration;
+            if(yawT > 1.0f) yawT = 1.0f;
+
+            Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.LerpStart + yawDiff * yawT;
+
+            // ===== Pitch：直接线性插值（非循环角度，受机械限位） =====
+            float pitchDiff = Gimbal_Instance.Calc.Pitch.LerpTarget - Gimbal_Instance.Calc.Pitch.LerpStart;
+
+            uint32_t pitchElapsed = HAL_GetTick() - Gimbal_Instance.Calc.Pitch.LerpStartTick;
+            float pitchT = (float)pitchElapsed / (float)Gimbal_Instance.Calc.Pitch.LerpDuration;
+            if(pitchT > 1.0f) pitchT = 1.0f;
+
+            Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.LerpStart + pitchDiff * pitchT;
+
+            // 手动微调叠加（自瞄过程中操作手可小幅修正瞄准方向）
+            Gimbal_Instance.Calc.Yaw.T_Angle -= ManualYaw;
+            Gimbal_Instance.Calc.Pitch.T_Angle -= ManualPitch;
+        }
+        else
+        {
+            // 自瞄离线：纯手动步进控制
+            Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
+            Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - ManualPitch;
+        }
+    }
+    else
+    {
+        // 手动模式（自瞄关闭）：纯手动步进控制
+        Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
+        Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - ManualPitch;
+    }
+    
+    //限幅角度-180 ~ 180 循环模式
+    Gimbal_Instance.Calc.Yaw.T_Angle = MyMath_Limit_Float(
+                                            Gimbal_Instance.Calc.Yaw.T_Angle,
+                                            -180.00f,180.00f,1);
+
+    //限幅俯仰角，非循环模式
+    Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
+                                            Gimbal_Instance.Calc.Pitch.T_Angle,
+                                            -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
+
+#endif
+
+#if((AUTOAIM_IFOPEN == AUTOAIM_OPEN) && (AUTOAIM_SMOOTH == AUTOAIM_SMOOTH_OFF))
 
     /* 更新云台Yaw Pitch角度的目标值 */
     float ManualYaw = MyMath_Map_Range_Float(Gimbal_Instance.CMD.Gimbal.Yaw,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_YAW,GIMBAL_MAX_ANGLE_STEP_DEG_YAW);
@@ -227,7 +348,7 @@ static void Gimbal_Update_Target(void)
     Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Pitch.T_Angle,
                                             -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
-
+                                            
 #endif
 
 #if(AUTOAIM_IFOPEN == AUTOAIM_NOPEN)
