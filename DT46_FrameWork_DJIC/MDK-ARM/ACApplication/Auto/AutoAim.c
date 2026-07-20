@@ -1,4 +1,5 @@
 #include "AutoAim.h"
+#include "CRC.h"
 
 #if((BOARD_MODE == BOARD_MODE_DUAL && BOARD_ID == GIMBAL_BOARD )|| BOARD_MODE == BOARD_MODE_SINGLE)
 
@@ -143,6 +144,13 @@ void AutoAim_ReceiveProcess(void)
         return;
     }
 
+    // CRC16 校验：防止误匹配 / 数据损坏
+    if(Verify_CRC16_Check_Sum((uint8_t *)rx_buf, sizeof(AutoAim_Rx_t)) == 0)
+    {
+        AutoAim_Instance.Rx_OnlineFlag = 0;
+        return;
+    }
+
     AutoAim_Instance.Rx = *rx_buf;
     AutoAim_Instance.Rx_OnlineFlag = 1;
     AutoAim_Instance.Rx_LastTick = HAL_GetTick();
@@ -173,6 +181,33 @@ void AutoAim_UpdateRx(void)
     }
 }
 
+/**
+ * @brief   帧头丢失重同步：在接收缓冲区内逐字节搜索帧头
+ * @note    当 DMA 收到的数据帧头不匹配（由于串口噪声或字节错位导致），
+ *          遍历整个 Rx_ParseBuf 寻找 AUTO_USART_HEADER。
+ *          找到后将后续数据整体前移，使帧头对齐到 buffer[0]。
+ *          如果从头到尾都找不到帧头，则保持原有数据不变，
+ *          后续的 ReceiveProcess 会因帧头错误而丢弃。
+ */
+static void AutoAim_ByteSearchResync(void)
+{
+    uint8_t *p = (uint8_t *)&AutoAim_Instance.Rx_ParseBuf;
+    uint32_t i;
+
+    for (i = 1; i < sizeof(AutoAim_Rx_t); i++)
+    {
+        if (p[i] == AUTO_USART_HEADER)
+        {
+            // 从偏移 i 处开始，将剩余数据前移对齐
+            memmove(p, &p[i], sizeof(AutoAim_Rx_t) - i);
+            // 末尾清零（清除残留数据）
+            memset(&p[sizeof(AutoAim_Rx_t) - i], 0, i);
+            break;
+        }
+    }
+    // 未找到帧头 → 不操作，后续 ReceiveProcess 会检测到帧头错误
+}
+
 //** ------------------------------------------------------------ **//
 //** ======================== 中断接收函数 ======================= **//
 //** ------------------------------------------------------------ **//
@@ -187,11 +222,17 @@ void AutoAim_UART_IRQHandler(void)
         // 1. 把当前DMA写完的整帧拷贝到解析缓存（DMA此时在另一个缓冲继续存数据，不会被覆写）
         memcpy(&AutoAim_Instance.Rx_ParseBuf, &AutoAim_Instance.Rx_Buf[AutoAim_Instance.Rx_ActiveBuf], sizeof(AutoAim_Rx_t));
 
-        // 2. 切换DMA目标缓冲，硬件自动切换，不再手动启停DMA
+        // 2. 切换DMA目标缓冲，硬件自动循环切换
         AutoAim_Instance.Rx_ActiveBuf ^= 1U;
         HAL_UART_Receive_DMA(&AUTO_USART_HANDLE, (uint8_t *)&AutoAim_Instance.Rx_Buf[AutoAim_Instance.Rx_ActiveBuf], sizeof(AutoAim_Rx_t));
 
-        // 3. 解析锁定好的数据
+        // 3. 若帧头不匹配，尝试逐字节搜索重同步（解决失步后无法恢复的问题）
+        if (AutoAim_Instance.Rx_ParseBuf.Frame_head != AUTO_USART_HEADER)
+        {
+            AutoAim_ByteSearchResync();
+        }
+
+        // 4. 解析数据（含帧头 + CRC 双重校验）
         AutoAim_ReceiveProcess();
     }
 }
