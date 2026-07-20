@@ -114,7 +114,7 @@
 //自瞄插帧
 #define AUTOAIM_SMOOTH_OFF       0
 #define AUTOAIM_SMOOTH_ON        1
-#define AUTOAIM_SMOOTH           AUTOAIM_SMOOTH_ON
+#define AUTOAIM_SMOOTH           AUTOAIM_SMOOTH_OFF
 
 //** #################################################################################################### **//
 //** ========================================= 枚举、结构体 ============================================= **//

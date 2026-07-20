@@ -6,7 +6,7 @@
 
 
 /* 自瞄接收超时时间 (ms)：超过此时间未收到有效帧视为离线 */
-#define AUTOAIM_RX_TIMEOUT_MS   1500
+#define AUTOAIM_RX_TIMEOUT_MS   50
 
 /* 自瞄结构体自己对齐可以确定结构体的大小 */
 #pragma pack(push, 1)   // 1字节对齐（通信必备）

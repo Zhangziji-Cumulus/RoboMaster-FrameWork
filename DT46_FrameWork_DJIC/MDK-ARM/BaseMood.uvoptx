@@ -158,37 +158,32 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Yaw_FF</ItemText>
+          <ItemText>AutoAim_Ctrl</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Pitch_In</ItemText>
+          <ItemText>AutoAim_Instance</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Gimbal_Pitch_Ex</ItemText>
+          <ItemText>Gimbal_Pitch_FF</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>SuperPower</ItemText>
+          <ItemText>Gimbal_Yaw_FF</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Referee_DrawUI</ItemText>
+          <ItemText>Gimbal_Pitch_In</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>s_ref_data</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>g_ref_ins</ItemText>
+          <ItemText>Gimbal_Pitch_Ex</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -1933,7 +1928,7 @@
 
   <Group>
     <GroupName>ABModule/PlayerUI</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -2557,7 +2552,7 @@
 
   <Group>
     <GroupName>ACApplication/Gimbal</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
