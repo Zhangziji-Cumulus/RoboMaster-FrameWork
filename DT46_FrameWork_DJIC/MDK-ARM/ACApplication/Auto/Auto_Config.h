@@ -3,7 +3,7 @@
 
 /* 系统相关 */
 
-#define AUTO_TASK_TIME_MS       100       //自动任务系统循环时间 
+#define AUTO_TASK_TIME_MS       10       //自动任务系统循环时间 
 
 #define AUTO_MATCH_RESET_MS     500      //自动任务系统匹配重置时间
 //串口句柄

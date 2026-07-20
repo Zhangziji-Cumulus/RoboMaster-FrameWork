@@ -158,8 +158,8 @@ void AutoAim_UpdateRx(void)
     
     if(AutoAim_Instance.Rx_OnlineFlag)
     {
-        AutoAim_Ctrl.Yaw = (AutoAim_Instance.Rx.Yaw * 0.01);
-        AutoAim_Ctrl.Pitch = (AutoAim_Instance.Rx.Pitch * 0.01);
+        AutoAim_Ctrl.Yaw = (AutoAim_Instance.Rx.Yaw * 0.1);
+        AutoAim_Ctrl.Pitch = (AutoAim_Instance.Rx.Pitch * 0.1);
         AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
         AutoAim_Ctrl.IsOnline = 1;
         AutoAim_Ctrl.RxTick = AutoAim_Instance.Rx_LastTick;

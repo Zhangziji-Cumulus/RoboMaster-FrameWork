@@ -21,10 +21,10 @@ __attribute__((used)) void AutoAimTask(void *argument)
   for(;;)
   {	
     //自瞄更新下位机发送给上位机数据
-    AutoAim_UpdateTx();
+    //AutoAim_UpdateTx();
 
     //自瞄发送数据函数
-    AutoAim_SendData();
+    //AutoAim_SendData();
 
     //更新自瞄接受数据
     AutoAim_UpdateRx();

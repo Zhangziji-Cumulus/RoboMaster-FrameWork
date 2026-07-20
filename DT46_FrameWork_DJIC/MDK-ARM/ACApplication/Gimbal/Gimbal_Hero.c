@@ -50,6 +50,16 @@ static void Gimbal_PitchStable_Calc(void);
 
  */
  
+// //YAW轴PID
+// PID_FF_Init(&Gimbal_Yaw_FF,4000.0f,0.5f,40000.0f,22000.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+// PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
+// PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+
+// //PITCH轴PID
+// PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
+// PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2600,2600,-10.0f, 10.0f);
+// PID_Init(&Gimbal_Pitch_Ex,900.0f,0.1f,1500.0f,-2400,2400,-1000.0f, 1000.0f);
+
 //初始化函数
 void Gimbal_Init(void)
 {
@@ -67,7 +77,7 @@ void Gimbal_Init(void)
     //PITCH轴PID
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2600,2600,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_Ex,900.0f,0.1f,1500.0f,-2400,2400,-1000.0f, 1000.0f);
+	PID_Init(&Gimbal_Pitch_Ex,1500.0f,0.1f,20000.0f,-2400,2400,-1000.0f, 1000.0f);
 
     //自瞄线性插值状态初始化
     Gimbal_Instance.Calc.Yaw.LerpDuration = AUTO_TASK_TIME_MS;   //默认100ms
@@ -237,9 +247,9 @@ static void Gimbal_Update_Target(void)
 
                 // 计算插值终点：IMU当前角度 + 自瞄偏移量（绝对角度）
                 Gimbal_Instance.Calc.Yaw.LerpTarget = Gimbal_Instance.Calc.Yaw.C_Angle
-                                                    + Gimbal_Instance.Auto.Aim.Yaw;
+                                                    - Gimbal_Instance.Auto.Aim.Yaw;
                 Gimbal_Instance.Calc.Pitch.LerpTarget = Gimbal_Instance.Calc.Pitch.C_Angle
-                                                      + Gimbal_Instance.Auto.Aim.Pitch;
+                                                      - Gimbal_Instance.Auto.Aim.Pitch;
 
                 // 记录起始时间
                 Gimbal_Instance.Calc.Yaw.LerpStartTick = HAL_GetTick();
