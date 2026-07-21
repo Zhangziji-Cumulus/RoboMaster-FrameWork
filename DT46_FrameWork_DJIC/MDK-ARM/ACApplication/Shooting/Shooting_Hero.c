@@ -16,14 +16,9 @@ Shooting_State_Machine_t Shooting_State_Machine;
 
 PID_HandleTypeDef PID_SFri_STOP;
 
-PID_HandleTypeDef PID_SFri_UL_In;
-PID_HandleTypeDef PID_SFri_UL_Ex;
-
-PID_HandleTypeDef PID_SFri_UR_In;
-PID_HandleTypeDef PID_SFri_UR_Ex;
-
-PID_HandleTypeDef PID_SFri_DM_In;
-PID_HandleTypeDef PID_SFri_DM_Ex;
+PID_Double_t      PID_SFri_UL;        // 双环：外环速度 + 内环电流
+PID_Double_t      PID_SFri_UR;
+PID_Double_t      PID_SFri_DM;
 
 //** #################################################################################################### **//
 //** ========================================= 对内函数声明 ============================================== **//
@@ -49,15 +44,36 @@ void Shooting_Init(void)
     //3508电机急停
     PID_Init(&PID_SFri_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
-	//摩擦轮PID
-	PID_Init(&PID_SFri_UL_In,1.0f,0.0f,0.2f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&PID_SFri_UL_Ex,10.0f,0.001f,30.0f,-10000,10000,-500.0f, 500.0f);
+	//摩擦轮PID（3个摩擦轮，线性双环）
+	PID_Double_Init(&PID_SFri_UL,
+	    1.0f, 0.0f, 0.2f,              // kp/ki/kd 内环(电流)
+	    10.0f, 0.001f, 30.0f,           // kp/ki/kd 外环(速度)
+	    -DJI_M3508_R, DJI_M3508_R,      // 内环输出限幅
+	    -10.0f, 10.0f,                   // 内环积分限幅
+	    -10000, 10000,                   // 外环输出限幅
+	    -500.0f, 500.0f,                 // 外环积分限幅
+	    FRICTION_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 	
-	PID_Init(&PID_SFri_UR_In,1.0f,0.0f,0.2f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&PID_SFri_UR_Ex,10.0f,0.001f,30.0f,-10000,10000,-500.0f, 500.0f);
+	PID_Double_Init(&PID_SFri_UR,
+	    1.0f, 0.0f, 0.2f,
+	    10.0f, 0.001f, 30.0f,
+	    -DJI_M3508_R, DJI_M3508_R,
+	    -10.0f, 10.0f,
+	    -10000, 10000,
+	    -500.0f, 500.0f,
+	    FRICTION_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 	
-	PID_Init(&PID_SFri_DM_In,1.0f,0.0f,0.2f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&PID_SFri_DM_Ex,10.0f,0.001f,30.0f,-10000,10000,-500.0f, 500.0f);
+	PID_Double_Init(&PID_SFri_DM,
+	    1.0f, 0.0f, 0.2f,
+	    10.0f, 0.001f, 30.0f,
+	    -DJI_M3508_R, DJI_M3508_R,
+	    -10.0f, 10.0f,
+	    -10000, 10000,
+	    -500.0f, 500.0f,
+	    FRICTION_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 	
     Shooting_Instance.Calc.PushRod.T_Angle = PUSHROD_POSITION_L_DEG;
     Shooting_Instance.Calc.PushRod.CtlFlag = 1;
@@ -126,28 +142,22 @@ void Shooting_RefreshTarget(void)
 void Shooting_CtrlCalc(void)
 {
     Shooting_Instance.Calc.Friction.UL.Ctrl_Vel = 
-                                    PID_Double_Calculate(&PID_SFri_UL_In,
-                                                         &PID_SFri_UL_Ex,
-                                                         Shooting_Instance.Calc.Friction.UL.T_rpm,
-                                                         Shooting_Instance.DJI_Motordata.UL.current_ma,
-                                                         Shooting_Instance.DJI_Motordata.UL.speed_rpm,
-                                                         FRICTION_PID_THRESHOLD);
+                                    PID_Double_Calc(&PID_SFri_UL,
+                                                    Shooting_Instance.Calc.Friction.UL.T_rpm,
+                                                    Shooting_Instance.DJI_Motordata.UL.current_ma,
+                                                    Shooting_Instance.DJI_Motordata.UL.speed_rpm);
 
     Shooting_Instance.Calc.Friction.UR.Ctrl_Vel = 
-                                    PID_Double_Calculate(&PID_SFri_UR_In,
-                                                         &PID_SFri_UR_Ex,
-                                                         Shooting_Instance.Calc.Friction.UR.T_rpm,
-                                                         Shooting_Instance.DJI_Motordata.UR.current_ma,
-                                                         Shooting_Instance.DJI_Motordata.UR.speed_rpm,
-                                                         FRICTION_PID_THRESHOLD);
+                                    PID_Double_Calc(&PID_SFri_UR,
+                                                    Shooting_Instance.Calc.Friction.UR.T_rpm,
+                                                    Shooting_Instance.DJI_Motordata.UR.current_ma,
+                                                    Shooting_Instance.DJI_Motordata.UR.speed_rpm);
 
     Shooting_Instance.Calc.Friction.DM.Ctrl_Vel = 
-                                    PID_Double_Calculate(&PID_SFri_DM_In,
-                                                         &PID_SFri_DM_Ex,
-                                                         Shooting_Instance.Calc.Friction.DM.T_rpm,
-                                                         Shooting_Instance.DJI_Motordata.DM.current_ma,
-                                                         Shooting_Instance.DJI_Motordata.DM.speed_rpm,
-                                                         FRICTION_PID_THRESHOLD);
+                                    PID_Double_Calc(&PID_SFri_DM,
+                                                    Shooting_Instance.Calc.Friction.DM.T_rpm,
+                                                    Shooting_Instance.DJI_Motordata.DM.current_ma,
+                                                    Shooting_Instance.DJI_Motordata.DM.speed_rpm);
 }
 
 //发送控制指令
@@ -582,8 +592,7 @@ Shooting_State_Machine_t Shooting_State_Machine;
 
 PID_HandleTypeDef Dial_Motor_STOP;
 
-PID_HandleTypeDef Dial_In;
-PID_HandleTypeDef Dial_Ex;
+PID_Double_t      Dial;               // 双环：外环速度 + 内环电流
 
 //** #################################################################################################### **//
 //** ========================================= 对内函数声明 ============================================== **//
@@ -606,9 +615,16 @@ void Shooting_Init(void)
     //初始化拨盘状态
     PID_Init(&Dial_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 
-	//拨盘PID
-	PID_Init(&Dial_In,0.8f,0.0f,0.15f,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-    PID_Init(&Dial_Ex,80.0f,0.003f,100.0f,-20000,20000,-1000.0f, 1000.0f);
+	//拨盘PID（线性双环）
+	PID_Double_Init(&Dial,
+	    0.8f, 0.0f, 0.15f,             // kp/ki/kd 内环(电流)
+	    80.0f, 0.003f, 100.0f,          // kp/ki/kd 外环(速度)
+	    -DJI_M3508_R, DJI_M3508_R,      // 内环输出限幅
+	    -10.0f, 10.0f,                   // 内环积分限幅
+	    -20000, 20000,                   // 外环输出限幅
+	    -1000.0f, 1000.0f,               // 外环积分限幅
+	    DIAL_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 
 }          
 
@@ -648,12 +664,10 @@ void Shooting_CtrlCalc(void)
 {
     if(Shooting_State_Machine.Load == LOAD_START)
     {
-        Shooting_Instance.Calc.Dial.Ctrl_Vel = PID_Double_Calculate(&Dial_In,
-                                                                    &Dial_Ex,
-                                                                    Shooting_Instance.Calc.Dial.T_rpm,
-                                                                    Shooting_Instance.DJI_Motordata.DIAL.current_ma,
-                                                                    Shooting_Instance.DJI_Motordata.DIAL.speed_rpm,
-                                                                    DIAL_PID_THRESHOLD);
+        Shooting_Instance.Calc.Dial.Ctrl_Vel = PID_Double_Calc(&Dial,
+                                                                Shooting_Instance.Calc.Dial.T_rpm,
+                                                                Shooting_Instance.DJI_Motordata.DIAL.current_ma,
+                                                                Shooting_Instance.DJI_Motordata.DIAL.speed_rpm);
     }
     else
     {

@@ -9,14 +9,10 @@ static Chassis_Instance_t Chassis_Instance = {0};
 
 PID_HandleTypeDef Chassis_Motor_STOP;
 
-PID_HandleTypeDef Chassis_MotorFL_In;
-PID_HandleTypeDef Chassis_MotorFL_Ex;
-PID_HandleTypeDef Chassis_MotorFR_In;
-PID_HandleTypeDef Chassis_MotorFR_Ex;
-PID_HandleTypeDef Chassis_MotorBL_In;
-PID_HandleTypeDef Chassis_MotorBL_Ex;
-PID_HandleTypeDef Chassis_MotorBR_In;
-PID_HandleTypeDef Chassis_MotorBR_Ex;
+PID_Double_t      Chassis_MotorFL;     // 双环：外环速度 + 内环电流
+PID_Double_t      Chassis_MotorFR;
+PID_Double_t      Chassis_MotorBL;
+PID_Double_t      Chassis_MotorBR;
 
 PID_HandleTypeDef Chassis_Follow_PID;
 
@@ -42,18 +38,46 @@ void Chassis_Init(void)
     //3508电机急停
     PID_Init(&Chassis_Motor_STOP,3.0f,0.0f,0.0f,-DJI_M3508_R,DJI_M3508_R,-5.0f, 5.0f);
 	
-	//地盘PID初始化
-	PID_Init(&Chassis_MotorFL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
-	PID_Init(&Chassis_MotorFL_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
+	//地盘PID初始化（4个轮子，外环速度 + 内环电流，线性模式）
+	PID_Double_Init(&Chassis_MotorFL,
+	    1.2f, 0.05f, 0.0f,             // kp/ki/kd 内环(电流)
+	    30.0f, 0.1f, 0.0f,              // kp/ki/kd 外环(速度)
+	    -DJI_M3508_R, DJI_M3508_R,      // 内环输出限幅
+	    -8000.0f, 8000.0f,               // 内环积分限幅
+	    -5000, 5000,                     // 外环输出限幅
+	    -2500.0f, 2500.0f,               // 外环积分限幅
+	    CHASSIS_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);          // 线性模式
 	
-	PID_Init(&Chassis_MotorFR_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
-	PID_Init(&Chassis_MotorFR_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
+	PID_Double_Init(&Chassis_MotorFR,
+	    1.2f, 0.05f, 0.0f,
+	    30.0f, 0.1f, 0.0f,
+	    -DJI_M3508_R, DJI_M3508_R,
+	    -8000.0f, 8000.0f,
+	    -5000, 5000,
+	    -2500.0f, 2500.0f,
+	    CHASSIS_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 	
-	PID_Init(&Chassis_MotorBL_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
-	PID_Init(&Chassis_MotorBL_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
+	PID_Double_Init(&Chassis_MotorBL,
+	    1.2f, 0.05f, 0.0f,
+	    30.0f, 0.1f, 0.0f,
+	    -DJI_M3508_R, DJI_M3508_R,
+	    -8000.0f, 8000.0f,
+	    -5000, 5000,
+	    -2500.0f, 2500.0f,
+	    CHASSIS_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 	
-	PID_Init(&Chassis_MotorBR_In,1.2f,0.05f,0.0f,-DJI_M3508_R,DJI_M3508_R,-8000.0f,8000.0f);
-	PID_Init(&Chassis_MotorBR_Ex,30.0f,0.1f,0.0f,-5000,5000,-2500.0f,2500.0f);
+	PID_Double_Init(&Chassis_MotorBR,
+	    1.2f, 0.05f, 0.0f,
+	    30.0f, 0.1f, 0.0f,
+	    -DJI_M3508_R, DJI_M3508_R,
+	    -8000.0f, 8000.0f,
+	    -5000, 5000,
+	    -2500.0f, 2500.0f,
+	    CHASSIS_PID_THRESHOLD,
+	    PID_OUTER_MODE_LINEAR);
 	
 	PID_Init(&Chassis_Follow_PID,0.05f,0.0,0.15f,-CHASSIS_MAX_SPEED_FOLLOWING,CHASSIS_MAX_SPEED_FOLLOWING,-0.75f,0.75f);
 
@@ -123,33 +147,25 @@ void Chassis_RefreshTarget(void)
 void Chassis_CtrlCalc(void)
 {
     
-    Chassis_Instance.Calc.W_FL.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorFL_In,
-                                                               &Chassis_MotorFL_Ex, 
-                                                               Chassis_Instance.Calc.W_FL.T_rpm,
-                                                               Chassis_Instance.MotorData.W_FL.current_ma,
-                                                               Chassis_Instance.MotorData.W_FL.speed_rpm,
-                                                               CHASSIS_PID_THRESHOLD);
+    Chassis_Instance.Calc.W_FL.Ctrl_Vel = PID_Double_Calc(&Chassis_MotorFL,
+                                                           Chassis_Instance.Calc.W_FL.T_rpm,
+                                                           Chassis_Instance.MotorData.W_FL.current_ma,
+                                                           Chassis_Instance.MotorData.W_FL.speed_rpm);
 
-    Chassis_Instance.Calc.W_FR.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorFR_In,
-                                                               &Chassis_MotorFR_Ex, 
-                                                               Chassis_Instance.Calc.W_FR.T_rpm,
-                                                               Chassis_Instance.MotorData.W_FR.current_ma,
-                                                               Chassis_Instance.MotorData.W_FR.speed_rpm,
-                                                               CHASSIS_PID_THRESHOLD);
+    Chassis_Instance.Calc.W_FR.Ctrl_Vel = PID_Double_Calc(&Chassis_MotorFR,
+                                                           Chassis_Instance.Calc.W_FR.T_rpm,
+                                                           Chassis_Instance.MotorData.W_FR.current_ma,
+                                                           Chassis_Instance.MotorData.W_FR.speed_rpm);
 
-    Chassis_Instance.Calc.W_BL.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorBL_In,
-                                                               &Chassis_MotorBL_Ex, 
-                                                               Chassis_Instance.Calc.W_BL.T_rpm,
-                                                               Chassis_Instance.MotorData.W_BL.current_ma,
-                                                               Chassis_Instance.MotorData.W_BL.speed_rpm,
-                                                               CHASSIS_PID_THRESHOLD);
+    Chassis_Instance.Calc.W_BL.Ctrl_Vel = PID_Double_Calc(&Chassis_MotorBL,
+                                                           Chassis_Instance.Calc.W_BL.T_rpm,
+                                                           Chassis_Instance.MotorData.W_BL.current_ma,
+                                                           Chassis_Instance.MotorData.W_BL.speed_rpm);
 
-    Chassis_Instance.Calc.W_BR.Ctrl_Vel = PID_Double_Calculate(&Chassis_MotorBR_In,
-                                                               &Chassis_MotorBR_Ex, 
-                                                               Chassis_Instance.Calc.W_BR.T_rpm,
-                                                               Chassis_Instance.MotorData.W_BR.current_ma,
-                                                               Chassis_Instance.MotorData.W_BR.speed_rpm,
-                                                               CHASSIS_PID_THRESHOLD);
+    Chassis_Instance.Calc.W_BR.Ctrl_Vel = PID_Double_Calc(&Chassis_MotorBR,
+                                                           Chassis_Instance.Calc.W_BR.T_rpm,
+                                                           Chassis_Instance.MotorData.W_BR.current_ma,
+                                                           Chassis_Instance.MotorData.W_BR.speed_rpm);
 }
 
 //发送控制指令

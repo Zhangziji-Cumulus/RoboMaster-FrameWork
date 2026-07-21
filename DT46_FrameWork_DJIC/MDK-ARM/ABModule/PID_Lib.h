@@ -232,31 +232,37 @@ float PID_FF_Calculate_CycleAngle(PID_FF_HandleTypeDef *pid,
 //** ================================================================================ **//
 
 /**
- * @brief  初始化双环PID复合结构体
- * @param  pid       双环PID结构体指针
- * @param  kp_in     内环比例系数
- * @param  ki_in     内环积分系数
- * @param  kd_in     内环微分系数
- * @param  kp_ex     外环比例系数
- * @param  ki_ex     外环积分系数
- * @param  kd_ex     外环微分系数
- * @param  out_min   输出下限
- * @param  out_max   输出上限
- * @param  int_min   积分累加值下限
- * @param  int_max   积分累加值上限
- * @param  threshold 误差阈值，小于该值时内环停止跟随
- * @param  outer_mode 外环模式（线性/角度）
+ * @brief  初始化双环PID复合结构体（内环和外环各自独立限幅）
+ * @param  pid           双环PID结构体指针
+ * @param  kp_in         内环比例系数
+ * @param  ki_in         内环积分系数
+ * @param  kd_in         内环微分系数
+ * @param  kp_ex         外环比例系数
+ * @param  ki_ex         外环积分系数
+ * @param  kd_ex         外环微分系数
+ * @param  out_min_in    内环输出下限
+ * @param  out_max_in    内环输出上限
+ * @param  int_min_in    内环积分累加值下限
+ * @param  int_max_in    内环积分累加值上限
+ * @param  out_min_ex    外环输出下限
+ * @param  out_max_ex    外环输出上限
+ * @param  int_min_ex    外环积分累加值下限
+ * @param  int_max_ex    外环积分累加值上限
+ * @param  threshold     误差阈值，小于该值时内环停止跟随
+ * @param  outer_mode    外环模式（线性/角度）
  */
 void PID_Double_Init(PID_Double_t *pid,
                      float kp_in, float ki_in, float kd_in,
                      float kp_ex, float ki_ex, float kd_ex,
-                     float out_min, float out_max,
-                     float int_min, float int_max,
+                     float out_min_in, float out_max_in,
+                     float int_min_in, float int_max_in,
+                     float out_min_ex, float out_max_ex,
+                     float int_min_ex, float int_max_ex,
                      float threshold,
                      PID_OuterMode_t outer_mode);
 
 /**
- * @brief  初始化三环PID复合结构体
+ * @brief  初始化三环PID复合结构体（各环独立限幅）
  * @param  pid             三环PID结构体指针
  * @param  kp_cur          电流环(最内层)比例系数
  * @param  ki_cur          电流环(最内层)积分系数
@@ -267,10 +273,18 @@ void PID_Double_Init(PID_Double_t *pid,
  * @param  kp_ang          角度环(最外层)比例系数
  * @param  ki_ang          角度环(最外层)积分系数
  * @param  kd_ang          角度环(最外层)微分系数
- * @param  out_min         输出下限
- * @param  out_max         输出上限
- * @param  int_min         积分累加值下限
- * @param  int_max         积分累加值上限
+ * @param  out_min_cur     电流环输出下限
+ * @param  out_max_cur     电流环输出上限
+ * @param  int_min_cur     电流环积分累加值下限
+ * @param  int_max_cur     电流环积分累加值上限
+ * @param  out_min_spd     速度环输出下限
+ * @param  out_max_spd     速度环输出上限
+ * @param  int_min_spd     速度环积分累加值下限
+ * @param  int_max_spd     速度环积分累加值上限
+ * @param  out_min_ang     角度环输出下限
+ * @param  out_max_ang     角度环输出上限
+ * @param  int_min_ang     角度环积分累加值下限
+ * @param  int_max_ang     角度环积分累加值上限
  * @param  max_angle_error 角度环误差阈值
  * @param  outer_mode      最外层模式（线性/角度）
  */
@@ -278,8 +292,12 @@ void PID_Triple_Init(PID_Triple_t *pid,
                      float kp_cur, float ki_cur, float kd_cur,
                      float kp_spd, float ki_spd, float kd_spd,
                      float kp_ang, float ki_ang, float kd_ang,
-                     float out_min, float out_max,
-                     float int_min, float int_max,
+                     float out_min_cur, float out_max_cur,
+                     float int_min_cur, float int_max_cur,
+                     float out_min_spd, float out_max_spd,
+                     float int_min_spd, float int_max_spd,
+                     float out_min_ang, float out_max_ang,
+                     float int_min_ang, float int_max_ang,
                      float max_angle_error,
                      PID_OuterMode_t outer_mode);
 

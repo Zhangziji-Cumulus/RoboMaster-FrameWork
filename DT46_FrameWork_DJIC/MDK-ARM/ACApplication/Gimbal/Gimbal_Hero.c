@@ -15,12 +15,10 @@ Gimbal_Instance_t Gimbal_Instance;
 PID_HandleTypeDef Gimbal_Motor_STOP;
 
 PID_FF_HandleTypeDef Gimbal_Yaw_FF;
-PID_HandleTypeDef Gimbal_Yaw_In;
-PID_HandleTypeDef Gimbal_Yaw_Ex;
+PID_Double_t      Gimbal_Yaw;          // 双环：外环角度(ANGLE) + 内环速度
 
 PID_FF_HandleTypeDef Gimbal_Pitch_FF;
-PID_HandleTypeDef Gimbal_Pitch_In;
-PID_HandleTypeDef Gimbal_Pitch_Ex;
+PID_Double_t      Gimbal_Pitch;        // 双环：外环角度(ANGLE) + 内环速度
 
 //** #################################################################################################### **//
 //** ========================================= 对内函数声明 ============================================== **//
@@ -71,13 +69,27 @@ void Gimbal_Init(void)
 
     //YAW轴PID
 	PID_FF_Init(&Gimbal_Yaw_FF,4000.0f,0.5f,40000.0f,22000.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
-	PID_Init(&Gimbal_Yaw_In,5.0f,0.0f,0.0f,-DJI_GM6020_R,DJI_GM6020_R,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Yaw_Ex,200.0f,0.0f,0.0f,-1000,1000,-10.0f, 10.0f);
+	PID_Double_Init(&Gimbal_Yaw,
+	    5.0f, 0.0f, 0.0f,              // kp/ki/kd 内环(速度)
+	    200.0f, 0.0f, 0.0f,            // kp/ki/kd 外环(角度)
+	    -DJI_GM6020_R, DJI_GM6020_R,   // 内环输出限幅
+	    -10.0f, 10.0f,                  // 内环积分限幅
+	    -1000, 1000,                    // 外环输出限幅
+	    -10.0f, 10.0f,                  // 外环积分限幅
+	    GIMBAL_PID_THRESHOLD,
+	    PID_OUTER_MODE_ANGLE);          // 角度模式
    
     //PITCH轴PID
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_In,1.1f,0.0f,0.0f,-2600,2600,-10.0f, 10.0f);
-	PID_Init(&Gimbal_Pitch_Ex,1500.0f,0.1f,20000.0f,-2400,2400,-1000.0f, 1000.0f);
+	PID_Double_Init(&Gimbal_Pitch,
+	    1.1f, 0.0f, 0.0f,              // kp/ki/kd 内环(速度)
+	    1500.0f, 0.1f, 20000.0f,       // kp/ki/kd 外环(角度)
+	    -2600, 2600,                    // 内环输出限幅
+	    -10.0f, 10.0f,                  // 内环积分限幅
+	    -2400, 2400,                    // 外环输出限幅
+	    -1000.0f, 1000.0f,              // 外环积分限幅
+	    GIMBAL_PID_THRESHOLD,
+	    PID_OUTER_MODE_ANGLE);          // 角度模式
 
     //自瞄线性插值状态初始化
     Gimbal_Instance.Calc.Yaw.LerpDuration = AUTO_TASK_TIME_MS;   //默认100ms
@@ -340,8 +352,16 @@ static void Gimbal_Update_Target(void)
 
     if(Gimbal_Instance.CMD.Auto.Aim == AUTOAIM_ON)
     {
-        Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - FusionYaw;
-        Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - FusionPitch;
+        if(Gimbal_Instance.Auto.Aim.IsOnline)
+        {
+            Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - FusionYaw;
+            Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - FusionPitch;
+        }
+        else
+        {
+            Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
+            Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - ManualPitch;
+        }
     }
     else
     {
@@ -358,7 +378,7 @@ static void Gimbal_Update_Target(void)
     Gimbal_Instance.Calc.Pitch.T_Angle = MyMath_Limit_Float(
                                             Gimbal_Instance.Calc.Pitch.T_Angle,
                                             -GIMBAL_PITCH_MAX_DEP,GIMBAL_PITCH_MAX_ELE,0);
-                                            
+
 #endif
 
 #if(AUTOAIM_IFOPEN == AUTOAIM_NOPEN)
@@ -404,13 +424,11 @@ static void Gimbal_YawStable_Calc(void)
 
     #if(PID_CTRL_MODE_YAW == PID_CTRL_MODE_DOUBLE_LOOP)
 
-    Gimbal_Instance.Calc.Yaw.Ctrl_Vel = PID_Double_CycleAngle(
-                                            &Gimbal_Yaw_In,
-                                            &Gimbal_Yaw_Ex,
+    Gimbal_Instance.Calc.Yaw.Ctrl_Vel = PID_Double_Calc(
+                                            &Gimbal_Yaw,
                                             Gimbal_Instance.Calc.Yaw.T_Angle,
                                             Gimbal_Instance.MotorData.Yaw.speed_rpm,
-                                            Gimbal_Instance.Calc.Yaw.C_Angle,
-                                            GIMBAL_PID_THRESHOLD);
+                                            Gimbal_Instance.Calc.Yaw.C_Angle);
 
     #endif
 
@@ -429,13 +447,11 @@ static void Gimbal_PitchStable_Calc(void)
 
     #if(PID_CTRL_MODE_PITCH == PID_CTRL_MODE_DOUBLE_LOOP)
 
-    Gimbal_Instance.Calc.Pitch.Ctrl_Vel = PID_Double_CycleAngle(
-                                            &Gimbal_Pitch_In,
-                                            &Gimbal_Pitch_Ex,
+    Gimbal_Instance.Calc.Pitch.Ctrl_Vel = PID_Double_Calc(
+                                            &Gimbal_Pitch,
                                             Gimbal_Instance.Calc.Pitch.T_Angle,
                                             Gimbal_Instance.MotorData.Pitch.speed_rpm,
-                                            Gimbal_Instance.Calc.Pitch.C_Angle,
-                                            GIMBAL_PID_THRESHOLD);
+                                            Gimbal_Instance.Calc.Pitch.C_Angle);
     #endif
 
 }
