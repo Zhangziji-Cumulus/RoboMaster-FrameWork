@@ -169,6 +169,8 @@ typedef struct
 
 }Shooting_State_Machine_t;
 
+const Load_State_e* get_Loadflag_point(void);
+
 #endif
 
 #endif

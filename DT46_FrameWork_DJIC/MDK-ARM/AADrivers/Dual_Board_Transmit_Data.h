@@ -1,4 +1,6 @@
 #include "CMDCenter.h"
+#include "A_CommonSystem.h"
+#include "INS_task.h"
 
 //** ================================================================================ **//
 //** ============================= 定义双板通信数据结构体 ============================ **//
@@ -12,6 +14,7 @@
 typedef struct{
 
     CMD_t CMD;
+    fp32 INS_angle_Gimbal[3];   // [0]=Yaw, [1]=Roll, [2]=Pitch
 
     uint8_t LoadStartFlag;
 
@@ -38,6 +41,7 @@ typedef struct{
 typedef struct{
 
     CMD_t CMD;
+    fp32 INS_angle_Gimbal[3];   // [0]=Yaw, [1]=Roll, [2]=Pitch
 
     uint8_t LoadStartFlag;
 

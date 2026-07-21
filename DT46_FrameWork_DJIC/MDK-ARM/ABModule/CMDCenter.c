@@ -198,7 +198,6 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
       //图传链路控制
       else if(CMD.ctrl == KEYBOARD_MODE)
       {
-
         //键盘控制
         {
           //地盘移动
@@ -220,11 +219,11 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
             //左右
             if(VT_Ctr->keyboard.bit.a)
             {
-              CMD.Chassis.LR = CMD_CTRL_RANGE;
+              CMD.Chassis.LR = -CMD_CTRL_RANGE;
             }
             else if(VT_Ctr->keyboard.bit.d)
             {
-              CMD.Chassis.LR = -CMD_CTRL_RANGE;
+              CMD.Chassis.LR = CMD_CTRL_RANGE;
             }
             else
             {
@@ -236,7 +235,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
           {
             //鼠标传入的数据太小了放大一点
             int16_t mouse_x = MyMath_Scale_Int16(VT_Ctr->mouse_x,1000.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
-            int16_t mouse_y = MyMath_Scale_Int16(VT_Ctr->mouse_y,1000.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
+            int16_t mouse_y = MyMath_Scale_Int16(VT_Ctr->mouse_y,1500.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
 
             CMD.Gimbal.Yaw = MyMath_Map_Range_Int16(mouse_x,
                                                     VTX_MOUSE_MIN,
@@ -244,7 +243,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
                                                    -CMD_CTRL_RANGE,
                                                     CMD_CTRL_RANGE);
 
-            CMD.Gimbal.Pitch = MyMath_Map_Range_Int16(mouse_y,
+            CMD.Gimbal.Pitch = MyMath_Map_Range_Int16(-mouse_y,
                                                       VTX_MOUSE_MIN,
                                                       VTX_MOUSE_MAX,
                                                      -CMD_CTRL_RANGE,
@@ -314,6 +313,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
 
           //开火
           CMD.Shooting.Fire = KeyDebounce_Process(&Key_Fire,VT_Ctr->mouse_left);
+
           //自瞄开启
           if(KeyLongPress_Process(&Key_AutoAim,VT_Ctr->mouse_right,1,200) == KEY_LONG_PRESS_HOLD)
           {
@@ -329,12 +329,12 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
 
         //RC遥控器控制
         if(!VT_Ctr->keyboard.value
-            && VT_Ctr->mouse_x != 0
-            && VT_Ctr->mouse_y != 0
-            && VT_Ctr->mouse_z != 0
-            && VT_Ctr->custom_left != 0
-            && VT_Ctr->custom_right != 0
-            && VT_Ctr->mouse_mid != 0
+            && VT_Ctr->mouse_x == 0
+            && VT_Ctr->mouse_y == 0
+            && VT_Ctr->mouse_z == 0
+            && VT_Ctr->mouse_left == 0
+            && VT_Ctr->mouse_right == 0
+            && VT_Ctr->mouse_mid == 0
         )
         {
           //地盘移动
@@ -377,7 +377,6 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
           //发射机构
           CMD.Shooting.Fire = KeyDebounce_Process(&Key_RCTrigger,VT_Ctr->trigger);
         }
-
       }
     }
     else

@@ -19,7 +19,14 @@ __attribute__((used)) void DualBoardTask(void *argument)
   {
 
 	  Tx.CMD = *CMD_Get_point();
-		
+    {
+        // IMU数据: [0]=Yaw, [1]=Roll, [2]=Pitch (角度度)
+        const fp32* imu = IMU_Get_point();
+        Tx.INS_angle_Gimbal[0] = imu[0];   // Yaw
+        Tx.INS_angle_Gimbal[1] = imu[1];   // Roll
+        Tx.INS_angle_Gimbal[2] = imu[2];   // Pitch
+    }
+
     DualBoard_SendStruct(&hcan2,TX_BASE_ID,&Tx,sizeof(Tx));
 
 		//=============================== 剩余栈检测 ===============================//

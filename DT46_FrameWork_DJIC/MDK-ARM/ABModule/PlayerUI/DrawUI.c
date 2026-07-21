@@ -3,9 +3,9 @@
 #if(BOARD_ID == CHASSIS_BOARD)
 
 static const referee_all_data_t* Referee_DrawUI;
-static const float* INS_angle_DrawUI;
 static const CMD_t* CMD_DrawUI;
 static const SuperPower_t* SuperPower_DrawUI;
+static const Load_State_e* LoadFlag;
 
 
 //使用这个函数来更新交互、数据
@@ -99,20 +99,19 @@ static void Update_Data(void)
 {
     //获取裁判系统数据
     Referee_DrawUI = Referee_GetData();
-    //获取地盘控制板姿态
-    INS_angle_DrawUI = IMU_Get_point();
     //获取控制指令
     CMD_DrawUI =  CMD_Get_point();
     //获取超电数据指针
     SuperPower_DrawUI = get_superpower_piont();
+    //获取装弹标志
+    LoadFlag = get_Loadflag_point();
 } 
 
 static void DrawUI_Dynamic(void)
 {
     Update_Data();
 
-    /***** 绘制地盘状态 *****/
-    //更新绘制开火标志位
+    //更新绘制标志位
     {
         //是否按了开火键
         if(CMD_DrawUI->Shooting.Fire  == ON)
@@ -124,6 +123,16 @@ static void DrawUI_Dynamic(void)
             ui_Dynamic_Fire_FireFlag->color = 8;
         }
 
+        //是否按了开火键
+        if(CMD_DrawUI->Auto.Aim  == ON)
+        {
+            ui_Dynamic_Fire_AutoAimFlag->color = 1;
+        }
+        else
+        {
+            ui_Dynamic_Fire_AutoAimFlag->color = 8;
+        }
+
         //跟新小陀螺是否开启
         if(CMD_DrawUI->Move == NORMAL)
         {
@@ -133,11 +142,27 @@ static void DrawUI_Dynamic(void)
         {
             ui_Dynamic_Chassis_ChassisFront->color = 1;
         }
+
+        //更新拨盘标志
+        if(*LoadFlag == LOAD_START)
+        {
+            ui_Dynamic_Fire_LoadFlag->color = 8;
+        }
+        else if(*LoadFlag == LOAD_OK)
+        {
+            ui_Dynamic_Fire_LoadFlag->color = 6;
+        }
+        else if(*LoadFlag == LOAD_WAIT)
+        {
+            ui_Dynamic_Fire_LoadFlag->color = 1;
+        }
     }
 
     /***** 绘制姿态角 *****/
-    float Yaw = INS_angle_DrawUI[0];
-    float Pitch = INS_angle_DrawUI[2];
+    // INS_angle_Gimbal[3] 通过CAN从云台板接收: [0]=Yaw, [1]=Roll, [2]=Pitch
+    float Yaw   = BoardCRX.INS_angle_Gimbal[0];
+    float Roll  = BoardCRX.INS_angle_Gimbal[1];
+    float Pitch       = BoardCRX.INS_angle_Gimbal[2];
 
     //更新绘制地盘方向
     {

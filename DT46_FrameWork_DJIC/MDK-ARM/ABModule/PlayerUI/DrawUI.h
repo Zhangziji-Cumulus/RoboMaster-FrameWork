@@ -35,6 +35,8 @@
 #include "A_MCommon.h"
 #include "Dual_Board_Transmit.h"
 #include "SuperPower.h"
+#include "CMDCenter.h"
+#include "Shooting_Hero.h"
 
 void DrawUI_Init(void);
 
