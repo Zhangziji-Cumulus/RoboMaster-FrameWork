@@ -449,3 +449,264 @@ float PID_FF_Calculate_CycleAngle(PID_FF_HandleTypeDef *pid, float current, floa
     return PID_FF_CalcCore(pid, pid->error, ff_value);
 }
 
+//** #################################################################################################### **//
+//** ==================================== 复合多环 PID 结构体实现 ======================================== **//
+//** #################################################################################################### **//
+
+//** ================================================================================ **//
+//** ============================= 双环复合 PID 实现 ================================ **//
+//** ================================================================================ **//
+
+/**
+ * @brief  初始化双环PID复合结构体
+ * @param  pid       双环PID结构体指针
+ * @param  kp_in     内环比例系数
+ * @param  ki_in     内环积分系数
+ * @param  kd_in     内环微分系数
+ * @param  kp_ex     外环比例系数
+ * @param  ki_ex     外环积分系数
+ * @param  kd_ex     外环微分系数
+ * @param  out_min   输出下限
+ * @param  out_max   输出上限
+ * @param  int_min   积分累加值下限
+ * @param  int_max   积分累加值上限
+ * @param  threshold 误差阈值，小于该值时内环停止跟随
+ * @param  outer_mode 外环模式（线性/角度）
+ */
+void PID_Double_Init(PID_Double_t *pid,
+                     float kp_in, float ki_in, float kd_in,
+                     float kp_ex, float ki_ex, float kd_ex,
+                     float out_min, float out_max,
+                     float int_min, float int_max,
+                     float threshold,
+                     PID_OuterMode_t outer_mode)
+{
+    PID_Init(&pid->inner, kp_in, ki_in, kd_in, out_min, out_max, int_min, int_max);
+    PID_Init(&pid->outer, kp_ex, ki_ex, kd_ex, out_min, out_max, int_min, int_max);
+
+    pid->outer_mode          = outer_mode;
+    pid->threshold           = threshold;
+    pid->inner_override_enable = 0;
+    pid->inner_target_override = 0.0f;
+}
+
+/**
+ * @brief  双环PID计算
+ * @note   根据 outer_mode 自动选择线性PID或角度PID(CycleAngle)进行外环计算。
+ *         内环目标值支持 override 覆盖模式。
+ * @param  pid        双环PID结构体指针
+ * @param  target     外环目标值
+ * @param  current_in 内环当前反馈值
+ * @param  current_ex 外环当前反馈值
+ * @retval 内环PID输出值（已限幅）
+ */
+float PID_Double_Calc(PID_Double_t *pid,
+                      float target, float current_in, float current_ex)
+{
+    // 1. 外环计算：根据模式选择线性或角度PID
+    float outer_out;
+    if (pid->outer_mode == PID_OUTER_MODE_ANGLE) {
+        outer_out = PID_Calculate_CycleAngle(&pid->outer, current_ex, target);
+    } else {
+        outer_out = PID_Calculate(&pid->outer, current_ex, target);
+    }
+    pid->outer.Output = outer_out;
+
+    // 2. 判断内环目标值
+    float inner_target = pid->inner_override_enable
+                         ? pid->inner_target_override
+                         : outer_out;
+
+    // 3. 阈值判断后执行内环
+    float inner_out = 0.0f;
+    if (fabsf(current_ex - target) > pid->threshold) {
+        inner_out = PID_Calculate(&pid->inner, current_in, inner_target);
+    }
+    pid->inner.Output = inner_out;
+
+    return inner_out;
+}
+
+//** ================================================================================ **//
+//** ============================= 三环复合 PID 实现 ================================ **//
+//** ================================================================================ **//
+
+/**
+ * @brief  初始化三环PID复合结构体
+ * @param  pid             三环PID结构体指针
+ * @param  kp_cur          电流环(最内层)比例系数
+ * @param  ki_cur          电流环(最内层)积分系数
+ * @param  kd_cur          电流环(最内层)微分系数
+ * @param  kp_spd          速度环(中间层)比例系数
+ * @param  ki_spd          速度环(中间层)积分系数
+ * @param  kd_spd          速度环(中间层)微分系数
+ * @param  kp_ang          角度环(最外层)比例系数
+ * @param  ki_ang          角度环(最外层)积分系数
+ * @param  kd_ang          角度环(最外层)微分系数
+ * @param  out_min         输出下限
+ * @param  out_max         输出上限
+ * @param  int_min         积分累加值下限
+ * @param  int_max         积分累加值上限
+ * @param  max_angle_error 角度环误差阈值
+ * @param  outer_mode      最外层模式（线性/角度）
+ */
+void PID_Triple_Init(PID_Triple_t *pid,
+                     float kp_cur, float ki_cur, float kd_cur,
+                     float kp_spd, float ki_spd, float kd_spd,
+                     float kp_ang, float ki_ang, float kd_ang,
+                     float out_min, float out_max,
+                     float int_min, float int_max,
+                     float max_angle_error,
+                     PID_OuterMode_t outer_mode)
+{
+    PID_Init(&pid->current, kp_cur, ki_cur, kd_cur, out_min, out_max, int_min, int_max);
+    PID_Init(&pid->speed,   kp_spd, ki_spd, kd_spd, out_min, out_max, int_min, int_max);
+    PID_Init(&pid->angle,   kp_ang, ki_ang, kd_ang, out_min, out_max, int_min, int_max);
+
+    pid->outer_mode          = outer_mode;
+    pid->max_angle_error     = max_angle_error;
+    pid->inner_override_enable = 0;
+    pid->inner_target_override = 0.0f;
+}
+
+/**
+ * @brief  三环PID计算（角度环 → 速度环 → 电流环）
+ * @note   最外层根据 outer_mode 自动选择线性或角度PID，
+ *         中间层与最内层始终线性PID，最内层支持 override 覆盖模式。
+ * @param  pid              三环PID结构体指针
+ * @param  target_angle     角度环目标值
+ * @param  current_angle    角度环当前反馈值
+ * @param  current_speed    速度环当前反馈值
+ * @param  current_current  电流环当前反馈值
+ * @retval 最内层(电流环)PID输出值（已限幅）
+ */
+float PID_Triple_Calc(PID_Triple_t *pid,
+                      float target_angle, float current_angle,
+                      float current_speed, float current_current)
+{
+    pid->angle.current   = current_angle;
+    pid->speed.current   = current_speed;
+    pid->current.current = current_current;
+
+    // 1. 最外层(角度环)：根据模式选择线性或角度PID
+    float angle_out;
+    if (pid->outer_mode == PID_OUTER_MODE_ANGLE) {
+        angle_out = PID_Calculate_CycleAngle(&pid->angle, current_angle, target_angle);
+    } else {
+        angle_out = PID_Calculate(&pid->angle, current_angle, target_angle);
+    }
+    pid->angle.Output = angle_out;
+
+    // 2. 中间层(速度环)：始终线性PID
+    float speed_out = 0.0f;
+    if (fabsf(target_angle - current_angle) > pid->max_angle_error) {
+        speed_out = PID_Calculate(&pid->speed, current_speed, angle_out);
+    }
+    pid->speed.Output = speed_out;
+
+    // 3. 最内层(电流环)：支持override，始终线性PID
+    float inner_target = pid->inner_override_enable
+                         ? pid->inner_target_override
+                         : speed_out;
+    float current_out = PID_Calculate(&pid->current, current_current, inner_target);
+    pid->current.Output = current_out;
+
+    return current_out;
+}
+
+//** ================================================================================ **//
+//** ======================== 复合多环 PID 调参辅助函数 ============================== **//
+//** ================================================================================ **//
+
+// === 双环调参辅助 ===
+
+/**
+ * @brief  启用内环目标值覆盖模式
+ * @note   启用后内环使用手动设定的固定目标值而非外环输出，用于由内到外分步调参。
+ * @param  pid    双环PID结构体指针
+ * @param  target 内环手动目标值
+ */
+void PID_Double_SetInnerOverride(PID_Double_t *pid, float target)
+{
+    pid->inner_target_override = target;
+    pid->inner_override_enable = 1;
+}
+
+/**
+ * @brief  禁用内环目标值覆盖模式
+ * @note   恢复内环跟随外环输出的级联模式。
+ * @param  pid 双环PID结构体指针
+ */
+void PID_Double_DisableInnerOverride(PID_Double_t *pid)
+{
+    pid->inner_override_enable = 0;
+}
+
+/**
+ * @brief  读取外环输出中间量
+ * @param  pid 双环PID结构体指针
+ * @retval 外环PID当前输出值
+ */
+float PID_Double_GetOuterOutput(PID_Double_t *pid)
+{
+    return pid->outer.Output;
+}
+
+/**
+ * @brief  读取内环实际目标值
+ * @param  pid 双环PID结构体指针
+ * @retval 内环当前实际使用的目标值（覆盖值 or 外环输出）
+ */
+float PID_Double_GetInnerTarget(PID_Double_t *pid)
+{
+    return pid->inner_override_enable
+           ? pid->inner_target_override
+           : pid->outer.Output;
+}
+
+// === 三环调参辅助 ===
+
+/**
+ * @brief  启用三环最内层目标值覆盖模式
+ * @note   启用后电流环使用手动设定的固定目标值，用于由内到外分步调参。
+ * @param  pid    三环PID结构体指针
+ * @param  target 最内层(电流环)手动目标值
+ */
+void PID_Triple_SetInnerOverride(PID_Triple_t *pid, float target)
+{
+    pid->inner_target_override = target;
+    pid->inner_override_enable = 1;
+}
+
+/**
+ * @brief  禁用三环最内层目标值覆盖模式
+ * @note   恢复电流环跟随速度环输出的级联模式。
+ * @param  pid 三环PID结构体指针
+ */
+void PID_Triple_DisableInnerOverride(PID_Triple_t *pid)
+{
+    pid->inner_override_enable = 0;
+}
+
+/**
+ * @brief  读取三环最外层输出中间量
+ * @param  pid 三环PID结构体指针
+ * @retval 角度环PID当前输出值
+ */
+float PID_Triple_GetOuterOutput(PID_Triple_t *pid)
+{
+    return pid->angle.Output;
+}
+
+/**
+ * @brief  读取三环最内层实际目标值
+ * @param  pid 三环PID结构体指针
+ * @retval 最内层(电流环)当前实际使用的目标值
+ */
+float PID_Triple_GetInnerTarget(PID_Triple_t *pid)
+{
+    return pid->inner_override_enable
+           ? pid->inner_target_override
+           : pid->speed.Output;
+}
+

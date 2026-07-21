@@ -100,6 +100,46 @@ typedef enum {
 } PID_FF_Mode_t;
 
 
+//** ================================================================================ **//
+//** ======================== 复合多环 PID 结构体定义 ================================ **//
+//** ================================================================================ **//
+
+/**
+ * @brief 外环模式枚举：决定最外层环使用线性PID还是角度环PID
+ */
+typedef enum {
+    PID_OUTER_MODE_LINEAR = 0,   ///< 外环线性 PID（默认）
+    PID_OUTER_MODE_ANGLE  = 1,   ///< 外环角度环，自动最短路径 [0,360)
+} PID_OuterMode_t;
+
+/**
+ * @brief 双环PID复合结构体
+ * @note  封装内环+外环，支持内环目标值覆盖调参模式
+ */
+typedef struct {
+    PID_HandleTypeDef inner;                ///< 内环 (电流环 / 速度环)
+    PID_HandleTypeDef outer;                ///< 外环 (速度环 / 角度环)
+    PID_OuterMode_t    outer_mode;          ///< 外环模式：线性/角度
+    float  inner_target_override;           ///< 内环目标值手动覆盖（调参用）
+    uint8_t inner_override_enable;          ///< 1=启用覆盖, 0=外环输出
+    float  threshold;                       ///< 误差阈值，小于该值时内环停止跟随
+} PID_Double_t;
+
+/**
+ * @brief 三环PID复合结构体
+ * @note  封装角度环+速度环+电流环，支持最内层目标值覆盖
+ */
+typedef struct {
+    PID_HandleTypeDef current;              ///< 电流环 (最内层)
+    PID_HandleTypeDef speed;                ///< 速度环 (中间层)
+    PID_HandleTypeDef angle;                ///< 角度环 (最外层)
+    PID_OuterMode_t    outer_mode;          ///< 最外层模式：线性/角度
+    float  inner_target_override;           ///< 最内层目标值手动覆盖
+    uint8_t inner_override_enable;          ///< 1=启用覆盖
+    float  max_angle_error;                 ///< 角度环误差阈值
+} PID_Triple_t;
+
+
 //** #################################################################################################### **//
 //** =========================================== 函数声明 =============================================== **//
 //** #################################################################################################### **//
@@ -187,8 +227,155 @@ float PID_FF_Calculate_CycleAngle(PID_FF_HandleTypeDef *pid,
                                   float current, 
                                   float target);	
 
+//** ================================================================================ **//
+//** ==================== 复合多环 PID 初始化与计算函数 ============================== **//
+//** ================================================================================ **//
+
+/**
+ * @brief  初始化双环PID复合结构体
+ * @param  pid       双环PID结构体指针
+ * @param  kp_in     内环比例系数
+ * @param  ki_in     内环积分系数
+ * @param  kd_in     内环微分系数
+ * @param  kp_ex     外环比例系数
+ * @param  ki_ex     外环积分系数
+ * @param  kd_ex     外环微分系数
+ * @param  out_min   输出下限
+ * @param  out_max   输出上限
+ * @param  int_min   积分累加值下限
+ * @param  int_max   积分累加值上限
+ * @param  threshold 误差阈值，小于该值时内环停止跟随
+ * @param  outer_mode 外环模式（线性/角度）
+ */
+void PID_Double_Init(PID_Double_t *pid,
+                     float kp_in, float ki_in, float kd_in,
+                     float kp_ex, float ki_ex, float kd_ex,
+                     float out_min, float out_max,
+                     float int_min, float int_max,
+                     float threshold,
+                     PID_OuterMode_t outer_mode);
+
+/**
+ * @brief  初始化三环PID复合结构体
+ * @param  pid             三环PID结构体指针
+ * @param  kp_cur          电流环(最内层)比例系数
+ * @param  ki_cur          电流环(最内层)积分系数
+ * @param  kd_cur          电流环(最内层)微分系数
+ * @param  kp_spd          速度环(中间层)比例系数
+ * @param  ki_spd          速度环(中间层)积分系数
+ * @param  kd_spd          速度环(中间层)微分系数
+ * @param  kp_ang          角度环(最外层)比例系数
+ * @param  ki_ang          角度环(最外层)积分系数
+ * @param  kd_ang          角度环(最外层)微分系数
+ * @param  out_min         输出下限
+ * @param  out_max         输出上限
+ * @param  int_min         积分累加值下限
+ * @param  int_max         积分累加值上限
+ * @param  max_angle_error 角度环误差阈值
+ * @param  outer_mode      最外层模式（线性/角度）
+ */
+void PID_Triple_Init(PID_Triple_t *pid,
+                     float kp_cur, float ki_cur, float kd_cur,
+                     float kp_spd, float ki_spd, float kd_spd,
+                     float kp_ang, float ki_ang, float kd_ang,
+                     float out_min, float out_max,
+                     float int_min, float int_max,
+                     float max_angle_error,
+                     PID_OuterMode_t outer_mode);
+
+/**
+ * @brief  双环PID计算
+ * @note   根据 outer_mode 自动选择线性PID或角度环PID(CycleAngle)进行外环计算。
+ *         内环目标值支持 override 覆盖模式（调参使用）。
+ * @param  pid        双环PID结构体指针
+ * @param  target     外环目标值
+ * @param  current_in 内环当前反馈值
+ * @param  current_ex 外环当前反馈值
+ * @retval 内环PID输出值（已限幅）
+ */
+float PID_Double_Calc(PID_Double_t *pid,
+                      float target, float current_in, float current_ex);
+
+/**
+ * @brief  三环PID计算（角度环 → 速度环 → 电流环）
+ * @note   最外层根据 outer_mode 自动选择线性或角度PID，中间层与最内层始终线性PID。
+ *         最内层(电流环)支持 override 覆盖模式。
+ * @param  pid              三环PID结构体指针
+ * @param  target_angle     角度环目标值
+ * @param  current_angle    角度环当前反馈值
+ * @param  current_speed    速度环当前反馈值
+ * @param  current_current  电流环当前反馈值
+ * @retval 最内层(电流环)PID输出值（已限幅）
+ */
+float PID_Triple_Calc(PID_Triple_t *pid,
+                      float target_angle, float current_angle,
+                      float current_speed, float current_current);
+
+//** ================================================================================ **//
+//** ======================== 复合多环 PID 调参辅助函数 ============================== **//
+//** ================================================================================ **//
+
+// === 双环调参辅助 ===
+
+/**
+ * @brief  启用内环目标值覆盖模式
+ * @note   启用后内环使用手动设定的固定目标值而非外环输出，用于由内到外分步调参。
+ * @param  pid    双环PID结构体指针
+ * @param  target 内环手动目标值
+ */
+void  PID_Double_SetInnerOverride(PID_Double_t *pid, float target);
+
+/**
+ * @brief  禁用内环目标值覆盖模式
+ * @note   恢复内环跟随外环输出的级联模式。
+ * @param  pid 双环PID结构体指针
+ */
+void  PID_Double_DisableInnerOverride(PID_Double_t *pid);
+
+/**
+ * @brief  读取外环输出中间量
+ * @param  pid 双环PID结构体指针
+ * @retval 外环PID当前输出值
+ */
+float PID_Double_GetOuterOutput(PID_Double_t *pid);
+
+/**
+ * @brief  读取内环实际目标值
+ * @param  pid 双环PID结构体指针
+ * @retval 内环当前实际使用的目标值（覆盖值 or 外环输出）
+ */
+float PID_Double_GetInnerTarget(PID_Double_t *pid);
+
+// === 三环调参辅助 ===
+
+/**
+ * @brief  启用三环最内层目标值覆盖模式
+ * @param  pid    三环PID结构体指针
+ * @param  target 最内层(电流环)手动目标值
+ */
+void  PID_Triple_SetInnerOverride(PID_Triple_t *pid, float target);
+
+/**
+ * @brief  禁用三环最内层目标值覆盖模式
+ * @param  pid 三环PID结构体指针
+ */
+void  PID_Triple_DisableInnerOverride(PID_Triple_t *pid);
+
+/**
+ * @brief  读取三环最外层输出中间量
+ * @param  pid 三环PID结构体指针
+ * @retval 角度环PID当前输出值
+ */
+float PID_Triple_GetOuterOutput(PID_Triple_t *pid);
+
+/**
+ * @brief  读取三环最内层实际目标值
+ * @param  pid 三环PID结构体指针
+ * @retval 最内层(电流环)当前实际使用的目标值
+ */
+float PID_Triple_GetInnerTarget(PID_Triple_t *pid);
+
 										
-																	
 #ifdef __cplusplus
 }
 #endif
