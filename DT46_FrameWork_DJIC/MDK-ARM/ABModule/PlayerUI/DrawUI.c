@@ -6,7 +6,7 @@ static const referee_all_data_t* Referee_DrawUI;
 static const CMD_t* CMD_DrawUI;
 static const SuperPower_t* SuperPower_DrawUI;
 static const Load_State_e* LoadFlag;
-
+static const float* INS_angle_DrawUI;
 
 //使用这个函数来更新交互、数据
 static void Update_Data(void);
@@ -105,6 +105,8 @@ static void Update_Data(void)
     SuperPower_DrawUI = get_superpower_piont();
     //获取装弹标志
     LoadFlag = get_Loadflag_point();
+    //获取地盘IMU
+    INS_angle_DrawUI = IMU_Get_point();
 } 
 
 static void DrawUI_Dynamic(void)
@@ -160,9 +162,8 @@ static void DrawUI_Dynamic(void)
 
     /***** 绘制姿态角 *****/
     // INS_angle_Gimbal[3] 通过CAN从云台板接收: [0]=Yaw, [1]=Roll, [2]=Pitch
-    float Yaw   = BoardCRX.INS_angle_Gimbal[0];
-    float Roll  = BoardCRX.INS_angle_Gimbal[1];
-    float Pitch       = BoardCRX.INS_angle_Gimbal[2];
+    float Yaw   = INS_angle_DrawUI[0];
+    float Pitch = BoardCRX.INS_angle_Gimbal[2];
 
     //更新绘制地盘方向
     {

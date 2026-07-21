@@ -41,10 +41,10 @@ __attribute__((used)) void VTTask(void *argument)
 
         //测试键盘功能是否正常
         
-        if(VT03_KeyTest(&vt03_data) || VT03_MouseTest(&vt03_data))
-        {
-            buzzer->sound_effect = B_;
-        }
+        // if(VT03_KeyTest(&vt03_data) || VT03_MouseTest(&vt03_data))
+        // {
+        //     buzzer->sound_effect = B_;
+        // }
 
         // 栈余量监控
         remain_VTTask = uxTaskGetStackHighWaterMark(NULL);

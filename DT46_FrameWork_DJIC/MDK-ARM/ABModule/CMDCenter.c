@@ -165,6 +165,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
         {
           CMD.Shooting.Fire = OFF;
         }
+
         //上弹
         if(RC_Ctl->Switch.S3_L == HOTRC_SWITCH_DOWN)
         {
@@ -174,6 +175,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
         {
           CMD.Shooting.Load = OFF;
         }
+
         //打开摩擦轮
         if(RC_Ctl->Switch.S2_L == HOTRC_SWITCH_DOWN)
         {
@@ -234,8 +236,8 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
           //云台移动，鼠标 x，y
           {
             //鼠标传入的数据太小了放大一点
-            int16_t mouse_x = MyMath_Scale_Int16(VT_Ctr->mouse_x,1000.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
-            int16_t mouse_y = MyMath_Scale_Int16(VT_Ctr->mouse_y,1500.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
+            int16_t mouse_x = MyMath_Scale_Int16(VT_Ctr->mouse_x,800.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
+            int16_t mouse_y = MyMath_Scale_Int16(VT_Ctr->mouse_y,2000.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
 
             CMD.Gimbal.Yaw = MyMath_Map_Range_Int16(mouse_x,
                                                     VTX_MOUSE_MIN,
@@ -243,11 +245,13 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
                                                    -CMD_CTRL_RANGE,
                                                     CMD_CTRL_RANGE);
 
-            CMD.Gimbal.Pitch = MyMath_Map_Range_Int16(-mouse_y,
+            CMD.Gimbal.Pitch = MyMath_Map_Range_Int16(mouse_y,
                                                       VTX_MOUSE_MIN,
                                                       VTX_MOUSE_MAX,
                                                      -CMD_CTRL_RANGE,
                                                       CMD_CTRL_RANGE);
+
+            CMD.Gimbal.Pitch = -CMD.Gimbal.Pitch;
           }
 
 
@@ -259,8 +263,8 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
 
               // 执行按键消抖翻转处理
 
-              uint8_t cw_sw  = KeyToggle_Process(&Key_SpinCW, VT_Ctr->keyboard.bit.q);
-              uint8_t ccw_sw = KeyToggle_Process(&Key_SpinCCW, VT_Ctr->keyboard.bit.e);
+              uint8_t cw_sw  = KeyToggle_Process(&Key_SpinCW, VT_Ctr->keyboard.bit.e);
+              uint8_t ccw_sw = KeyToggle_Process(&Key_SpinCCW, VT_Ctr->keyboard.bit.q);
               
 
               // 两路开关同时打开处理
@@ -313,6 +317,9 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
 
           //开火
           CMD.Shooting.Fire = KeyDebounce_Process(&Key_Fire,VT_Ctr->mouse_left);
+
+          //打开摩擦轮
+          CMD.Shooting.Friction = ON;
 
           //自瞄开启
           if(KeyLongPress_Process(&Key_AutoAim,VT_Ctr->mouse_right,1,200) == KEY_LONG_PRESS_HOLD)
