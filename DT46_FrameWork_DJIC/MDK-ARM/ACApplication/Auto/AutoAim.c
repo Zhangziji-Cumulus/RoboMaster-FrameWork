@@ -110,6 +110,10 @@ void AutoAim_Init(void)
     AutoAim_Instance.Tx_Done = 1;
     AutoAim_Instance.Tx.Frame_head = AUTO_USART_HEADER;
     AutoAim_Instance.Tx.Enemy_Color = AUTOAIM_ENEMY_COLOR;
+
+    //级联滤波状态初始化
+    AutoAim_Instance.Filter.Initialized = 0;
+    AutoAim_Instance.Filter.Buf_Idx = 0;
 }
 
 //** ====================== 更新要发送的数据 ====================== **//
@@ -166,8 +170,80 @@ void AutoAim_UpdateRx(void)
     
     if(AutoAim_Instance.Rx_OnlineFlag)
     {
-        AutoAim_Ctrl.Yaw = (AutoAim_Instance.Rx.Yaw * 0.1);
-        AutoAim_Ctrl.Pitch = (AutoAim_Instance.Rx.Pitch * 0.1);
+        float raw_yaw = AutoAim_Instance.Rx.Yaw * 0.1f;
+        float raw_pitch = AutoAim_Instance.Rx.Pitch * 0.1f;
+
+        // ---- 滤波初始化（每次离线→在线时重置） ----
+        if(!AutoAim_Instance.Filter.Initialized)
+        {
+            AutoAim_Instance.Filter.Yaw_Buf[0] = raw_yaw;
+            AutoAim_Instance.Filter.Yaw_Buf[1] = raw_yaw;
+            AutoAim_Instance.Filter.Yaw_Buf[2] = raw_yaw;
+            AutoAim_Instance.Filter.Pitch_Buf[0] = raw_pitch;
+            AutoAim_Instance.Filter.Pitch_Buf[1] = raw_pitch;
+            AutoAim_Instance.Filter.Pitch_Buf[2] = raw_pitch;
+            AutoAim_Instance.Filter.Yaw_EMA = raw_yaw;
+            AutoAim_Instance.Filter.Pitch_EMA = raw_pitch;
+            AutoAim_Instance.Filter.Buf_Idx = 0;
+            AutoAim_Instance.Filter.Initialized = 1;
+
+            // 首次直接输出，不做滤波
+            AutoAim_Ctrl.Yaw = raw_yaw;
+            AutoAim_Ctrl.Pitch = raw_pitch;
+        }
+        else
+        {
+            /* ===== 第1级：3点中值滤波（剔除野值） ===== */
+            AutoAim_Instance.Filter.Yaw_Buf[AutoAim_Instance.Filter.Buf_Idx] = raw_yaw;
+            AutoAim_Instance.Filter.Pitch_Buf[AutoAim_Instance.Filter.Buf_Idx] = raw_pitch;
+            AutoAim_Instance.Filter.Buf_Idx = (AutoAim_Instance.Filter.Buf_Idx + 1) % 3;
+
+            // Yaw 3点取中值
+            float a = AutoAim_Instance.Filter.Yaw_Buf[0];
+            float b = AutoAim_Instance.Filter.Yaw_Buf[1];
+            float c = AutoAim_Instance.Filter.Yaw_Buf[2];
+            if(a > b) { float t = a; a = b; b = t; }
+            if(b > c) { float t = b; b = c; c = t; }
+            if(a > b) { float t = a; a = b; b = t; }
+            float median_yaw = b;
+
+            // Pitch 3点取中值
+            a = AutoAim_Instance.Filter.Pitch_Buf[0];
+            b = AutoAim_Instance.Filter.Pitch_Buf[1];
+            c = AutoAim_Instance.Filter.Pitch_Buf[2];
+            if(a > b) { float t = a; a = b; b = t; }
+            if(b > c) { float t = b; b = c; c = t; }
+            if(a > b) { float t = a; a = b; b = t; }
+            float median_pitch = b;
+
+            /* ===== 第2级：自适应EMA ===== */
+            // Yaw轴
+            float diff = median_yaw - AutoAim_Instance.Filter.Yaw_EMA;
+            float abs_diff = (diff > 0.0f) ? diff : -diff;
+            float alpha;
+            if(abs_diff > AUTOAIM_FILTER_THRESHOLD_HIGH)
+                alpha = AUTOAIM_FILTER_ALPHA_FAST;     // 快速移动 → 轻滤波
+            else if(abs_diff > AUTOAIM_FILTER_THRESHOLD_LOW)
+                alpha = AUTOAIM_FILTER_ALPHA_MEDIUM;   // 慢速移动 → 中滤波
+            else
+                alpha = AUTOAIM_FILTER_ALPHA_NOISE;    // 噪声抖动 → 重滤波
+            AutoAim_Instance.Filter.Yaw_EMA += (1.0f - alpha) * diff;
+
+            // Pitch轴
+            diff = median_pitch - AutoAim_Instance.Filter.Pitch_EMA;
+            abs_diff = (diff > 0.0f) ? diff : -diff;
+            if(abs_diff > AUTOAIM_FILTER_THRESHOLD_HIGH)
+                alpha = AUTOAIM_FILTER_ALPHA_FAST;
+            else if(abs_diff > AUTOAIM_FILTER_THRESHOLD_LOW)
+                alpha = AUTOAIM_FILTER_ALPHA_MEDIUM;
+            else
+                alpha = AUTOAIM_FILTER_ALPHA_NOISE;
+            AutoAim_Instance.Filter.Pitch_EMA += (1.0f - alpha) * diff;
+
+            AutoAim_Ctrl.Yaw = AutoAim_Instance.Filter.Yaw_EMA;
+            AutoAim_Ctrl.Pitch = AutoAim_Instance.Filter.Pitch_EMA;
+        }
+
         AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
         AutoAim_Ctrl.IsOnline = 1;
         AutoAim_Ctrl.RxTick = AutoAim_Instance.Rx_LastTick;
@@ -178,6 +254,9 @@ void AutoAim_UpdateRx(void)
         AutoAim_Ctrl.Pitch = 0;
         AutoAim_Ctrl.FireOK = 0;
         AutoAim_Ctrl.IsOnline = 0;
+
+        // 复位滤波状态，下次上线时重新初始化
+        AutoAim_Instance.Filter.Initialized = 0;
     }
 }
 

@@ -91,6 +91,16 @@ typedef struct
     uint8_t Tx_Buff[sizeof(AutoAim_Tx_t)];  //发送缓存
     uint8_t Tx_Done;    //已经发送一组数据标志位
 
+    // 自瞄信号级联滤波状态（3点中值 + 自适应EMA）
+    struct{
+        float Yaw_Buf[3];      // 中值滤波环形缓冲区(Yaw)
+        float Pitch_Buf[3];    // 中值滤波环形缓冲区(Pitch)
+        float Yaw_EMA;         // EMA滤波状态(Yaw)
+        float Pitch_EMA;       // EMA滤波状态(Pitch)
+        uint8_t Buf_Idx;       // 环形缓冲写入索引
+        uint8_t Initialized;   // 滤波初始化标志
+    }Filter;
+
 }AutoAim_Instance_t;
 
 typedef struct{

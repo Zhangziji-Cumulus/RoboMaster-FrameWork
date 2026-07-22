@@ -30,6 +30,13 @@
 #define AUTOAIM_K_AIM_STEP      0.05f   // 自瞄融合系数步进值(每周期)
 #define AUTOAIM_K_AIM_MAX       1.0f    // 自瞄融合系数上限
 
+//自瞄信号级联滤波参数（3点中值 + 自适应EMA）
+#define AUTOAIM_FILTER_THRESHOLD_LOW     0.5f   // 下界(°)：低于此值视为噪声，重滤波
+#define AUTOAIM_FILTER_THRESHOLD_HIGH    2.0f   // 上界(°)：高于此值视为快速运动，轻滤波
+#define AUTOAIM_FILTER_ALPHA_FAST        0.2f   // 快变区 α（噪声区 α = 1 - 此值）
+#define AUTOAIM_FILTER_ALPHA_NOISE       (1.0f - AUTOAIM_FILTER_ALPHA_FAST)
+#define AUTOAIM_FILTER_ALPHA_MEDIUM      ((AUTOAIM_FILTER_ALPHA_FAST + AUTOAIM_FILTER_ALPHA_NOISE) / 2.0f)
+
 //自瞄权重
 #define AUTOAIM_WEIGHT_AUTO         80
 #define AUTOAIM_WEIGHT_MANUAL      (100 - AUTOAIM_WEIGHT_AUTO)
