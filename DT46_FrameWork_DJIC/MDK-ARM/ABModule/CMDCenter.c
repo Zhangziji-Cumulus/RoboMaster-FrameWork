@@ -236,7 +236,7 @@ __attribute__((used)) void CMDUpdateTask(void *argument)
           //云台移动，鼠标 x，y
           {
             //鼠标传入的数据太小了放大一点
-            int16_t mouse_x = MyMath_Scale_Int16(VT_Ctr->mouse_x,800.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
+            int16_t mouse_x = MyMath_Scale_Int16(VT_Ctr->mouse_x,500.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
             int16_t mouse_y = MyMath_Scale_Int16(VT_Ctr->mouse_y,2000.0,VTX_MOUSE_MIN,VTX_MOUSE_MAX);
 
             CMD.Gimbal.Yaw = MyMath_Map_Range_Int16(mouse_x,

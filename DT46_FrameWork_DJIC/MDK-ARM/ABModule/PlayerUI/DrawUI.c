@@ -42,6 +42,10 @@ void DrawUI_Init(void)
     ui_init_Static_Text5();
     osDelay(30);
     ui_init_Static_Graphic();
+    osDelay(30);
+    ui_init_Static_Graphic2();
+    osDelay(30);
+    ui_init_Static_Graphic3();
     osDelay(50);
 
     //初始化动态UI
@@ -87,6 +91,9 @@ static void DrawUI_ReInit(void)
     ui_init_Static_Text5();
     osDelay(30);
     ui_init_Static_Graphic();
+    ui_init_Static_Graphic2();
+    osDelay(30);
+    ui_init_Static_Graphic3();
     osDelay(50);
 
     //初始化动态UI
