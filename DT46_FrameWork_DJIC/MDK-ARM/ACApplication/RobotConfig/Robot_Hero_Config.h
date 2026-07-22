@@ -120,7 +120,7 @@ PID_CTRL_MODE_TRIPLE_FF     三环PID + 前馈
 /** ===== 摩擦轮配置 ===== **/
 
 /* 摩擦轮速度相关 */
-#define FRICTION_MAX_SPEED_M_S  5.0f               //摩擦轮最大线速度(单位：m/s）
+#define FRICTION_MAX_SPEED_M_S  10.5f               //摩擦轮最大线速度(单位：m/s）
 
 /* 摩擦轮的物理参数 */
 #define FRICTION_NUM            3                   //摩擦轮数量
