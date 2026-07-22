@@ -3,7 +3,7 @@
 
 /* 系统相关 */
 
-#define AUTO_TASK_TIME_MS       10       //自动任务系统循环时间 
+#define AUTO_TASK_TIME_MS       5       //自动任务系统循环时间 
 
 #define AUTO_MATCH_RESET_MS     500      //自动任务系统匹配重置时间
 //串口句柄
@@ -25,6 +25,10 @@
 //开关自瞄宏
 #define AUTOAIM_OFF     0       //关闭自瞄
 #define AUTOAIM_ON      1       //打开自瞄
+
+//自瞄融合参数
+#define AUTOAIM_K_AIM_STEP      0.05f   // 自瞄融合系数步进值(每周期)
+#define AUTOAIM_K_AIM_MAX       1.0f    // 自瞄融合系数上限
 
 //自瞄权重
 #define AUTOAIM_WEIGHT_AUTO         80

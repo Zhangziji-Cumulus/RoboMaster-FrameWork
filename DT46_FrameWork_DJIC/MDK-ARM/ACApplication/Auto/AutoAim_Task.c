@@ -30,7 +30,7 @@ __attribute__((used)) void AutoAimTask(void *argument)
     AutoAim_UpdateRx();
     
     //=============================== 剩余栈检测 ===============================//
-	remain_AutoAimTask = uxTaskGetStackHighWaterMark(NULL);
+	  remain_AutoAimTask = uxTaskGetStackHighWaterMark(NULL);
     osDelay(AUTO_TASK_TIME_MS);
   }
 }
