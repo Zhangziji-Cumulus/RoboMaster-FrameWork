@@ -68,7 +68,7 @@ void Gimbal_Init(void)
   	PID_Init(&Gimbal_Motor_STOP,3.0f,0.0f,0.0f,-DJI_STOP_A,DJI_STOP_A,-5.0f, 5.0f);
 
     //YAW轴PID
-	PID_FF_Init(&Gimbal_Yaw_FF,4000.0f,0.5f,40000.0f,22000.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
+	PID_FF_Init(&Gimbal_Yaw_FF,4200.0f,0.5f,18000.0f,500.0f,-DJI_GM6020_R,DJI_GM6020_R,-1000.0f, 1000.0f);
 	PID_Double_Init(&Gimbal_Yaw,
 	    5.0f, 0.0f, 0.0f,              // kp/ki/kd 内环(速度)
 	    200.0f, 0.0f, 0.0f,            // kp/ki/kd 外环(角度)
@@ -83,7 +83,7 @@ void Gimbal_Init(void)
     PID_FF_Init(&Gimbal_Pitch_FF,3.0f,0.0f,0.0f,1.0,-DJI_M3508_R,DJI_M3508_R,-10.0f, 10.0f);
 	PID_Double_Init(&Gimbal_Pitch,
 	    1.1f, 0.0f, 0.0f,              // kp/ki/kd 内环(速度)
-	    1500.0f, 0.1f, 20000.0f,       // kp/ki/kd 外环(角度)
+	    1600.0f, 0.1f, 50000.0f,       // kp/ki/kd 外环(角度)
 	    -2600, 2600,                    // 内环输出限幅
 	    -10.0f, 10.0f,                  // 内环积分限幅
 	    -2400, 2400,                    // 外环输出限幅
@@ -233,35 +233,35 @@ static void Gimbal_Update_Target(void)
     float ManualPitch = MyMath_Map_Range_Float(Gimbal_Instance.CMD.Gimbal.Pitch,-CMD_CTRL_RANGE,CMD_CTRL_RANGE,-GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
     float AutoPitch   = Gimbal_Instance.Auto.Aim.Pitch;
 
-    float FusionYaw = AutoAim_WeightFusion_Float(ManualYaw,
-                                              AutoYaw,
-                                              Gimbal_Instance.Auto.Aim.IsOnline,
-                                             -GIMBAL_MAX_ANGLE_STEP_DEG_YAW,
-                                              GIMBAL_MAX_ANGLE_STEP_DEG_YAW);
-
-    float FusionPitch = AutoAim_WeightFusion_Float(ManualPitch,
-                                              AutoPitch,
-                                              Gimbal_Instance.Auto.Aim.IsOnline,
-                                             -GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,
-                                              GIMBAL_MAX_ANGLE_STEP_DEG_PITCH);
-
     if(Gimbal_Instance.CMD.Auto.Aim == AUTOAIM_ON)
     {
         if(Gimbal_Instance.Auto.Aim.IsOnline)
         {
-            Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - FusionYaw;
-            Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - FusionPitch;
+            // 手动全量 + 自瞄附加修正：操作手感不受稀释
+            float AddYaw   = ManualYaw   + AUTOAIM_GAIN * AutoYaw;
+            float AddPitch = ManualPitch + AUTOAIM_GAIN * AutoPitch;
+
+            // 限幅保护
+            AddYaw   = MyMath_Limit_Float(AddYaw,
+                                          -GIMBAL_MAX_ANGLE_STEP_DEG_YAW,
+                                           GIMBAL_MAX_ANGLE_STEP_DEG_YAW, 0);
+            AddPitch = MyMath_Limit_Float(AddPitch,
+                                          -GIMBAL_MAX_ANGLE_STEP_DEG_PITCH,
+                                           GIMBAL_MAX_ANGLE_STEP_DEG_PITCH, 0);
+
+            Gimbal_Instance.Calc.Yaw.T_Angle   -= AddYaw;
+            Gimbal_Instance.Calc.Pitch.T_Angle -= AddPitch;
         }
         else
         {
-            Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
-            Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - ManualPitch;
+            Gimbal_Instance.Calc.Yaw.T_Angle -= ManualYaw;
+            Gimbal_Instance.Calc.Pitch.T_Angle -= ManualPitch;
         }
     }
     else
     {
-        Gimbal_Instance.Calc.Yaw.T_Angle = Gimbal_Instance.Calc.Yaw.T_Angle - ManualYaw;
-        Gimbal_Instance.Calc.Pitch.T_Angle = Gimbal_Instance.Calc.Pitch.T_Angle - ManualPitch;
+        Gimbal_Instance.Calc.Yaw.T_Angle -= ManualYaw;
+        Gimbal_Instance.Calc.Pitch.T_Angle -= ManualPitch;
     }
     
     //限幅角度-180 ~ 180 循环模式
@@ -327,6 +327,29 @@ static void Gimbal_YawStable_Calc(void)
 
     #endif
 
+#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
+    // 自瞄速度前馈：目标角速度 × 前馈增益，经误差衰减后叠加到PID输出
+    if (Gimbal_Instance.Auto.Aim.IsOnline && Gimbal_Instance.Auto.Aim.YawVel != 0.0f)
+    {
+        // 计算Yaw位置误差（角度制，考虑循环角度）
+        float yaw_error = fabsf(MyMath_angle_diff_shortest(
+                                Gimbal_Instance.Calc.Yaw.T_Angle,
+                                Gimbal_Instance.Calc.Yaw.C_Angle));
+        
+        // 误差衰减：误差大→系数≈1(全量前馈)，误差小→系数≈0(衰减)
+        // decay = error / (error + DECAY_K)，DECAY_K=3时error=3°时衰减到0.5
+        float decay = yaw_error / (yaw_error + AUTOAIM_FF_DECAY_K);
+        
+        float ff = Gimbal_Instance.Auto.Aim.YawVel * AUTOAIM_FF_GAIN_YAW * decay;
+        
+        // 限幅
+        if (ff > AUTOAIM_FF_MAX_YAW) ff = AUTOAIM_FF_MAX_YAW;
+        if (ff < -AUTOAIM_FF_MAX_YAW) ff = -AUTOAIM_FF_MAX_YAW;
+        
+        Gimbal_Instance.Calc.Yaw.Ctrl_Vel += (int16_t)ff;
+    }
+#endif
+
 }
 
 static void Gimbal_PitchStable_Calc(void)
@@ -348,6 +371,27 @@ static void Gimbal_PitchStable_Calc(void)
                                             Gimbal_Instance.MotorData.Pitch.speed_rpm,
                                             Gimbal_Instance.Calc.Pitch.C_Angle);
     #endif
+
+#if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
+    // 自瞄速度前馈：目标角速度 × 前馈增益，经误差衰减后叠加到PID输出
+    if (Gimbal_Instance.Auto.Aim.IsOnline && Gimbal_Instance.Auto.Aim.PitchVel != 0.0f)
+    {
+        // 计算Pitch位置误差
+        float pitch_error = fabsf(Gimbal_Instance.Calc.Pitch.T_Angle
+                                - Gimbal_Instance.Calc.Pitch.C_Angle);
+        
+        // 误差衰减
+        float decay = pitch_error / (pitch_error + AUTOAIM_FF_DECAY_K);
+        
+        float ff = Gimbal_Instance.Auto.Aim.PitchVel * AUTOAIM_FF_GAIN_PITCH * decay;
+        
+        // 限幅
+        if (ff > AUTOAIM_FF_MAX_PITCH) ff = AUTOAIM_FF_MAX_PITCH;
+        if (ff < -AUTOAIM_FF_MAX_PITCH) ff = -AUTOAIM_FF_MAX_PITCH;
+        
+        Gimbal_Instance.Calc.Pitch.Ctrl_Vel += (int16_t)ff;
+    }
+#endif
 
 }
 

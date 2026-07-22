@@ -110,6 +110,16 @@ void AutoAim_Init(void)
     AutoAim_Instance.Tx_Done = 1;
     AutoAim_Instance.Tx.Frame_head = AUTO_USART_HEADER;
     AutoAim_Instance.Tx.Enemy_Color = AUTOAIM_ENEMY_COLOR;
+
+    // 初始化自适应EMA滤波器
+    memset(&AutoAim_Instance.EMA, 0, sizeof(AutoAim_EMA_t));
+
+    // 初始化速度前馈追踪值
+    AutoAim_Instance.Ctrl_Yaw_Prev   = 0.0f;
+    AutoAim_Instance.Ctrl_Pitch_Prev = 0.0f;
+    AutoAim_Instance.Ctrl_Tick_Prev  = HAL_GetTick();
+    AutoAim_Ctrl.YawVel   = 0.0f;
+    AutoAim_Ctrl.PitchVel = 0.0f;
 }
 
 //** ====================== 更新要发送的数据 ====================== **//
@@ -156,6 +166,97 @@ void AutoAim_ReceiveProcess(void)
     AutoAim_Instance.Rx_LastTick = HAL_GetTick();
 }
 
+//** ======================================================================== **//
+//** ====================== 自适应EMA滤波器 ================================ **//
+//** ======================================================================== **//
+
+/**
+ * @brief   自适应EMA滤波（单轴）—— 根据变化率动态调节平滑系数
+ * @param  raw_val      当前原始值
+ * @param  prev_raw    上一次原始值指针（会被更新为当前原始值）
+ * @param  prev_filter  上一次滤波值指针（会被更新为当前滤波值）
+ * @param  initialized  初始化标志指针（首次调用直接赋值，不滤波）
+ * @return float        滤波后的值
+ * @note   算法原理：
+ *         1. 计算原始值的变化率 dx = |raw_val - *prev_raw|
+ *         2. 自适应 alpha = ALPHA_MIN + (ALPHA_MAX - ALPHA_MIN) * saturate(dx / THRESHOLD)
+ *         3. 标准一阶 EMA：filtered = alpha * raw + (1-alpha) * prev_filter
+ *         4. 变化率大 → alpha 大 → 响应快（跟随目标快速移动）
+ *         5. 变化率小 → alpha 小 → 平滑强（抑制抖动噪声）
+ *         首次调用时直接输出原始值并初始化历史数据。
+ */
+static float AutoAim_EMA_Update_Single(float raw_val, float *prev_raw, float *prev_filter, uint8_t *initialized)
+{
+    float alpha;
+    float dx;
+    float output;
+
+    if (!(*initialized))
+    {
+        // 首次：直接赋值，不滤波
+        *prev_raw    = raw_val;
+        *prev_filter = raw_val;
+        *initialized = 1;
+        return raw_val;
+    }
+
+    // 计算变化率
+    dx = raw_val - *prev_raw;
+    if (dx < 0.0f) dx = -dx;
+
+    // 自适应 alpha：变化率越大 alpha 越大（响应越快）
+    alpha = AUTOAIM_EMA_ALPHA_MIN;
+    if (dx < AUTOAIM_EMA_THRESHOLD)
+    {
+        // 线性插值：alpha = alpha_min + (alpha_max - alpha_min) * (dx / threshold)
+        alpha += (AUTOAIM_EMA_ALPHA_MAX - AUTOAIM_EMA_ALPHA_MIN) * (dx / AUTOAIM_EMA_THRESHOLD);
+    }
+    else
+    {
+        // 超过阈值，使用最大 alpha（最快响应）
+        alpha = AUTOAIM_EMA_ALPHA_MAX;
+    }
+
+    // 一阶 EMA
+    output = alpha * raw_val + (1.0f - alpha) * (*prev_filter);
+
+    // 更新历史数据
+    *prev_raw    = raw_val;
+    *prev_filter = output;
+
+    return output;
+}
+
+/**
+ * @brief   自适应EMA滤波 —— 对 Rx 原始 Yaw/Pitch 进行滤波
+ * @note    在 AutoAim_UpdateRx() 内部调用。
+ *          当离线时重置滤波器 Initialized 标志，确保重连后快速跟踪。
+ */
+static void AutoAim_EMA_Update(void)
+{
+    AutoAim_EMA_t *ema = &AutoAim_Instance.EMA;
+
+    // 离线时重置滤波器（重连后首次直接输出，不滤波）
+    if (!AutoAim_Instance.Rx_OnlineFlag)
+    {
+        ema->Initialized = 0;
+        return;
+    }
+
+    // 对 Yaw 和 Pitch 分别进行自适应 EMA 滤波（在原始域，未乘 0.1）
+    ema->Yaw   = AutoAim_EMA_Update_Single(AutoAim_Instance.Rx.Yaw,
+                                            &ema->Yaw_PrevRaw,
+                                            &ema->Yaw,
+                                            &ema->Initialized);
+    ema->Pitch = AutoAim_EMA_Update_Single(AutoAim_Instance.Rx.Pitch,
+                                            &ema->Pitch_PrevRaw,
+                                            &ema->Pitch,
+                                            &ema->Initialized);
+}
+
+//** ------------------------------------------------------------ **//
+//** ======================== 更新接收数据 ======================== **//
+//** ------------------------------------------------------------ **//
 void AutoAim_UpdateRx(void)
 {
     // 超时检测：超过 AUTOAIM_RX_TIMEOUT_MS 未收到有效帧 → 置离线
@@ -164,20 +265,56 @@ void AutoAim_UpdateRx(void)
         AutoAim_Instance.Rx_OnlineFlag = 0;
     }
     
+    // 先执行自适应EMA滤波
+    AutoAim_EMA_Update();
+    
     if(AutoAim_Instance.Rx_OnlineFlag)
     {
-        AutoAim_Ctrl.Yaw = (AutoAim_Instance.Rx.Yaw * 0.1);
-        AutoAim_Ctrl.Pitch = (AutoAim_Instance.Rx.Pitch * 0.1);
+        // 注意：此处使用滤波后的值（ema->Yaw / ema->Pitch）而非原始 Rx.Yaw / Rx.Pitch
+        AutoAim_Ctrl.Yaw   = (AutoAim_Instance.EMA.Yaw   * 0.1f);
+        AutoAim_Ctrl.Pitch = (AutoAim_Instance.EMA.Pitch * 0.1f);
         AutoAim_Ctrl.FireOK = AutoAim_Instance.Rx.Fire;
         AutoAim_Ctrl.IsOnline = 1;
         AutoAim_Ctrl.RxTick = AutoAim_Instance.Rx_LastTick;
+
+        // === 计算目标角速度（用于速度前馈） ===
+        uint32_t now_tick = HAL_GetTick();
+        uint32_t dt_ms = now_tick - AutoAim_Instance.Ctrl_Tick_Prev;
+
+        if (dt_ms >= 1)  // 防止除零
+        {
+            float dt_sec = (float)dt_ms * 0.001f;
+
+            // 原始角速度 (°/s)
+            float raw_vel_yaw   = (AutoAim_Ctrl.Yaw   - AutoAim_Instance.Ctrl_Yaw_Prev)   / dt_sec;
+            float raw_vel_pitch = (AutoAim_Ctrl.Pitch - AutoAim_Instance.Ctrl_Pitch_Prev) / dt_sec;
+
+            // 一阶低通滤波，抑制速度噪声
+            AutoAim_Ctrl.YawVel   = AUTOAIM_FF_LPF_ALPHA * raw_vel_yaw
+                                  + (1.0f - AUTOAIM_FF_LPF_ALPHA) * AutoAim_Ctrl.YawVel;
+            AutoAim_Ctrl.PitchVel = AUTOAIM_FF_LPF_ALPHA * raw_vel_pitch
+                                  + (1.0f - AUTOAIM_FF_LPF_ALPHA) * AutoAim_Ctrl.PitchVel;
+
+            // 速度死区：微小速度不给前馈，防止静止时漂移
+            if (fabsf(AutoAim_Ctrl.YawVel) < AUTOAIM_FF_DEADZONE)
+                AutoAim_Ctrl.YawVel = 0.0f;
+            if (fabsf(AutoAim_Ctrl.PitchVel) < AUTOAIM_FF_DEADZONE)
+                AutoAim_Ctrl.PitchVel = 0.0f;
+        }
+
+        // 更新前馈追踪值
+        AutoAim_Instance.Ctrl_Yaw_Prev   = AutoAim_Ctrl.Yaw;
+        AutoAim_Instance.Ctrl_Pitch_Prev = AutoAim_Ctrl.Pitch;
+        AutoAim_Instance.Ctrl_Tick_Prev  = now_tick;
     }
     else
     {
-        AutoAim_Ctrl.Yaw = 0;
-        AutoAim_Ctrl.Pitch = 0;
+        AutoAim_Ctrl.Yaw = 0.0f;
+        AutoAim_Ctrl.Pitch = 0.0f;
         AutoAim_Ctrl.FireOK = 0;
         AutoAim_Ctrl.IsOnline = 0;
+        AutoAim_Ctrl.YawVel = 0.0f;
+        AutoAim_Ctrl.PitchVel = 0.0f;
     }
 }
 
