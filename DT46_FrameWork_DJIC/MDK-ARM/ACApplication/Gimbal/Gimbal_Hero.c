@@ -343,7 +343,10 @@ static void Gimbal_YawStable_Calc(void)
                                 Gimbal_Instance.Calc.Yaw.C_Angle));
         
         // 误差衰减：误差大→系数≈1(全量前馈)，误差小→系数≈0(衰减)
-        float decay = yaw_error / (yaw_error + autoaim_param.FF_Decay_K);
+        // 防 FF_Decay_K=0 时产生 0/0=NaN
+        float decay = (autoaim_param.FF_Decay_K > 0.001f)
+                      ? yaw_error / (yaw_error + autoaim_param.FF_Decay_K)
+                      : 1.0f;
         
         float ff = Gimbal_Instance.Auto.Aim.YawVel * autoaim_param.PID_FF_Gain_Yaw * decay;
         
@@ -386,8 +389,10 @@ static void Gimbal_PitchStable_Calc(void)
         float pitch_error = fabsf(Gimbal_Instance.Calc.Pitch.T_Angle
                                 - Gimbal_Instance.Calc.Pitch.C_Angle);
         
-        // 误差衰减
-        float decay = pitch_error / (pitch_error + autoaim_param.FF_Decay_K);
+        // 误差衰减（防 FF_Decay_K=0 时产生 NaN）
+        float decay = (autoaim_param.FF_Decay_K > 0.001f)
+                      ? pitch_error / (pitch_error + autoaim_param.FF_Decay_K)
+                      : 1.0f;
         
         float ff = Gimbal_Instance.Auto.Aim.PitchVel * autoaim_param.PID_FF_Gain_Pitch * decay;
         

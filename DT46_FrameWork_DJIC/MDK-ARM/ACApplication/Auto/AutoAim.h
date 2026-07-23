@@ -8,12 +8,14 @@
 /* 自瞄接收超时时间 (ms)：超过此时间未收到有效帧视为离线 */
 #define AUTOAIM_RX_TIMEOUT_MS   25
 
-/* 帧率自适应基准配置（换摄像头无需改参数，自动适配） */
-#define AUTOAIM_FPS_BASE            60.0f   /* 基准帧率 */
-#define AUTOAIM_EMA_ALPHA_BASE      0.25f   /* 基准帧率下的 EMA_Alpha_Min */
-#define AUTOAIM_EMA_ALPHA_ABSOLUTE_MIN  0.10f  /* EMA_Alpha_Min 下限 */
-#define AUTOAIM_EMA_ALPHA_ABSOLUTE_MAX  0.80f  /* EMA_Alpha_Min 上限 */
-#define AUTOAIM_FPS_LPF_ALPHA       0.1f    /* 帧率测量低通系数 */
+/* 帧率测量低通系数（仅用于统计显示，不参与滤波） */
+#define AUTOAIM_FPS_LPF_ALPHA       0.1f
+
+/* 跟随器工况模式 */
+#define FOLLOWER_MODE_STILL     0
+#define FOLLOWER_MODE_RAMP      1
+#define FOLLOWER_MODE_CORNER    2
+#define FOLLOWER_MODE_STEP      3
 
 /* ================================================================
  * 运行时可调参数结构体
@@ -21,26 +23,41 @@
  * 实时修改，无需重新编译下载
  * ================================================================ */
 typedef struct {
-    /* 角度修正 */
-    float Gain;                 /* 自瞄修正增益 (推荐1.0f) */
+    // ==================== Phase 1: 位置跟踪 ====================
+    float Scale_Yaw;            /* [0.10] Yaw缩放因子, ↑跟不上则增大, ↓抖动则减小 */
+    float Scale_Pitch;          /* [0.08] Pitch缩放因子, 比Yaw小一点(惯量小) */
+    float Gain;                 /* [1.0]  全局增益, 调好Scale后仍不满意再动 */
+    float Alpha_Still;          /* [0.10] 静止滤波系数, ↑=更强滤波抑制抖动 */
+    float DeadBand;             /* [0.1]  指令死区°, 过滤视觉帧间小噪声 */
+    float Pos_DeadBand;         /* [0.00] 输出死区°, Ctrl变化小于此值不更新云台, 静止微抖时尝试0.01~0.03 */
+    float Max_Jump_Deg;         /* [5.0]  跳变丢弃阈值°, 飞点抖动时减小 */
 
-    /* 速度前馈（PID层） */
-    float PID_FF_Gain_Yaw;      /* Yaw PID层前馈增益 (原50.0f) */
-    float PID_FF_Gain_Pitch;    /* Pitch PID层前馈增益 (原8.0f) */
-    float FF_Decay_K;           /* 前馈误差衰减常数 (推荐5.0f) */
-    int16_t FF_Max_Yaw;         /* Yaw前馈最大控制量 (800) */
-    int16_t FF_Max_Pitch;       /* Pitch前馈最大控制量 (300) */
+    // ==================== Phase 2: 匀速跟踪 ====================
+    float Alpha_Ramp;           /* [0.40] 匀速滤波系数, ↑跟上更快, ↓更平滑 */
+    float Kff_Ramp;             /* [0.0]  匀速前馈增益, ↑减小滞后, 过冲则↓ */
+    float Delta_Thr_Ramp;       /* [0.5]  匀速判定阈值°, 偏大则更难触发 */
 
-    /* 目标层速度前馈 */
-    float TargetFF_Gain;        /* 目标层前馈增益 (推荐0.5f) */
-    float FF_LPF_Alpha;         /* 速度低通滤波系数 (推荐0.5f) */
-    float FF_DeadZone;          /* 速度死区°/s (推荐1.0f) */
+    // ==================== Phase 3: 阶跃响应 ====================
+    float Alpha_Step;           /* [0.90] 阶跃滤波系数, 目标突跳时响应速度 */
+    float Kff_Step;             /* [0.0]  阶跃前馈增益, ↑加快到位, 过冲则↓ */
+    float Delta_Thr_Step;       /* [3.0]  阶跃判定阈值°, 越小越易触发 */
 
-    /* 自适应EMA滤波器 */
-    float EMA_Alpha_Min;        /* EMA最小平滑系数 (推荐0.40f) */
-    float EMA_Alpha_Max;        /* EMA最大平滑系数 (推荐0.95f) */
-    float EMA_Threshold;        /* EMA变化率阈值° (推荐1.0f) */
-    float Max_Jump_Deg;         /* 异常跳变丢弃阈值° (推荐5.0f) */
+    // ==================== Phase 4: 拐点平滑 ====================
+    float Alpha_Corner;         /* [0.25] 拐点滤波系数, ↑响应快, ↓更平滑 */
+    float Kff_Corner;           /* [0.0]  拐点前馈衰减, ↑减少拐点停顿感 */
+    float Corner_Hold_Time;     /* [200]  拐点保持时间ms, ↑更久才退出拐点模式 */
+
+    // ==================== PID层速度前馈 ====================
+    float PID_FF_Gain_Yaw;      /* [0]  Yaw PID层前馈, 跟踪滞后时开启 */
+    float PID_FF_Gain_Pitch;    /* [0]  Pitch PID层前馈 */
+    float FF_Decay_K;           /* [5.0] 前馈误差衰减, 误差小时减小前馈 */
+    int16_t FF_Max_Yaw;         /* [800]  Yaw前馈限幅 */
+    int16_t FF_Max_Pitch;       /* [300]  Pitch前馈限幅 */
+
+    // ==================== 目标层速度前馈 ====================
+    float TargetFF_Gain;        /* [0.0] 目标层前馈增益, 融合进位置环 */
+    float FF_LPF_Alpha;         /* [0.5] 速度低通滤波, ↑响应快, ↓更平滑 */
+    float FF_DeadZone;          /* [1.0] 速度死区°/s, 静止时前馈漂移则增大 */
 
 } AutoAim_Param_t;
 
@@ -106,15 +123,19 @@ typedef struct
 
 #pragma pack(pop)
 
-/* 自适应EMA滤波器状态结构体 */
+/* 自适应跟随器状态结构体（每个轴独立一个实例） */
 typedef struct
 {
-    float Yaw;              // 滤波后的Yaw（原始域，未乘0.1）
-    float Pitch;            // 滤波后的Pitch
-    float Yaw_PrevRaw;      // 上一次原始Yaw（用于计算变化率）
-    float Pitch_PrevRaw;    // 上一次原始Pitch
-    uint8_t Initialized;    // 首次初始化标志（首次直接赋值不滤波）
-} AutoAim_EMA_t;
+    float cmd_prev;             /* 上一帧原始指令值 */
+    float cmd_delta_prev;       /* 上一帧指令变化量 */
+    float filtered;             /* 滤波后的值（原始域，未乘Scale） */
+    float feedforward;          /* 前馈速度值 (°/s) */
+    uint32_t tick_prev;         /* 上一帧时间戳(ms)，用于计算帧间隔 */
+    uint8_t initialized;        /* 首次初始化标志 */
+    uint8_t direction_reversed; /* 方向反转标志 */
+    float last_reversal_time;   /* 上次反转时间戳(ms) */
+    uint8_t mode;               /* 当前工况 FOLLOWER_MODE_* */
+} AutoAim_Follower_t;
 
 typedef struct
 {
@@ -135,26 +156,26 @@ typedef struct
     uint32_t Rx_LastTick;       //最后有效帧的时间戳(ms)
     uint8_t Rx_OnlineFlag;
 
-    // 自适应EMA滤波器
-    AutoAim_EMA_t EMA;
+    // 自适应跟随器（Yaw/Pitch各一个独立实例）
+    AutoAim_Follower_t Follower_Yaw;
+    AutoAim_Follower_t Follower_Pitch;
 
-    // 速度前馈：上一次Ctrl值和时刻（用于计算目标角速度）
-    float Ctrl_Yaw_Prev;
-    float Ctrl_Pitch_Prev;
-    uint32_t Ctrl_Tick_Prev;
+    // 位置输出死区：上一次实际输出的 Ctrl 值
+    float Ctrl_Yaw_Last;
+    float Ctrl_Pitch_Last;
 
     // 通信发送
     AutoAim_Tx_t Tx;    
     uint8_t Tx_Buff[sizeof(AutoAim_Tx_t)];  //发送缓存
     uint8_t Tx_Done;    //已经发送一组数据标志位
 
-    // === 帧率自适应 ===
-    float   MeasuredFPS;         //实测帧率
+    // === 帧率统计（仅显示用） ===
+    float   MeasuredFPS;
     uint32_t LastRxTick;         //上一次有效帧的RxTick(用于检测数据是否更新)
 
     // === 异常帧检测 ===
-    float   LastRawYaw;          //上一次原始Yaw(用于跳变检测)
-    float   LastRawPitch;        //上一次原始Pitch
+    float   LastRawYaw;
+    float   LastRawPitch;
 
 }AutoAim_Instance_t;
 

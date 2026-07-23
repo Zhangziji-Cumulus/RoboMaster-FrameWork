@@ -180,6 +180,21 @@
           <WinNumber>1</WinNumber>
           <ItemText>Gimbal_Pitch</ItemText>
         </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>AutoAim_Instance</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>autoaim_param,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\BaseMood\ACApplication/Auto/AutoAim.c\autoaim_param.Delta_Thr_Still</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
