@@ -19,7 +19,7 @@ AutoAim_Param_t autoaim_param = {
     .Scale_Pitch     = 0.0f,
     .Gain            = 1.0f,
     .Alpha_Still     = 0.01f,
-    .DeadBand        = 0.8f,
+    .DeadBand        = 1.5f,
     .Pos_DeadBand    = 0.005f,
     .Max_Jump_Deg    = 8.0f,
 
@@ -280,7 +280,8 @@ static void AutoAim_Follower_Update(AutoAim_Follower_t *f, float raw_val, uint32
     // === 工况判别 + 参数选择 ===
     float alpha;
     float ff = 0.0f;
-    float abs_delta = fabsf(cmd_delta);
+    float abs_delta = fabsf(cmd_delta);    // 帧间变化量（用于阶跃检测）
+    float gap       = fabsf(raw_val - f->filtered);  // 与滤波值的偏差（用于匀速检测）
 
     if (!f->initialized)
     {
@@ -297,7 +298,7 @@ static void AutoAim_Follower_Update(AutoAim_Follower_t *f, float raw_val, uint32
     else if (abs_delta > autoaim_param.Delta_Thr_Step)
     {
         alpha = autoaim_param.Alpha_Step;
-        ff    = (raw_val - f->filtered) * autoaim_param.Kff_Step;
+        ff    = gap * autoaim_param.Kff_Step;
         f->mode = FOLLOWER_MODE_STEP;
     }
     else if (f->direction_reversed)
@@ -306,7 +307,7 @@ static void AutoAim_Follower_Update(AutoAim_Follower_t *f, float raw_val, uint32
         ff    = (dt_sec > 0.001f) ? (f->feedforward * autoaim_param.Kff_Corner) : 0.0f;
         f->mode = FOLLOWER_MODE_CORNER;
     }
-    else if (!in_deadband && abs_delta > autoaim_param.Delta_Thr_Ramp)
+    else if (!in_deadband && gap > autoaim_param.Delta_Thr_Ramp)
     {
         alpha = autoaim_param.Alpha_Ramp;
         ff    = (dt_sec > 0.001f) ? ((cmd_delta / dt_sec) * autoaim_param.Kff_Ramp) : 0.0f;
