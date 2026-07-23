@@ -30,22 +30,15 @@
 #define AUTOAIM_WEIGHT_AUTO         80
 #define AUTOAIM_WEIGHT_MANUAL      (100 - AUTOAIM_WEIGHT_AUTO)
 
-//自瞄修正增益：T_Angle -= Manual + AUTOAIM_GAIN × Auto
-//手动全量保留，自瞄作为附加修正，不影响操作手感
-#define AUTOAIM_GAIN                0.8f
-
-//自瞄速度前馈增益（将目标角速度 °/s 映射到电机控制量）
-#define AUTOAIM_FF_GAIN_YAW         50.0f    // Yaw 速度前馈增益
-#define AUTOAIM_FF_GAIN_PITCH       8.0f     // Pitch 速度前馈增益
-
-//自瞄速度低通滤波系数（越小越平滑）
-#define AUTOAIM_FF_LPF_ALPHA        0.3f     // 新速度权重，1.0=无滤波
-
-//自瞄速度前馈防飘/防冲参数
-#define AUTOAIM_FF_DEADZONE         1.0f     // 速度死区(°/s)：|vel|<此值不给前馈，防静止漂移
-#define AUTOAIM_FF_DECAY_K          3.0f     // 误差衰减常数：越大衰减越早，防过冲
-#define AUTOAIM_FF_MAX_YAW          800      // Yaw前馈最大控制量，防单帧冲击
-#define AUTOAIM_FF_MAX_PITCH        300      // Pitch前馈最大控制量
+//=============================================================================
+// 以下参数已迁移至 AutoAim_Param_t 结构体（autoaim_param 全局变量）
+// 可在 Debug 时通过 Watch 窗口实时修改，无需重新编译：
+//   - Gain / PID_FF_Gain_Yaw / PID_FF_Gain_Pitch
+//   - FF_Decay_K / FF_Max_Yaw / FF_Max_Pitch
+//   - TargetFF_Gain / FF_LPF_Alpha / FF_DeadZone
+//   - EMA_Alpha_Min / EMA_Alpha_Max / EMA_Threshold / Max_Jump_Deg
+// 定义位置：AutoAim.c / AutoAim.h
+//=============================================================================
 
 void AutoAim_UART_IRQHandler(void);//自瞄串口中断处理函数
 

@@ -237,9 +237,14 @@ static void Gimbal_Update_Target(void)
     {
         if(Gimbal_Instance.Auto.Aim.IsOnline)
         {
-            // 手动全量 + 自瞄附加修正：操作手感不受稀释
-            float AddYaw   = ManualYaw   + AUTOAIM_GAIN * AutoYaw;
-            float AddPitch = ManualPitch + AUTOAIM_GAIN * AutoPitch;
+            // 使用封装的融合函数（含位置修正 + 速度前馈）
+            // 参数来自 autoaim_param，Debug 时可在 Watch 窗口实时调参
+            float AddYaw   = AutoAim_FusionAxis(ManualYaw,   AutoYaw,
+                                Gimbal_Instance.Auto.Aim.YawVel,
+                                Gimbal_Instance.Auto.Aim.IsOnline, 0.01f);
+            float AddPitch = AutoAim_FusionAxis(ManualPitch, AutoPitch,
+                                Gimbal_Instance.Auto.Aim.PitchVel,
+                                Gimbal_Instance.Auto.Aim.IsOnline, 0.01f);
 
             // 限幅保护
             AddYaw   = MyMath_Limit_Float(AddYaw,
@@ -329,6 +334,7 @@ static void Gimbal_YawStable_Calc(void)
 
 #if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
     // 自瞄速度前馈：目标角速度 × 前馈增益，经误差衰减后叠加到PID输出
+    // 参数来自 autoaim_param（可在 Debug 时实时调参）
     if (Gimbal_Instance.Auto.Aim.IsOnline && Gimbal_Instance.Auto.Aim.YawVel != 0.0f)
     {
         // 计算Yaw位置误差（角度制，考虑循环角度）
@@ -337,14 +343,13 @@ static void Gimbal_YawStable_Calc(void)
                                 Gimbal_Instance.Calc.Yaw.C_Angle));
         
         // 误差衰减：误差大→系数≈1(全量前馈)，误差小→系数≈0(衰减)
-        // decay = error / (error + DECAY_K)，DECAY_K=3时error=3°时衰减到0.5
-        float decay = yaw_error / (yaw_error + AUTOAIM_FF_DECAY_K);
+        float decay = yaw_error / (yaw_error + autoaim_param.FF_Decay_K);
         
-        float ff = Gimbal_Instance.Auto.Aim.YawVel * AUTOAIM_FF_GAIN_YAW * decay;
+        float ff = Gimbal_Instance.Auto.Aim.YawVel * autoaim_param.PID_FF_Gain_Yaw * decay;
         
         // 限幅
-        if (ff > AUTOAIM_FF_MAX_YAW) ff = AUTOAIM_FF_MAX_YAW;
-        if (ff < -AUTOAIM_FF_MAX_YAW) ff = -AUTOAIM_FF_MAX_YAW;
+        if (ff > autoaim_param.FF_Max_Yaw) ff = (float)autoaim_param.FF_Max_Yaw;
+        if (ff < -autoaim_param.FF_Max_Yaw) ff = -(float)autoaim_param.FF_Max_Yaw;
         
         Gimbal_Instance.Calc.Yaw.Ctrl_Vel += (int16_t)ff;
     }
@@ -374,6 +379,7 @@ static void Gimbal_PitchStable_Calc(void)
 
 #if(AUTOAIM_IFOPEN == AUTOAIM_OPEN)
     // 自瞄速度前馈：目标角速度 × 前馈增益，经误差衰减后叠加到PID输出
+    // 参数来自 autoaim_param（可在 Debug 时实时调参）
     if (Gimbal_Instance.Auto.Aim.IsOnline && Gimbal_Instance.Auto.Aim.PitchVel != 0.0f)
     {
         // 计算Pitch位置误差
@@ -381,13 +387,13 @@ static void Gimbal_PitchStable_Calc(void)
                                 - Gimbal_Instance.Calc.Pitch.C_Angle);
         
         // 误差衰减
-        float decay = pitch_error / (pitch_error + AUTOAIM_FF_DECAY_K);
+        float decay = pitch_error / (pitch_error + autoaim_param.FF_Decay_K);
         
-        float ff = Gimbal_Instance.Auto.Aim.PitchVel * AUTOAIM_FF_GAIN_PITCH * decay;
+        float ff = Gimbal_Instance.Auto.Aim.PitchVel * autoaim_param.PID_FF_Gain_Pitch * decay;
         
         // 限幅
-        if (ff > AUTOAIM_FF_MAX_PITCH) ff = AUTOAIM_FF_MAX_PITCH;
-        if (ff < -AUTOAIM_FF_MAX_PITCH) ff = -AUTOAIM_FF_MAX_PITCH;
+        if (ff > autoaim_param.FF_Max_Pitch) ff = (float)autoaim_param.FF_Max_Pitch;
+        if (ff < -autoaim_param.FF_Max_Pitch) ff = -(float)autoaim_param.FF_Max_Pitch;
         
         Gimbal_Instance.Calc.Pitch.Ctrl_Vel += (int16_t)ff;
     }

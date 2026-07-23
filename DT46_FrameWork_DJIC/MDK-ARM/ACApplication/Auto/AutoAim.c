@@ -11,6 +11,25 @@
 	AutoAim_Ctrl_t AutoAim_Ctrl;//自瞄控制量
 
 //** ================================================================================ **//
+//** ================== 运行时可调参数（Debug时Watch窗口实时修改） =================== **//
+//** ================================================================================ **//
+AutoAim_Param_t autoaim_param = {
+    .Gain            = 1.0f,
+    .PID_FF_Gain_Yaw   = 50.0f,
+    .PID_FF_Gain_Pitch = 8.0f,
+    .FF_Decay_K      = 5.0f,
+    .FF_Max_Yaw      = 800,
+    .FF_Max_Pitch    = 300,
+    .TargetFF_Gain   = 0.5f,
+    .FF_LPF_Alpha    = 0.5f,
+    .FF_DeadZone     = 1.0f,
+    .EMA_Alpha_Min   = 0.40f,
+    .EMA_Alpha_Max   = 0.95f,
+    .EMA_Threshold   = 1.0f,
+    .Max_Jump_Deg    = 5.0f,
+};
+
+//** ================================================================================ **//
 //** ================================== 融合算法 ==================================== **//
 //** ================================================================================ **//
 
@@ -80,13 +99,30 @@ float AutoAim_WeightFusion_Float(float manual, float auto_val, uint8_t aim_valid
     return output;
 }
 
+//** ================================================================================ **//
+//** ======================= 单轴自瞄+手动融合（含速度前馈） ========================= **//
+//** ================================================================================ **//
+
 /**
- * @brief   获取自瞄控制量结构体指针
- * @return const AutoAim_Ctrl_t*  自瞄控制量（Yaw/Pitch/FireOK/IsOnline）的指针
- * @note    Yaw/Pitch 为视觉给出的期望角度，FireOK 为开火允许标志，
- *         IsOnline 表示视觉上位机是否在线。
- *         外部模块通过此接口只读访问自瞄控制量，无需直接操作本文件内部变量。
+ * @brief   单轴自瞄+手动融合函数（含速度前馈）
+ * @param  manual     手动控制量（角度步进值）
+ * @param  auto_val   自瞄期望角度修正值
+ * @param  auto_vel   自瞄目标角速度(°/s)
+ * @param  aim_online 自瞄是否在线
+ * @param  dt_sec     控制周期(秒)，用于前馈换算
+ * @return float      融合后的输出值
+ * @note   当自瞄离线时只输出手动量；
+ *         当自瞄在线时叠加修正 Gain × auto_val 和速度前馈 auto_vel × TargetFF_Gain × dt_sec。
+ *         参数来自 autoaim_param 结构体，可在 Debug 时通过 Watch 窗口实时调参。
  */
+float AutoAim_FusionAxis(float manual, float auto_val, float auto_vel, uint8_t aim_online, float dt_sec)
+{
+    if (!aim_online)
+        return manual;
+
+    float ff = auto_vel * autoaim_param.TargetFF_Gain * dt_sec;
+    return manual + autoaim_param.Gain * auto_val + ff;
+}
 
 //** ================================================================================ **//
 //** ========================== 获取自瞄控制数据（对外） ============================= **//
@@ -120,6 +156,12 @@ void AutoAim_Init(void)
     AutoAim_Instance.Ctrl_Tick_Prev  = HAL_GetTick();
     AutoAim_Ctrl.YawVel   = 0.0f;
     AutoAim_Ctrl.PitchVel = 0.0f;
+
+    // 初始化帧率自适应 & 异常检测
+    AutoAim_Instance.MeasuredFPS   = 30.0f;   // 默认30FPS
+    AutoAim_Instance.LastRxTick    = 0;
+    AutoAim_Instance.LastRawYaw    = 0.0f;
+    AutoAim_Instance.LastRawPitch  = 0.0f;
 }
 
 //** ====================== 更新要发送的数据 ====================== **//
@@ -129,8 +171,6 @@ void AutoAim_UpdateTx(void)
     AutoAim_Instance.Tx.IMU_Roll = AutoAim_Instance.MCUData.INS_angle[IMU_INDEX_ROLL];
     AutoAim_Instance.Tx.IMU_Pitch = AutoAim_Instance.MCUData.INS_angle[IMU_INDEX_PITCH];
     AutoAim_Instance.Tx.IMU_Yaw = AutoAim_Instance.MCUData.INS_angle[IMU_INDEX_YAW];
-
-    //AutoAim_Instance.Tx.Match = 999;
 }
 
 //** ===================== 普通模式发送函数 ====================== **//
@@ -171,21 +211,17 @@ void AutoAim_ReceiveProcess(void)
 //** ======================================================================== **//
 
 /**
- * @brief   自适应EMA滤波（单轴）—— 根据变化率动态调节平滑系数
+ * @brief   自适应EMA滤波（单轴）—— 增加 alpha_min 参数，支持帧率自适应
  * @param  raw_val      当前原始值
  * @param  prev_raw    上一次原始值指针（会被更新为当前原始值）
  * @param  prev_filter  上一次滤波值指针（会被更新为当前滤波值）
  * @param  initialized  初始化标志指针（首次调用直接赋值，不滤波）
+ * @param  alpha_min    最小alpha（由帧率自适应计算传入，替代固定宏）
  * @return float        滤波后的值
- * @note   算法原理：
- *         1. 计算原始值的变化率 dx = |raw_val - *prev_raw|
- *         2. 自适应 alpha = ALPHA_MIN + (ALPHA_MAX - ALPHA_MIN) * saturate(dx / THRESHOLD)
- *         3. 标准一阶 EMA：filtered = alpha * raw + (1-alpha) * prev_filter
- *         4. 变化率大 → alpha 大 → 响应快（跟随目标快速移动）
- *         5. 变化率小 → alpha 小 → 平滑强（抑制抖动噪声）
- *         首次调用时直接输出原始值并初始化历史数据。
+ * @note   使用 autoaim_param 结构体中的参数，可在 Debug 时实时调参。
  */
-static float AutoAim_EMA_Update_Single(float raw_val, float *prev_raw, float *prev_filter, uint8_t *initialized)
+static float AutoAim_EMA_Update_Single_Adaptive(float raw_val, float *prev_raw,
+    float *prev_filter, uint8_t *initialized, float alpha_min)
 {
     float alpha;
     float dx;
@@ -193,34 +229,28 @@ static float AutoAim_EMA_Update_Single(float raw_val, float *prev_raw, float *pr
 
     if (!(*initialized))
     {
-        // 首次：直接赋值，不滤波
         *prev_raw    = raw_val;
         *prev_filter = raw_val;
         *initialized = 1;
         return raw_val;
     }
 
-    // 计算变化率
     dx = raw_val - *prev_raw;
     if (dx < 0.0f) dx = -dx;
 
-    // 自适应 alpha：变化率越大 alpha 越大（响应越快）
-    alpha = AUTOAIM_EMA_ALPHA_MIN;
-    if (dx < AUTOAIM_EMA_THRESHOLD)
+    // 自适应 alpha：用传入的 alpha_min（帧率自适应）替代固定宏
+    alpha = alpha_min;
+    if (dx < autoaim_param.EMA_Threshold)
     {
-        // 线性插值：alpha = alpha_min + (alpha_max - alpha_min) * (dx / threshold)
-        alpha += (AUTOAIM_EMA_ALPHA_MAX - AUTOAIM_EMA_ALPHA_MIN) * (dx / AUTOAIM_EMA_THRESHOLD);
+        alpha += (autoaim_param.EMA_Alpha_Max - alpha_min) * (dx / autoaim_param.EMA_Threshold);
     }
     else
     {
-        // 超过阈值，使用最大 alpha（最快响应）
-        alpha = AUTOAIM_EMA_ALPHA_MAX;
+        alpha = autoaim_param.EMA_Alpha_Max;
     }
 
-    // 一阶 EMA
     output = alpha * raw_val + (1.0f - alpha) * (*prev_filter);
 
-    // 更新历史数据
     *prev_raw    = raw_val;
     *prev_filter = output;
 
@@ -228,9 +258,36 @@ static float AutoAim_EMA_Update_Single(float raw_val, float *prev_raw, float *pr
 }
 
 /**
- * @brief   自适应EMA滤波 —— 对 Rx 原始 Yaw/Pitch 进行滤波
- * @note    在 AutoAim_UpdateRx() 内部调用。
- *          当离线时重置滤波器 Initialized 标志，确保重连后快速跟踪。
+ * @brief   计算帧率自适应的 EMA α_min
+ * @param  inst  AutoAim_Instance_t 指针（含 MeasuredFPS）
+ * @return float 自适应后的 α_min
+ * @note   α_min = α_base × (FPS_base / FPS_measured)
+ *         30FPS → 0.25 × 2.0 = 0.50（延迟小，响应快）
+ *         60FPS → 0.25 × 1.0 = 0.25（平滑适中）
+ *         120FPS→ 0.25 × 0.5 = 0.125（充分利用高帧率，更平滑）
+ */
+static float AutoAim_CalcAdaptiveAlpha(AutoAim_Instance_t *inst)
+{
+    float alpha_min;
+
+    alpha_min = AUTOAIM_EMA_ALPHA_BASE * (AUTOAIM_FPS_BASE / inst->MeasuredFPS);
+
+    if (alpha_min < AUTOAIM_EMA_ALPHA_ABSOLUTE_MIN)
+        alpha_min = AUTOAIM_EMA_ALPHA_ABSOLUTE_MIN;
+    if (alpha_min > AUTOAIM_EMA_ALPHA_ABSOLUTE_MAX)
+        alpha_min = AUTOAIM_EMA_ALPHA_ABSOLUTE_MAX;
+
+    return alpha_min;
+}
+
+/**
+ * @brief   自适应EMA滤波 —— 重写版
+ * @note    新增功能：
+ *          1. 数据新鲜度检测：RxTick没变则跳过滤波，维持上次输出
+ *          2. 帧率实时测量：只在数据更新时计算帧率
+ *          3. 异常跳变检测：|Δ| > Max_Jump_Deg 丢弃该帧
+ *          4. 帧率自适应 α_min：根据实测帧率自动调整
+ *          5. 离线时重置滤波器
  */
 static void AutoAim_EMA_Update(void)
 {
@@ -240,18 +297,53 @@ static void AutoAim_EMA_Update(void)
     if (!AutoAim_Instance.Rx_OnlineFlag)
     {
         ema->Initialized = 0;
+        AutoAim_Instance.LastRawYaw   = 0.0f;
+        AutoAim_Instance.LastRawPitch = 0.0f;
         return;
     }
 
-    // 对 Yaw 和 Pitch 分别进行自适应 EMA 滤波（在原始域，未乘 0.1）
-    ema->Yaw   = AutoAim_EMA_Update_Single(AutoAim_Instance.Rx.Yaw,
-                                            &ema->Yaw_PrevRaw,
-                                            &ema->Yaw,
-                                            &ema->Initialized);
-    ema->Pitch = AutoAim_EMA_Update_Single(AutoAim_Instance.Rx.Pitch,
-                                            &ema->Pitch_PrevRaw,
-                                            &ema->Pitch,
-                                            &ema->Initialized);
+    // === 数据新鲜度检测 ===
+    // 如果 RxTick 没变（同一帧重复接收），跳过滤波，维持上次输出
+    if (AutoAim_Instance.Rx_LastTick == AutoAim_Instance.LastRxTick)
+        return;
+    AutoAim_Instance.LastRxTick = AutoAim_Instance.Rx_LastTick;
+
+    // === 帧率测量（只在数据更新时测量） ===
+    static uint32_t prev_fps_tick = 0;
+    if (prev_fps_tick != 0)
+    {
+        float dt_ms = (float)(AutoAim_Instance.Rx_LastTick - prev_fps_tick);
+        if (dt_ms >= 1.0f && dt_ms <= 500.0f)
+        {
+            float instant_fps = 1000.0f / dt_ms;
+            AutoAim_Instance.MeasuredFPS = AUTOAIM_FPS_LPF_ALPHA * instant_fps
+                                         + (1.0f - AUTOAIM_FPS_LPF_ALPHA) * AutoAim_Instance.MeasuredFPS;
+        }
+    }
+    prev_fps_tick = AutoAim_Instance.Rx_LastTick;
+
+    // === 异常跳变检测 ===
+    float dyaw   = fabsf(AutoAim_Instance.Rx.Yaw   - AutoAim_Instance.LastRawYaw);
+    float dpitch = fabsf(AutoAim_Instance.Rx.Pitch - AutoAim_Instance.LastRawPitch);
+
+    if (dyaw > autoaim_param.Max_Jump_Deg || dpitch > autoaim_param.Max_Jump_Deg)
+    {
+        // 异常跳变 → 丢弃这一帧，保持上次输出
+        return;
+    }
+    AutoAim_Instance.LastRawYaw   = AutoAim_Instance.Rx.Yaw;
+    AutoAim_Instance.LastRawPitch = AutoAim_Instance.Rx.Pitch;
+
+    // === 计算帧率自适应的 α_min ===
+    float adaptive_alpha_min = AutoAim_CalcAdaptiveAlpha(&AutoAim_Instance);
+
+    // === 对 Yaw 和 Pitch 分别滤波（使用自适应 α_min） ===
+    ema->Yaw   = AutoAim_EMA_Update_Single_Adaptive(AutoAim_Instance.Rx.Yaw,
+                    &ema->Yaw_PrevRaw, &ema->Yaw, &ema->Initialized,
+                    adaptive_alpha_min);
+    ema->Pitch = AutoAim_EMA_Update_Single_Adaptive(AutoAim_Instance.Rx.Pitch,
+                    &ema->Pitch_PrevRaw, &ema->Pitch, &ema->Initialized,
+                    adaptive_alpha_min);
 }
 
 //** ------------------------------------------------------------ **//
@@ -289,16 +381,16 @@ void AutoAim_UpdateRx(void)
             float raw_vel_yaw   = (AutoAim_Ctrl.Yaw   - AutoAim_Instance.Ctrl_Yaw_Prev)   / dt_sec;
             float raw_vel_pitch = (AutoAim_Ctrl.Pitch - AutoAim_Instance.Ctrl_Pitch_Prev) / dt_sec;
 
-            // 一阶低通滤波，抑制速度噪声
-            AutoAim_Ctrl.YawVel   = AUTOAIM_FF_LPF_ALPHA * raw_vel_yaw
-                                  + (1.0f - AUTOAIM_FF_LPF_ALPHA) * AutoAim_Ctrl.YawVel;
-            AutoAim_Ctrl.PitchVel = AUTOAIM_FF_LPF_ALPHA * raw_vel_pitch
-                                  + (1.0f - AUTOAIM_FF_LPF_ALPHA) * AutoAim_Ctrl.PitchVel;
+            // 一阶低通滤波，抑制速度噪声（参数来自 autoaim_param，Debug可实时调）
+            AutoAim_Ctrl.YawVel   = autoaim_param.FF_LPF_Alpha * raw_vel_yaw
+                                  + (1.0f - autoaim_param.FF_LPF_Alpha) * AutoAim_Ctrl.YawVel;
+            AutoAim_Ctrl.PitchVel = autoaim_param.FF_LPF_Alpha * raw_vel_pitch
+                                  + (1.0f - autoaim_param.FF_LPF_Alpha) * AutoAim_Ctrl.PitchVel;
 
             // 速度死区：微小速度不给前馈，防止静止时漂移
-            if (fabsf(AutoAim_Ctrl.YawVel) < AUTOAIM_FF_DEADZONE)
+            if (fabsf(AutoAim_Ctrl.YawVel) < autoaim_param.FF_DeadZone)
                 AutoAim_Ctrl.YawVel = 0.0f;
-            if (fabsf(AutoAim_Ctrl.PitchVel) < AUTOAIM_FF_DEADZONE)
+            if (fabsf(AutoAim_Ctrl.PitchVel) < autoaim_param.FF_DeadZone)
                 AutoAim_Ctrl.PitchVel = 0.0f;
         }
 
