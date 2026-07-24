@@ -6,7 +6,8 @@
 
 
 /* 自瞄接收超时时间 (ms)：超过此时间未收到有效帧视为离线 */
-#define AUTOAIM_RX_TIMEOUT_MS   25
+/* 注意：需大于 2 帧间隔。30fps=33ms → 至少 70ms，15fps=66ms → 至少 140ms */
+#define AUTOAIM_RX_TIMEOUT_MS   70
 
 /* 帧率测量低通系数（仅用于统计显示，不参与滤波） */
 #define AUTOAIM_FPS_LPF_ALPHA       0.1f
@@ -75,23 +76,13 @@ typedef struct
 {
     uint8_t Frame_head;//帧头 0x5A
 
-    // uint8_t reserved0;// 填充
-    // uint8_t reserved1;// 填充
-    // uint8_t reserved2;// 填充（4字节对齐）
-
     float Yaw;        // 4
     float Pitch;      // 4
     int32_t Fire;      // 1
 
     uint16_t crc;
 
-    // int8_t reserved3; // 1
-    // int8_t reserved4; // 1
-    // int8_t reserved5; // 1
-
-    //int32_t Match;    // 4
-
-} AutoAim_Rx_t;       // 总：4+4+4+1+1+1+1+4 = 20 字节
+} AutoAim_Rx_t; 
 
 
 // ==============================
@@ -103,23 +94,13 @@ typedef struct
     uint8_t Frame_head;   // 帧头 0x5A
     uint8_t Enemy_Color;  // 敌方颜色
 
-    // uint8_t reserved0;    // 填充
-    // uint8_t reserved1;    // 填充（4字节对齐）
-
     float IMU_Roll;       // 4
     float IMU_Pitch;      // 4
     float IMU_Yaw;        // 4
 
-    //int32_t Match;        // 4
 
 } AutoAim_Tx_t;
 
-// 总大小：
-// 1+1+1+1 = 4
-// +4+4+4 = 12
-// +4 = 4
-// +1+1+1+1 = 4
-// 总计：4+12+4+4 = 24 字节 
 
 #pragma pack(pop)
 

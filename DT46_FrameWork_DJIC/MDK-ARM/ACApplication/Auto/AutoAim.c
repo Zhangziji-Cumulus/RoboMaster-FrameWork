@@ -7,6 +7,21 @@
 
 //static 
 	AutoAim_Instance_t  AutoAim_Instance;//自瞄实例
+
+// 调试计数器：在 Watch 窗口观察这些值是否在增长
+volatile uint32_t debug_call_count = 0;     // Follower_Update 被调用的次数
+volatile uint32_t debug_step_count = 0;     // 进入 STEP 模式的次数
+volatile uint32_t debug_ramp_count = 0;     // 进入 RAMP 模式的次数
+volatile uint32_t debug_reset_count = 0;    // 跟随器被重置的次数（离线导致 memset）
+volatile float    debug_max_gap_yaw = 0.0f; // Yaw 方向的 gap 最大值
+volatile float    debug_max_gap_pitch = 0.0f; // Pitch 方向的 gap 最大值
+// 调参辅助统计（记录运行时特征，发给我帮你算参数）
+volatile float    debug_max_delta_yaw   = 0.0f; // Yaw 最大帧间变化量 |Δcmd| → 用于 Delta_Thr_Step
+volatile float    debug_max_delta_pitch = 0.0f; // Pitch 最大帧间变化量 |Δcmd|
+volatile float    debug_max_ff_yaw      = 0.0f; // Yaw 最大前馈速度 °/s → 用于 Kff_Ramp 限幅
+volatile float    debug_max_ff_pitch    = 0.0f; // Pitch 最大前馈速度 °/s
+volatile uint32_t debug_corner_count    = 0;    // 进入 CORNER 模式的次数
+volatile uint32_t debug_total_frames    = 0;    // 非初始化帧的总数（样本量）
 //static 
 	AutoAim_Ctrl_t AutoAim_Ctrl;//自瞄控制量
 
@@ -15,35 +30,35 @@
 //** ================================================================================ **//
 AutoAim_Param_t autoaim_param = {
     // Phase 1: 位置跟踪
-    .Scale_Yaw       = 0.040f,
+    .Scale_Yaw       = 0.050f,
     .Scale_Pitch     = 0.0f,
     .Gain            = 1.0f,
-    .Alpha_Still     = 0.01f,
-    .DeadBand        = 1.5f,
-    .Pos_DeadBand    = 0.005f,
+    .Alpha_Still     = 0.10f,
+    .DeadBand        = 0.5f,
+    .Pos_DeadBand    = 0.003f,
     .Max_Jump_Deg    = 8.0f,
 
     // Phase 2: 匀速跟踪
-    .Alpha_Ramp      = 0.40f,
-    .Kff_Ramp        = 0.0f,
-    .Delta_Thr_Ramp  = 1.5f,
+    .Alpha_Ramp      = 0.88f,
+    .Kff_Ramp        = 0.9f,
+    .Delta_Thr_Ramp  = 0.8f,
 
     // Phase 3: 阶跃响应
     .Alpha_Step      = 0.90f,
     .Kff_Step        = 0.0f,
-    .Delta_Thr_Step  = 3.0f,
+    .Delta_Thr_Step  = 6.0f,
 
     // Phase 4: 拐点平滑
-    .Alpha_Corner    = 0.25f,
-    .Kff_Corner      = 0.0f,
+    .Alpha_Corner    = 0.55f,
+    .Kff_Corner      = 0.3f,
     .Corner_Hold_Time = 200.0f,
 
     // PID层速度前馈
     .PID_FF_Gain_Yaw   = 0.0f,
     .PID_FF_Gain_Pitch = 0.0f,
     .FF_Decay_K      = 5.0f,
-    .FF_Max_Yaw      = 800,
-    .FF_Max_Pitch    = 300,
+    .FF_Max_Yaw      = 650,
+    .FF_Max_Pitch    = 550,
 
     // 目标层速度前馈
     .TargetFF_Gain   = 0.0f,
@@ -285,6 +300,7 @@ static void AutoAim_Follower_Update(AutoAim_Follower_t *f, float raw_val, uint32
 
     if (!f->initialized)
     {
+        debug_call_count++;
         // 首次初始化：直接赋值，不滤波
         f->filtered       = raw_val;
         f->cmd_prev       = raw_val;
@@ -297,40 +313,40 @@ static void AutoAim_Follower_Update(AutoAim_Follower_t *f, float raw_val, uint32
     }
     else if (abs_delta > autoaim_param.Delta_Thr_Step)
     {
+        debug_call_count++;
+        debug_step_count++;
         alpha = autoaim_param.Alpha_Step;
         ff    = gap * autoaim_param.Kff_Step;
         f->mode = FOLLOWER_MODE_STEP;
     }
     else if (f->direction_reversed)
     {
+        debug_call_count++;
+        debug_corner_count++;
         alpha = autoaim_param.Alpha_Corner;
         ff    = (dt_sec > 0.001f) ? (f->feedforward * autoaim_param.Kff_Corner) : 0.0f;
         f->mode = FOLLOWER_MODE_CORNER;
     }
-    else if (!in_deadband && gap > autoaim_param.Delta_Thr_Ramp)
+    else if (gap > autoaim_param.Delta_Thr_Ramp)
     {
+        debug_call_count++;
+        debug_ramp_count++;
         alpha = autoaim_param.Alpha_Ramp;
         ff    = (dt_sec > 0.001f) ? ((cmd_delta / dt_sec) * autoaim_param.Kff_Ramp) : 0.0f;
         f->mode = FOLLOWER_MODE_RAMP;
     }
     else
     {
+        debug_call_count++;
         alpha = autoaim_param.Alpha_Still;
         ff    = 0.0f;
         f->mode = FOLLOWER_MODE_STILL;
     }
 
     // 一阶低通滤波
-    if (!in_deadband)
-    {
-        // 正常模式：用工况对应的 α 滤波
-        f->filtered = alpha * raw_val + (1.0f - alpha) * f->filtered;
-    }
-    else
-    {
-        // 死区内：极弱跟踪 (α=0.02)，几乎冻结但缓慢跟随，退出死区时无跳变
-        f->filtered = 0.02f * raw_val + 0.98f * f->filtered;
-    }
+    // 注意：即使死区内，RAMP/STEP等模式仍用其α快速跟踪
+    // 死区只控制 cmd_delta 清零和方向反转检测，不强制覆盖滤波系数
+    f->filtered = alpha * raw_val + (1.0f - alpha) * f->filtered;
 
     // 前馈输出 (°/s)
     f->feedforward = ff;
@@ -344,22 +360,28 @@ static void AutoAim_Follower_Update(AutoAim_Follower_t *f, float raw_val, uint32
 /**
  * @brief   双轴自适应跟随更新（Yaw + Pitch）
  * @param  timestamp 当前时间戳(ms)
- * @note   包含离线重置、数据新鲜度检测、跳变检测
+ * @note   离线时保留跟随器状态（不清零），当目标重新出现时可平滑过渡；
+ *        包含数据新鲜度检测、异常跳变检测、帧率统计
  */
 static void AutoAim_Follower_UpdateAll(uint32_t timestamp)
 {
-    // === 离线时重置 ===
-    if (!AutoAim_Instance.Rx_OnlineFlag)
+    // === 离线时：不清零跟随器状态 ===
+    // 保留 f->filtered / f->cmd_prev / f->initialized 等状态，
+    // 当目标重新出现时跟随器可平滑过渡，避免反复从初始化开始导致 mode 永远为 STILL(0)
     {
-        memset(&AutoAim_Instance.Follower_Yaw, 0, sizeof(AutoAim_Follower_t));
-        memset(&AutoAim_Instance.Follower_Pitch, 0, sizeof(AutoAim_Follower_t));
-        AutoAim_Instance.Ctrl_Yaw_Last   = 0.0f;
-        AutoAim_Instance.Ctrl_Pitch_Last = 0.0f;
-        AutoAim_Instance.LastRawYaw   = 0.0f;
-        AutoAim_Instance.LastRawPitch = 0.0f;
-        AutoAim_Ctrl.YawVel   = 0.0f;
-        AutoAim_Ctrl.PitchVel = 0.0f;
-        return;
+        static uint8_t prev_online = 0;
+        if (!AutoAim_Instance.Rx_OnlineFlag)
+        {
+            // 仅统计 online→offline 切换次数（而非每5ms累加）
+            if (prev_online)
+                debug_reset_count++;
+            prev_online = 0;
+            // Ctrl_Yaw_Last / Ctrl_Pitch_Last 保持不变，防止位置跳变
+            // LastRawYaw / LastRawPitch 保持不变，使跳变检测在重连后仍能工作
+            // 速度前馈由 AutoAim_UpdateRx 的 else 分支清空
+            return;
+        }
+        prev_online = 1;
     }
 
     // === 数据新鲜度检测 ===
@@ -394,21 +416,44 @@ static void AutoAim_Follower_UpdateAll(uint32_t timestamp)
     if (!AutoAim_Instance.Follower_Pitch.initialized)
         pitch_jump = 0;
 
-    if (!yaw_jump)
-        AutoAim_Instance.LastRawYaw = AutoAim_Instance.Rx.Yaw;
-    if (!pitch_jump)
-        AutoAim_Instance.LastRawPitch = AutoAim_Instance.Rx.Pitch;
+    // 无论是否跳变都更新 LastRawYaw/Pitch：
+    // 若跳变帧不更新，当目标跳到新位置后所有后续帧都会因 Δ 过大
+    // 而被判为跳变，导致跟随器死锁、永远无法更新滤波值
+    AutoAim_Instance.LastRawYaw   = AutoAim_Instance.Rx.Yaw;
+    AutoAim_Instance.LastRawPitch = AutoAim_Instance.Rx.Pitch;
 
     // === 分别对 Yaw 和 Pitch 执行自适应跟随 ===
     if (!yaw_jump)
     {
+        // 调参：记录最大帧间变化量 |Δcmd|（调用前 cmd_prev 还是旧值）
+        float delta_yaw = fabsf(AutoAim_Instance.Rx.Yaw - AutoAim_Instance.Follower_Yaw.cmd_prev);
+        if (delta_yaw > debug_max_delta_yaw) debug_max_delta_yaw = delta_yaw;
+
         AutoAim_Follower_Update(&AutoAim_Instance.Follower_Yaw,
             AutoAim_Instance.Rx.Yaw, timestamp);
+
+        // 调参：记录 gap / 前馈 / 帧数
+        float gap_yaw = fabsf(AutoAim_Instance.Rx.Yaw - AutoAim_Instance.Follower_Yaw.filtered);
+        if (gap_yaw > debug_max_gap_yaw) debug_max_gap_yaw = gap_yaw;
+        if (AutoAim_Instance.Follower_Yaw.feedforward > debug_max_ff_yaw)
+            debug_max_ff_yaw = AutoAim_Instance.Follower_Yaw.feedforward;
+        if (AutoAim_Instance.Follower_Yaw.initialized) // 非初始化帧
+            debug_total_frames++;
     }
     if (!pitch_jump)
     {
+        // 调参：记录最大帧间变化量 |Δcmd|
+        float delta_pitch = fabsf(AutoAim_Instance.Rx.Pitch - AutoAim_Instance.Follower_Pitch.cmd_prev);
+        if (delta_pitch > debug_max_delta_pitch) debug_max_delta_pitch = delta_pitch;
+
         AutoAim_Follower_Update(&AutoAim_Instance.Follower_Pitch,
             AutoAim_Instance.Rx.Pitch, timestamp);
+
+        // 调参：记录 gap / 前馈
+        float gap_pitch = fabsf(AutoAim_Instance.Rx.Pitch - AutoAim_Instance.Follower_Pitch.filtered);
+        if (gap_pitch > debug_max_gap_pitch) debug_max_gap_pitch = gap_pitch;
+        if (AutoAim_Instance.Follower_Pitch.feedforward > debug_max_ff_pitch)
+            debug_max_ff_pitch = AutoAim_Instance.Follower_Pitch.feedforward;
     }
 }
 
